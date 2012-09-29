@@ -1,0 +1,49 @@
+body {
+    background-image: url("/static/images/background.png");
+
+}
+
+/*
+* ENTITIES
+*/
+
+.entity {
+    z-index: 1;
+
+    background-color: #fff;
+    width: 200px;
+    border: 1px solid #d5d5d5;
+    border-radius: 10px;
+    color: #505050;
+    position: absolute;
+
+    left: 20%;
+    top: 20%;
+}
+
+.entity header {}
+
+.entity h3 {
+    margin: 0;
+    padding: 3px;
+    text-align: center;
+    cursor: move;
+}
+
+.entity ul {
+    margin: 5px 0;
+    padding: 0;
+}
+
+.entity ul li {
+    margin: 0;
+    padding: 3px 10px;
+    border-top: 1px solid #eaeaea;
+    list-style-type: none;
+}
+
+
+
+canvas {
+    position: absolute; width: 100%; height: 100%; overflow: hidden;
+}

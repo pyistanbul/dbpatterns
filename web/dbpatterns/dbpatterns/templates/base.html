@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>DBPatterns</title>
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/h5bp.css" />
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" />
+</head>
+<body>
+
+<script type="text/html" id="entity_template">
+    <div class="entity" style="top: <%= entity.position.top %>px; left: <%= entity.position.left %>px">
+        <header>
+            <h3><%= entity.name %></h3>
+        </header>
+        <ul>
+            <% for ( var i = 0; i < entity.attributes.length; i++ ) { %>
+            <li><%= entity.attributes[i].name %></li>
+            <% } %>
+        </ul>
+    </div>
+</script>
+<script type="text/javascript">var dbpatterns = {}; // global namespace</script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.class.min.js"></script>
+<script src="{{ STATIC_URL }}js/raphael.js"></script>
+<script src="{{ STATIC_URL }}js/tmpl.js"></script>
+<script src="{{ STATIC_URL }}js/dbpatterns.document.js"></script>
+<script src="{{ STATIC_URL }}js/dbpatterns.entity.js"></script>
+
+    <script type="text/javascript">
+    $(function () {
+        var db_document = new dbpatterns.Document({
+            "document_container": "body"
+        });
+
+        window.entity = new dbpatterns.Entity({
+            "name": "users",
+            "position": {
+                "left": 100,
+                "top": 200
+            },
+            "attributes": [
+                {
+                    "name": "id",
+                    "type": "auto-increment"
+                },
+                {
+                    "name": "first_name",
+                    "type": "string"
+                }
+            ]
+        });
+
+        db_document.add_entity(entity);
+
+
+    });
+    </script>
+
+</body>
+</html>
