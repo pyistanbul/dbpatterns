@@ -7,17 +7,29 @@
 </head>
 <body>
 
+<header role="banner">
+    <h1>Friendship model</h1>
+</header>
+
+<script type="text/html" id="attribute_template">
+    <li><%= name %></li>
+</script>
 <script type="text/html" id="entity_template">
-    <div class="entity" style="top: <%= entity.position.top %>px; left: <%= entity.position.left %>px">
+    <div class="entity" <% if (entity.position) { %> style="top: <%= entity.position.top %>; left: <%= entity.position.left %>"<% } %>>
         <header>
             <h3><%= entity.name %></h3>
         </header>
         <ul>
             <% for ( var i = 0; i < entity.attributes.length; i++ ) { %>
-            <li><%= entity.attributes[i].name %></li>
+            <%= tmpl("attribute_template", entity.attributes[i]) %>
             <% } %>
         </ul>
+        <footer>
+            <a href="#" class="new">new</a>
+        </footer>
     </div>
+
+
 </script>
 <script type="text/javascript">var dbpatterns = {}; // global namespace</script>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
@@ -37,8 +49,8 @@
         window.entity = new dbpatterns.Entity({
             "name": "users",
             "position": {
-                "left": 100,
-                "top": 200
+                "left": "100px",
+                "top": "200px"
             },
             "attributes": [
                 {
