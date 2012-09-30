@@ -10,7 +10,11 @@
 <article id="document">
     <header role="banner">
         <h1>test</h1>
+        <a href="#" class="edit-title">edit</a>
     </header>
+    <footer>
+        <a href="#" class="new-entity">New entity</a>
+    </footer>
 </article>
 
 <script type="text/html" id="entity-template">
@@ -19,7 +23,7 @@
     </header>
     <ul></ul>
     <footer>
-        <a href="#" class="new">new</a>
+        <a href="#" class="new-attribute">new</a>
     </footer>
 </script>
 
@@ -41,6 +45,8 @@
 <script src="{{ STATIC_URL }}js/models/entity.js"></script>
 <script src="{{ STATIC_URL }}js/views/document.js"></script>
 <script src="{{ STATIC_URL }}js/views/entity.js"></script>
+<script src="{{ STATIC_URL }}js/views/attribute.js"></script>
+<script src="{{ STATIC_URL }}js/models/attribute.js"></script>
 <script src="{{ STATIC_URL }}js/utils/tastypie.js"></script>
 
 
@@ -56,7 +62,7 @@
           "entity_collection": (new dbpatterns.collections.Entity())
       });
 
-      document_model.fetch();
+    document_model.fetch();
 
 
 
