@@ -7,68 +7,63 @@
 </head>
 <body>
 
-<header role="banner">
-    <h1>Friendship model</h1>
-</header>
+<article id="document">
+    <header role="banner">
+        <h1>test</h1>
+    </header>
+</article>
 
-<script type="text/html" id="attribute_template">
-    <li><%= name %></li>
+<script type="text/html" id="entity-template">
+    <header>
+        <h3><%= name %></h3>
+    </header>
+    <ul></ul>
+    <footer>
+        <a href="#" class="new">new</a>
+    </footer>
 </script>
-<script type="text/html" id="entity_template">
-    <div class="entity" <% if (entity.position) { %> style="top: <%= entity.position.top %>; left: <%= entity.position.left %>"<% } %>>
-        <header>
-            <h3><%= entity.name %></h3>
-        </header>
-        <ul>
-            <% for ( var i = 0; i < entity.attributes.length; i++ ) { %>
-            <%= tmpl("attribute_template", entity.attributes[i]) %>
-            <% } %>
-        </ul>
-        <footer>
-            <a href="#" class="new">new</a>
-        </footer>
-    </div>
 
+<!-- libs -->
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery-min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery-ui-min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/underscore/underscore-min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/backbone/backbone.js"></script>
 
+<!-- application -->
+<script type="text/javascript">
+    var dbpatterns = {
+        models: {},
+        collections: {},
+        views: {}
+    };
 </script>
-<script type="text/javascript">var dbpatterns = {}; // global namespace</script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/jquery-ui.min.js"></script>
-<script src="{{ STATIC_URL }}js/jquery.class.min.js"></script>
-<script src="{{ STATIC_URL }}js/raphael.js"></script>
-<script src="{{ STATIC_URL }}js/tmpl.js"></script>
-<script src="{{ STATIC_URL }}js/dbpatterns.document.js"></script>
-<script src="{{ STATIC_URL }}js/dbpatterns.entity.js"></script>
-
-    <script type="text/javascript">
-    $(function () {
-        var db_document = new dbpatterns.Document({
-            "document_container": "body"
-        });
-
-        window.entity = new dbpatterns.Entity({
-            "name": "users",
-            "position": {
-                "left": "100px",
-                "top": "200px"
-            },
-            "attributes": [
-                {
-                    "name": "id",
-                    "type": "auto-increment"
-                },
-                {
-                    "name": "first_name",
-                    "type": "string"
-                }
-            ]
-        });
-
-        db_document.add_entity(entity);
+<script src="{{ STATIC_URL }}js/models/document.js"></script>
+<script src="{{ STATIC_URL }}js/models/entity.js"></script>
+<script src="{{ STATIC_URL }}js/views/document.js"></script>
+<script src="{{ STATIC_URL }}js/views/entity.js"></script>
+<script src="{{ STATIC_URL }}js/utils/tastypie.js"></script>
 
 
-    });
-    </script>
+<script type="text/javascript">
+  $(function () {
+
+      window.document_model = new dbpatterns.models.Document({
+          "resource_uri": "/api/documents/50678ed3ca21fe08bad2a7c5"
+      });
+
+      new dbpatterns.views.Document({
+          "model": document_model,
+          "entity_collection": (new dbpatterns.collections.Entity())
+      });
+
+      document_model.fetch();
+
+
+
+
+  });
+</script>
+
 
 </body>
 </html>
