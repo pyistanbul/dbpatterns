@@ -1,10 +1,16 @@
 dbpatterns.views.Document = Backbone.View.extend({
 
+    DEFAULT_ENTITY_POSITION: {
+        "top": 20,
+        "left": 300
+    },
+
     el: "article#document",
 
     events: {
         "click .new-entity": "new_entity",
-        "click .edit-title": "edit_title"
+        "click .edit-title": "edit_title",
+        "click .save-document": "save_document"
     },
 
     initialize: function () {
@@ -21,7 +27,8 @@ dbpatterns.views.Document = Backbone.View.extend({
         var entity_view = new dbpatterns.views.Entity({
             model: entity
         });
-        this.$el.append(entity_view.render().el)
+        this.$el.find("#entities").append(entity_view.render().el);
+        this.$el.find("#entities").height($(window).height() - $("header[role='banner']").height());
     },
 
     new_entity: function () {
@@ -33,10 +40,7 @@ dbpatterns.views.Document = Backbone.View.extend({
 
         var entity = new dbpatterns.models.Entity({
             name: entity_name,
-            position: {
-                left: "30%",
-                top: "40%"
-            }
+            position: this.DEFAULT_ENTITY_POSITION
         });
         this.model.entities.add(entity);
     },
@@ -57,6 +61,10 @@ dbpatterns.views.Document = Backbone.View.extend({
         this.model.set("title", title);
         this.model.save();
         return this;
+    },
+
+    save_document: function () {
+        this.model.save();
     }
 
 });

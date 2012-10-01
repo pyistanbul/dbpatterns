@@ -13,9 +13,7 @@ dbpatterns.models.Document = Backbone.Model.extend({
         }
 
         this.entities.reset(result.entities);
-
-        this.entities.bind("add", this.persist.bind(this));
-
+        this.entities.bind("add remove persist", this.persist.bind(this));
         return result;
 
     },
@@ -24,7 +22,6 @@ dbpatterns.models.Document = Backbone.Model.extend({
         this.set({
             "entities": this.entities.toJSON()
         });
-        this.save();
     }
 
 });

@@ -7,15 +7,26 @@
 </head>
 <body>
 
+<!-- layout -->
 <article id="document">
     <header role="banner">
-        <h1>test</h1>
-        <a href="#" class="edit-title">edit</a>
+        <h1 class="edit-title">test</h1>
     </header>
-    <footer>
-        <a href="#" class="new-entity">New entity</a>
-    </footer>
+    <nav>
+        <ul>
+            <li><a href="#" class="save-document">Save document</a></li>
+            <li><a href="#" class="new-entity">New entity</a></li>
+        </ul>
+    </nav>
+    <div id="entities">
+
+    </div>
 </article>
+
+<!-- templates -->
+<script type="text/html" id="attribute-template">
+    <%= name %>
+</script>
 
 <script type="text/html" id="entity-template">
     <header>
@@ -24,6 +35,7 @@
     <ul></ul>
     <footer>
         <a href="#" class="new-attribute">new</a>
+        <a href="#" class="destroy">delete</a>
     </footer>
 </script>
 
@@ -33,7 +45,7 @@
 <script src="{{ STATIC_URL }}js/libs/underscore/underscore-min.js"></script>
 <script src="{{ STATIC_URL }}js/libs/backbone/backbone.js"></script>
 
-<!-- application -->
+<!-- namespaces -->
 <script type="text/javascript">
     var dbpatterns = {
         models: {},
@@ -41,6 +53,8 @@
         views: {}
     };
 </script>
+
+<!-- application -->
 <script src="{{ STATIC_URL }}js/models/document.js"></script>
 <script src="{{ STATIC_URL }}js/models/entity.js"></script>
 <script src="{{ STATIC_URL }}js/views/document.js"></script>
@@ -49,7 +63,7 @@
 <script src="{{ STATIC_URL }}js/models/attribute.js"></script>
 <script src="{{ STATIC_URL }}js/utils/tastypie.js"></script>
 
-
+<!-- bootstrap -->
 <script type="text/javascript">
   $(function () {
 
@@ -63,8 +77,6 @@
       });
 
     document_model.fetch();
-
-
 
 
   });
