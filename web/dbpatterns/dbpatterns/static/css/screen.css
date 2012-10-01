@@ -43,7 +43,6 @@ nav ul li a {
     background-color: #fff;
     width: 200px;
     border: 1px solid #d5d5d5;
-    border-radius: 10px;
     color: #505050;
     margin-bottom: 10px;
 
@@ -78,9 +77,29 @@ nav ul li a {
 }
 
 .entity footer {
-    padding: 7px 10px;
-    border-top: 1px solid #eaeaea;
 
+}
+
+.entity .action {
+    display: block;
+    padding: 2px 10px;
+    text-decoration: none;
+    background-color: #f4f4f4;
+    color: black;
+    border-top: 1px solid #e7e7e7;
+
+}
+
+.entity .action:hover {
+    background-color: #e4e4e4;
+}
+
+.entity form {
+    padding: 4px;
+}
+
+.entity form input {
+    width: 185px;
 }
 
 
