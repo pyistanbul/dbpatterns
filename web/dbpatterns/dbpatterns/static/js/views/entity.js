@@ -1,3 +1,51 @@
+dbpatterns.views.Entities = Backbone.View.extend({
+
+
+    el: "article#document",
+
+    events: {
+        "click .new-entity": "new_entity"
+    },
+
+    DEFAULT_ENTITY_POSITION: {
+        "top": 20,
+        "left": 300
+    },
+
+    initialize: function () {
+        this.model.bind("reset", this.render_entities, this);
+        this.model.bind("add", this.add_entity, this);
+    },
+
+    render_entities: function (entities) {
+        _.forEach(entities.models, this.add_entity, this)
+    },
+
+    add_entity: function (entity) {
+        var entity_view = new dbpatterns.views.Entity({
+            model: entity
+        });
+        this.$el.find("#entities").append(entity_view.render().el);
+        this.$el.find("#entities").height($(window).height() - $("header[role='banner']").height());
+    },
+
+    new_entity: function () {
+        var entity_name = window.prompt("Entity name");
+
+        if (!entity_name) {
+            return;
+        }
+
+        var entity = new dbpatterns.models.Entity({
+            name: entity_name,
+            position: this.DEFAULT_ENTITY_POSITION
+        });
+        this.model.add(entity);
+    }
+
+
+});
+
 dbpatterns.views.Entity = Backbone.View.extend({
 
     tagName: "div",
@@ -5,18 +53,12 @@ dbpatterns.views.Entity = Backbone.View.extend({
     template: $("#entity-template").html(),
 
     events: {
-        "click .new-attribute": "new_attribute",
         "click .destroy": "destroy",
         "dblclick h3": "rename"
     },
 
     initialize: function () {
-        this.model.entity_attributes.bind("add", this.add_attribute, this);
-        this.model.on("change:name", this.render_name, this)
-    },
-
-    render_attributes: function (attributes) {
-        _.forEach(attributes, this.add_attribute, this);
+        this.model.on("change:name", this.render_name, this);
     },
 
     render: function () {
@@ -33,26 +75,11 @@ dbpatterns.views.Entity = Backbone.View.extend({
             "stop": this.on_drag.bind(this)
         });
 
-        this.render_attributes(this.model.entity_attributes.models);
-
-        return this;
-    },
-
-    add_attribute: function (attribute) {
-
-        this.$el.find("ul").append(new dbpatterns.views.Attribute({
-            model: attribute
+        this.$el.find(".attributes").html(new dbpatterns.views.Attributes({
+            model: this.model.entity_attributes
         }).render().el);
 
-    },
-
-    new_attribute: function () {
-        var attribute_name = window.prompt("Attribute name");
-        var attribute = new dbpatterns.models.Attribute({
-            "name": attribute_name,
-            "type": "string"
-        });
-        this.model.entity_attributes.add(attribute);
+        return this;
     },
 
     on_drag: function (event, ui) {
@@ -81,7 +108,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
         var name = window.prompt("Entity name", this.model.get("name"));
         this.model.set({
             "name": name
-        })
+        });
         this.model.save();
     }
 

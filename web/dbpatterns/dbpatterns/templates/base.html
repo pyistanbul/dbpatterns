@@ -24,6 +24,12 @@
 </article>
 
 <!-- templates -->
+
+<script type="text/html" id="attribute-list-template">
+    <ul></ul>
+    <a href="#" class="new-attribute">new</a>
+</script>
+
 <script type="text/html" id="attribute-template">
     <%= name %>
 </script>
@@ -32,9 +38,8 @@
     <header>
         <h3><%= name %></h3>
     </header>
-    <ul></ul>
+    <section class="attributes"></section>
     <footer>
-        <a href="#" class="new-attribute">new</a>
         <a href="#" class="destroy">delete</a>
     </footer>
 </script>
