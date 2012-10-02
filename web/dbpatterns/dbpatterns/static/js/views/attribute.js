@@ -4,6 +4,14 @@ dbpatterns.views.Attribute = Backbone.View.extend({
 
     template: $("#attribute-template").html(),
 
+    events: {
+        "click a": "show_attribute_form"
+    },
+
+    show_attribute_form: function () {
+        console.log(this.model)
+    },
+
     render: function () {
         this.$el.html(_.template(this.template, this.model.toJSON()));
         return this;

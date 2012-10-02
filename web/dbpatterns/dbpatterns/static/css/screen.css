@@ -71,9 +71,19 @@ nav ul li a {
 
 .entity ul li {
     margin: 0;
-    padding: 3px 10px;
     border-top: 1px solid #eaeaea;
     list-style-type: none;
+}
+
+.entity ul li a {
+    padding: 3px 10px;
+    display: block;
+    color: black;
+    text-decoration: none;
+}
+
+.entity ul li a:hover {
+    background-color: #f6f6f6;
 }
 
 .entity footer {

@@ -25,6 +25,8 @@ dbpatterns.views.Entity = Backbone.View.extend({
             containment: "#entities",
             "handle": "h3",
             "stop": this.on_drag.bind(this)
+        }).sortable({
+            // TODO: implement!
         });
 
         this.$el.find(".attributes").html(new dbpatterns.views.Attributes({

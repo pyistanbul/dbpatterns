@@ -15,8 +15,10 @@ dbpatterns.views.EditInPlaceForm = Backbone.View.extend({
     submit: function () {
         this.submit_callback(this.input.val());
         this.$el.remove();
+        return this;
     },
     success: function (callback) {
         this.submit_callback = callback;
+        return this;
     }
 });

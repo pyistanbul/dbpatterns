@@ -1,11 +1,9 @@
 dbpatterns.views.Document = Backbone.View.extend({
 
-
-
     el: "article#document",
 
     events: {
-        "click .edit-title": "edit_title",
+        "click .edit-title": "rename",
         "click .save-document": "save_document"
     },
 
@@ -23,7 +21,7 @@ dbpatterns.views.Document = Backbone.View.extend({
         return this;
     },
 
-    edit_title: function () {
+    rename: function () {
 
         var title = window.prompt("Title", this.model.get("title"));
 
@@ -32,7 +30,6 @@ dbpatterns.views.Document = Backbone.View.extend({
         }
 
         this.model.set("title", title);
-        this.model.save();
         return this;
     },
 
