@@ -7,7 +7,7 @@ dbpatterns.models.Entity = Backbone.Model.extend({
     initialize: function () {
         this.entity_attributes = new dbpatterns.collections.Attribute();
         this.entity_attributes.reset(this.get("attributes"));
-        this.entity_attributes.on("add persist", this.persist, this);
+        this.entity_attributes.on("add remove persist", this.persist, this);
 
     },
 
@@ -25,7 +25,6 @@ dbpatterns.models.Entity = Backbone.Model.extend({
 
     destroy: function () {
         this.collection.remove(this);
-
     }
 
 

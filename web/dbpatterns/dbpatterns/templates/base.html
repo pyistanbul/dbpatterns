@@ -25,13 +25,40 @@
 
 <!-- templates -->
 
+<script type="text/html" id="attribute-form-template">
+    <form action="#">
+        <p>
+            <label for="name">Name</label>
+            <input type="text" name="name" id="name">
+        </p>
+
+        <p>
+            <label for="type">Type</label>
+            <select name="type" id="type">
+                <% for (var type in types) { %>
+                <option value="<%= types[type] %>"><%= types[type] %></option>
+                <% } %>
+            </select>
+        </p>
+
+        <p>
+            <input type="checkbox" name="is_primary_key" value="true" id="is_primary_key">
+            <label for="is_primary_key">Primary key</label>
+        </p>
+
+        <input type="hidden" id="foreign_key_entity" name="foreign_key_entity" value="">
+        <input type="hidden" id="foreign_key_attribute" name="foreign_key_attribute" value="">
+
+    </form>
+</script>
+
 <script type="text/html" id="attribute-list-template">
     <ul></ul>
     <a href="#" class="action new-attribute">new attribute</a>
 </script>
 
 <script type="text/html" id="attribute-template">
-    <a href="#"><%= name %></a>
+    <a href="#"><%= name %> <span><%= type %></span></a>
 </script>
 
 <script type="text/html" id="entity-template">
@@ -47,8 +74,13 @@
 <!-- libs -->
 <script src="{{ STATIC_URL }}js/libs/jquery/jquery-min.js"></script>
 <script src="{{ STATIC_URL }}js/libs/jquery/jquery-ui-min.js"></script>
-<script src="{{ STATIC_URL }}js/libs/underscore/underscore-min.js"></script>
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery.form2json.js"></script>
+<script src="{{ STATIC_URL }}js/libs/jquery/jquery.jsplumb.js"></script>
+<script src="{{ STATIC_URL }}js/libs/underscore/underscore.js"></script>
 <script src="{{ STATIC_URL }}js/libs/backbone/backbone.js"></script>
+
+<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" />
+
 
 <!-- namespaces -->
 <script type="text/javascript">
@@ -74,7 +106,8 @@
   $(function () {
 
       window.document_model = new dbpatterns.models.Document({
-          "resource_uri": "/api/documents/50678ed3ca21fe08bad2a7c5"
+{#          "resource_uri": "/api/documents/50678ed3ca21fe08bad2a7c5"#}
+          "resource_uri": "/api/documents/506c9b83ca21fe23bff9aa55"
       });
 
       new dbpatterns.views.Document({
@@ -87,6 +120,8 @@
 
   });
 </script>
+
+
 
 
 </body>
