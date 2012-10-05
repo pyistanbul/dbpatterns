@@ -64,31 +64,42 @@ nav ul li a {
     cursor: move;
 }
 
-.entity ul {
+.entity .attributes {
     margin: 5px 0 0;
     padding: 0;
 }
 
-.entity ul li {
+.entity .attributes .attribute {
     margin: 0;
     border-top: 1px solid #eaeaea;
     list-style-type: none;
 }
 
-.entity ul li a {
+.entity .attributes .attribute a {
     padding: 3px 10px;
     display: block;
     color: black;
     text-decoration: none;
 }
 
-.entity ul li a:hover {
+.entity .attributes .attribute a:hover {
     background-color: #f6f6f6;
 }
 
-.entity ul li a span {
+.entity .attributes .attribute a span {
     color: gray;
     float: right;
+    display: inline-block;
+}
+
+.entity .attributes .attribute a em {
+    background-color: #cacaca;
+    float: right;
+    width: 7px;
+    height: 7px;
+    display: inline-block;
+    margin: 8px -5px 0 5px;
+    border-radius: 50%;
 }
 
 .entity footer {
@@ -132,4 +143,12 @@ form label {
 
 .hidden {
     display: none;
+}
+
+._jsPlumb_overlay {
+    z-index: 1;
+}
+
+.attribute-place-holder {
+    height: 27px;
 }

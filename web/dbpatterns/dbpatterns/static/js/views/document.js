@@ -10,11 +10,10 @@ dbpatterns.views.Document = Backbone.View.extend({
     initialize: function () {
         this.model.bind("change:title", this.render_title, this);
         this.entities_view = new dbpatterns.views.Entities({
-            model: this.model.entities
+            model: this.model.entities,
+            app_view: this
         })
     },
-
-
 
     render_title: function () {
         this.$el.find("header h1").html(this.model.get("title"));

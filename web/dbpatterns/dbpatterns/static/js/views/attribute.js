@@ -1,16 +1,25 @@
+
+
+
 dbpatterns.views.Attribute = Backbone.View.extend({
 
-    tagName: "li",
+    tagName: "div",
+    className: "attribute",
 
     template: $("#attribute-template").html(),
     form_template: $("#attribute-form-template").html(),
 
     events: {
-        "click a": "show_attribute_form",
-        "dblclick a": "destroy"
+        "click a": "show_attribute_form"
+//        "click em": "destroy"
     },
 
     types: ["string", "integer", "boolean", "currency", "date", "time", "datetime"],
+
+    initialize: function () {
+        this.model.bind("change", this.render, this);
+        this.model.bind("change connect", this.render_connection, this);
+    },
 
     show_attribute_form: function () {
         var dialog = (new dbpatterns.views.FormDialog({
@@ -25,10 +34,49 @@ dbpatterns.views.Attribute = Backbone.View.extend({
 
     render: function () {
         this.$el.html(_.template(this.template, this.model.toJSON()));
+        this.$el.data("model", this.model);
+        this.load_connection();
         return this;
     },
 
+    load_connection: function () {
+        this.options.app_view.on("load", this.render_connection, this);
+    },
+
+    render_connection: function () {
+
+        var source = this.$el.parents(".entity");
+        var target = $("[data-entity='" + this.model.get("foreign_key_entity") + "']");
+
+        if (this.connection) {
+            this.connection.destroy();
+        }
+
+        if (!this.model.get("is_foreign_key")) {
+            return;
+        }
+
+        if (!source.length || !target.length) {
+            this.model.trigger("fk_does_not_exist"); // foreign key does not exist.
+            return;
+        }
+
+        this.connection = (new dbpatterns.views.Connection({
+            model: this.model,
+            el: source,
+            target: target,
+            label: function (model) {
+                return model.get("name") + " -> " + model.get("foreign_key_attribute");
+            }
+        })).render();
+
+
+    },
+
     destroy: function () {
+        if (this.connection) {
+            this.connection.destroy();
+        }
         this.model.destroy();
         this.$el.remove();
     }
@@ -51,9 +99,11 @@ dbpatterns.views.Attributes = Backbone.View.extend({
     },
 
     add_attribute: function (attribute) {
-        this.$el.find("ul").append(new dbpatterns.views.Attribute({
-            model: attribute
+        this.$el.find("section.attributes").append(new dbpatterns.views.Attribute({
+            model: attribute,
+            app_view: this.options.app_view
         }).render().el);
+        attribute.trigger("render");
     },
 
     render: function () {
@@ -62,13 +112,26 @@ dbpatterns.views.Attributes = Backbone.View.extend({
         this.get_sortable_content().sortable({
             "axis": "y",
             "containment": this.get_sortable_content(),
-            "opacity": 0.6
+            "opacity": 0.6,
+            "placeholder": "attribute-place-holder",
+            "update": function (event, sorted) {
+                var target = $(event.target);
+                target.find(".attribute").each(function (index, element) {
+                    var item = $(element);
+                    item.data("model").set({
+                        "order": item.index()
+                    });
+                });
+                this.model.sort();
+                this.model.trigger("persist")
+                console.log(this.model.pluck("name"))
+            }.bind(this)
         });
         return this;
     },
 
     get_sortable_content: function () {
-        return this.$el.find("ul");
+        return this.$el.find("section");
     },
 
     new_attribute: function () {
@@ -77,7 +140,8 @@ dbpatterns.views.Attributes = Backbone.View.extend({
         button.before(view.render().el);
         view.success(function (name) {
             this.model.add(new dbpatterns.models.Attribute({
-                "name": name
+                "name": name,
+                "order": this.model.length
             }));
            button.focus();
         }.bind(this));

@@ -1,3 +1,6 @@
+
+
+
 dbpatterns.views.Entity = Backbone.View.extend({
 
     tagName: "div",
@@ -21,15 +24,21 @@ dbpatterns.views.Entity = Backbone.View.extend({
             "left": this.model.get("position").left
         });
 
-        this.$el.draggable({
+        jsPlumb.draggable($(this.el), {
             containment: "#entities",
             "handle": "h3",
             "stop": this.on_drag.bind(this)
         });
 
+        (new dbpatterns.views.ConnectorEndpoint({
+            "el": this.$el
+        })).render();
+
         this.$el.find(".attributes").html(new dbpatterns.views.Attributes({
-            model: this.model.entity_attributes
+            model: this.model.entity_attributes,
+            app_view: this.options.app_view
         }).render().el);
+        this.render_name();
 
         return this;
     },
@@ -54,6 +63,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
 
     render_name: function () {
         this.$el.find("h3").html(this.model.get("name"));
+        this.$el.attr("data-entity", this.model.get("name"));
     },
 
     rename: function () {
@@ -90,11 +100,13 @@ dbpatterns.views.Entities = Backbone.View.extend({
     render_entities: function (entities) {
         _.forEach(entities.models, this.add_entity, this);
         this.$el.find("#entities").height($(window).height() - $("header[role='banner']").height());
+        this.options.app_view.trigger("load");
     },
 
     add_entity: function (entity) {
         var entity_view = new dbpatterns.views.Entity({
-            model: entity
+            model: entity,
+            app_view: this.options.app_view
         });
         this.$el.find("#entities").append(entity_view.render().el);
     },

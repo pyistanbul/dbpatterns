@@ -46,19 +46,21 @@
             <label for="is_primary_key">Primary key</label>
         </p>
 
-        <input type="hidden" id="foreign_key_entity" name="foreign_key_entity" value="">
-        <input type="hidden" id="foreign_key_attribute" name="foreign_key_attribute" value="">
+        <p>
+            <input type="checkbox" name="is_foreign_key" value="true" id="is_foreign_key">
+            <label for="is_foreign_key">Foreign key</label>
+        </p>
 
     </form>
 </script>
 
 <script type="text/html" id="attribute-list-template">
-    <ul></ul>
+    <section class="attributes"></section>
     <a href="#" class="action new-attribute">new attribute</a>
 </script>
 
 <script type="text/html" id="attribute-template">
-    <a href="#"><%= name %> <span><%= type %></span></a>
+    <a href="#"><%= name %> <em></em> <span><%= type %></span> </a>
 </script>
 
 <script type="text/html" id="entity-template">
@@ -98,6 +100,7 @@
 <script src="{{ STATIC_URL }}js/views/entity.js"></script>
 <script src="{{ STATIC_URL }}js/views/attribute.js"></script>
 <script src="{{ STATIC_URL }}js/views/ui.js"></script>
+<script src="{{ STATIC_URL }}js/views/connection.js"></script>
 <script src="{{ STATIC_URL }}js/models/attribute.js"></script>
 <script src="{{ STATIC_URL }}js/utils/tastypie.js"></script>
 
@@ -105,23 +108,21 @@
 <script type="text/javascript">
   $(function () {
 
-      window.document_model = new dbpatterns.models.Document({
+      window.app = new dbpatterns.models.Document({
 {#          "resource_uri": "/api/documents/50678ed3ca21fe08bad2a7c5"#}
           "resource_uri": "/api/documents/506c9b83ca21fe23bff9aa55"
       });
 
       new dbpatterns.views.Document({
-          "model": document_model,
+          "model": window.app,
           "entity_collection": (new dbpatterns.collections.Entity())
       });
 
-    document_model.fetch();
+    window.app.fetch();
 
 
   });
 </script>
-
-
 
 
 </body>
