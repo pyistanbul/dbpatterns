@@ -25,7 +25,8 @@ dbpatterns.views.Attribute = Backbone.View.extend({
         var dialog = (new dbpatterns.views.FormDialog({
             "form": _.template(this.form_template, this),
             "title": "Attribute",
-            "model": this.model
+            "model": this.model,
+            "attach_to": this.$el.parents(".entity")
         })).success(function () {
             return true;
         }).render();
@@ -139,10 +140,14 @@ dbpatterns.views.Attributes = Backbone.View.extend({
         var view = new dbpatterns.views.EditInPlaceForm();
         button.before(view.render().el);
         view.success(function (name) {
-            this.model.add(new dbpatterns.models.Attribute({
+           button.focus();
+           if (!name) return;
+           this.model.add(new dbpatterns.models.Attribute({
                 "name": name,
                 "order": this.model.length
             }));
+        }.bind(this));
+        view.cancel(function () {
            button.focus();
         }.bind(this));
         view.focus();

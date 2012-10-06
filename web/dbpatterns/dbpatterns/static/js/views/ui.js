@@ -7,6 +7,15 @@ dbpatterns.views.EditInPlaceForm = Backbone.View.extend({
     attributes: {
         "action": "#"
     },
+    shortcuts: {
+        'esc': 'destroy'
+    },
+    initialize: function () {
+        _.extend(this, new Backbone.Shortcuts);
+        this.delegateShortcuts();
+        this.submit_callback = function () {};
+        this.cancel_callback = function () {};
+    },
     render: function (initial) {
         this.input.val(initial || "");
         this.$el.append(this.input);
@@ -21,9 +30,16 @@ dbpatterns.views.EditInPlaceForm = Backbone.View.extend({
         event.preventDefault();
         return this;
     },
+    cancel: function (callback) {
+        this.cancel_callback = callback;
+    },
     success: function (callback) {
         this.submit_callback = callback;
         return this;
+    },
+    destroy: function () {
+        this.cancel_callback();
+        this.$el.remove();
     }
 });
 
