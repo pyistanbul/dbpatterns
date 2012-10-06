@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="new-document">
+    <h2>New Document</h2>
+        <form action="{% url new_document %}" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Create">
+        </form>
+    </section>
+{% endblock %}

@@ -50,7 +50,8 @@ class MongoDBResource(Resource):
         """
         Creates mongodb document from POST data.
         """
-        self.get_collection().insert(bundle.data)
+        bundle.data.update(kwargs)
+        bundle.obj = self.get_collection().insert(bundle.data)
         return bundle
 
     def obj_update(self, bundle, request=None, **kwargs):

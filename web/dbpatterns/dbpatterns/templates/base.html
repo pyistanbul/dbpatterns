@@ -9,7 +9,7 @@
 
 {% block header %}
     <header>
-        <h1>db<span>patterns</span></h1>
+        <h1><a href="{% url home %}">db<span>patterns</span></a></h1>
         <nav>
             {% if user.is_anonymous %}
             <ul>
@@ -20,7 +20,8 @@
             {% else %}
             <ul>
                 <li><a href="{% url auth_logout %}">Logout</a></li>
-                <li> {{ user }}</li>
+                <li><a href="{% url my_documents %}">My Patterns</a></li>
+                <li><a href="{% url new_document %}">New Pattern</a></li>
             </ul>
             {% endif %}
         </nav>

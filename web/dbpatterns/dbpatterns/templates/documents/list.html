@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="my-documents">
+    <h2>My Documents</h2>
+    <ul>
+        {% for document in documents %}
+            <li><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></li>
+        {% endfor %}
+    </ul>
+    </section>
+{% endblock %}

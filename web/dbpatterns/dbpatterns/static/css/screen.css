@@ -16,9 +16,13 @@ header h1 {
     text-align: left;
     float: left;
     width: 300px;
-    color: #bbbbbb;
     font-weight: normal;
     font-size: 55px;
+}
+
+header h1 a {
+    color: #bbbbbb;
+    text-decoration: none;
 }
 
 header h1 span {
@@ -58,26 +62,29 @@ cite {
 
 section.latest {
     margin-top: 30px;
+    overflow: hidden;
 }
 
 section h2 {
-    font-size: 22px;
-    font-weight: bold;
-    color: #081f2f;
+    font-size: 29px;
+    font-weight: normal;
+    color: #5d605d;
     margin: 0 2px;
     padding: 5px 0;
+    text-align: center;
 }
 
 .document-preview {
     margin: 0 10px 5px 0;
-    width: 200px;
+    width: 226px;
     padding: 10px 2px;
     height: 200px;
     overflow: hidden;
     float: left;
 }
 .document-preview h4 {
-    font-size: 20px;
+    font-size: 18px;
+    text-align: center;
     font-weight: normal;
     margin: 0 0 5px;
 }
