@@ -7,125 +7,29 @@
 </head>
 <body>
 
-<!-- layout -->
-<article id="document">
-    <header role="banner">
-        <h1 class="edit-title">test</h1>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#" class="save-document">Save document</a></li>
-            <li><a href="#" class="new-entity">New entity</a></li>
-        </ul>
-    </nav>
-    <div id="entities">
-
-    </div>
-</article>
-
-<!-- templates -->
-
-<script type="text/html" id="attribute-form-template">
-    <form action="#">
-        <p>
-            <label for="name">Name</label>
-            <input type="text" name="name" id="name">
-        </p>
-
-        <p>
-            <label for="type">Type</label>
-            <select name="type" id="type">
-                <% for (var type in types) { %>
-                <option value="<%= types[type] %>"><%= types[type] %></option>
-                <% } %>
-            </select>
-        </p>
-
-        <p>
-            <input type="checkbox" name="is_primary_key" value="true" id="is_primary_key">
-            <label for="is_primary_key">Primary key</label>
-        </p>
-
-        <p>
-            <input type="checkbox" name="is_foreign_key" value="true" id="is_foreign_key">
-            <label for="is_foreign_key">Foreign key</label>
-        </p>
-
-    </form>
-</script>
-
-<script type="text/html" id="attribute-list-template">
-    <section class="attributes"></section>
-    <a href="#" class="action new-attribute">new attribute</a>
-</script>
-
-<script type="text/html" id="attribute-template">
-    <a href="#"><%= name %> <em></em> <span><%= type %></span> </a>
-</script>
-
-<script type="text/html" id="entity-template">
+{% block header %}
     <header>
-        <h3><%= name %></h3>
+        <h1>db<span>patterns</span></h1>
+        <nav>
+            {% if user.is_anonymous %}
+            <ul>
+                <li><a href="{% url auth_registration %}">Register</a></li>
+                <li><a href="{% url auth_login %}">Login</a></li>
+                <li><a href="{% url home %}">Home</a></li>
+            </ul>
+            {% else %}
+            <ul>
+                <li><a href="{% url auth_logout %}">Logout</a></li>
+                <li> {{ user }}</li>
+            </ul>
+            {% endif %}
+        </nav>
     </header>
-    <section class="attributes"></section>
-    <footer>
-        <a href="#" class="action destroy">delete entity</a>
-    </footer>
-</script>
+{% endblock %}
 
-<!-- libs -->
-<script src="{{ STATIC_URL }}js/libs/jquery/jquery-min.js"></script>
-<script src="{{ STATIC_URL }}js/libs/jquery/jquery-ui-min.js"></script>
-<script src="{{ STATIC_URL }}js/libs/jquery/jquery.form2json.js"></script>
-<script src="{{ STATIC_URL }}js/libs/jquery/jquery.jsplumb.js"></script>
-<script src="{{ STATIC_URL }}js/libs/keymaster/keymaster.js"></script>
-<script src="{{ STATIC_URL }}js/libs/underscore/underscore.js"></script>
-<script src="{{ STATIC_URL }}js/libs/backbone/backbone.js"></script>
-<script src="{{ STATIC_URL }}js/libs/backbone/backbone.shortcuts.js"></script>
+{% block content %}
 
-<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" />
-
-
-<!-- namespaces -->
-<script type="text/javascript">
-    var dbpatterns = {
-        models: {},
-        collections: {},
-        views: {}
-    };
-</script>
-
-<!-- application -->
-<script src="{{ STATIC_URL }}js/models/document.js"></script>
-<script src="{{ STATIC_URL }}js/models/entity.js"></script>
-<script src="{{ STATIC_URL }}js/views/document.js"></script>
-<script src="{{ STATIC_URL }}js/views/entity.js"></script>
-<script src="{{ STATIC_URL }}js/views/attribute.js"></script>
-<script src="{{ STATIC_URL }}js/views/ui.js"></script>
-<script src="{{ STATIC_URL }}js/views/connection.js"></script>
-<script src="{{ STATIC_URL }}js/models/attribute.js"></script>
-<script src="{{ STATIC_URL }}js/utils/tastypie.js"></script>
-
-<!-- bootstrap -->
-<script type="text/javascript">
-  $(function () {
-
-      window.app = new dbpatterns.models.Document({
-{#          "resource_uri": "/api/documents/50678ed3ca21fe08bad2a7c5"#}
-          "resource_uri": "/api/documents/506c9b83ca21fe23bff9aa55"
-      });
-
-      new dbpatterns.views.Document({
-          "model": window.app,
-          "entity_collection": (new dbpatterns.collections.Entity())
-      });
-
-    window.app.fetch();
-
-
-  });
-</script>
-
+{% endblock %}
 
 </body>
 </html>

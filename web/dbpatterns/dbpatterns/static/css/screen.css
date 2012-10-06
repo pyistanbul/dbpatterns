@@ -1,36 +1,105 @@
 body {
     background-image: url("/static/images/background.png");
-    margin: 0;
+    width: 960px;
+    margin: 0 auto;
 }
 
-article#document > header {
-    background-color: white;
-}
-
-header h1 {
-    font-size: 40px;
-    font-weight: normal;
-    color: #b6b6b6;
-    margin: 0;
-    padding: 10px;
-    text-align: center;
-}
-
-nav {
-    background-color: #e5e5e5;
-    border-bottom: 1px solid #d1d1d1;
+header {
+    margin-top: 40px;
     overflow: hidden;
 }
 
-nav ul li {
+header h1 {
+    /*background: url("/static/images/dbpatterns-logo.png") no-repeat;*/
+    margin: 0;
+    padding: 0;
+    text-align: left;
     float: left;
+    width: 300px;
+    color: #bbbbbb;
+    font-weight: normal;
+    font-size: 55px;
+}
+
+header h1 span {
+    color: #2894df;
+}
+
+nav {
+
+}
+
+nav ul li {
+    float: right;
+    margin-left: 20px;
+    margin-top: 20px;
 }
 
 nav ul li a {
     display: block;
-    padding: 4px 10px;
-    color: gray;
+    padding: 2px 20px;
+    background-color: #2894df;
+    color: white;
     text-decoration: none;
+    font-size: 24px;
+}
+
+section.landing {
+    margin-top: 10px;
+    margin-left: 2px;
+    font-size: 20px;
+
+}
+
+cite {
+    text-decoration: underline;
+    font-style: normal;
+}
+
+section.latest {
+    margin-top: 30px;
+}
+
+section h2 {
+    font-size: 22px;
+    font-weight: bold;
+    color: #081f2f;
+    margin: 0 2px;
+    padding: 5px 0;
+}
+
+.document-preview {
+    margin: 0 10px 5px 0;
+    width: 200px;
+    padding: 10px 2px;
+    height: 200px;
+    overflow: hidden;
+    float: left;
+}
+.document-preview h4 {
+    font-size: 20px;
+    font-weight: normal;
+    margin: 0 0 5px;
+}
+
+.document-preview .entity-preview {
+    float: left;
+    margin: 5px 4px 0 0;
+    width: 40%;
+    font-size: 12px;
+    background-color: white;
+    padding: 4px;
+    border: 1px solid #dddddd;
+}
+
+.document-preview .entity-preview li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.document-preview .entity-preview .name {
+    font-weight: bold;
 }
 
 /*
