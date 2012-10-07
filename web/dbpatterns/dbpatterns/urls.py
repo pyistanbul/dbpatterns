@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib import admin
 
 
 urlpatterns = patterns('',
@@ -8,5 +9,8 @@ urlpatterns = patterns('',
 
     # documents
     url(r'^', include('documents.urls')),
+
+    # admin
+    url(r'^admin/', include(admin.site.urls)),
 
 )
