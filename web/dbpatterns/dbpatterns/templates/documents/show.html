@@ -1,8 +1,19 @@
 {% extends "documents/app.html" %}
+{% load gravatar document_tags %}
 
 {% block body-id %}document-show-view{% endblock %}
 
-{% block tools %}{% endblock %}
+{% block tools %}
+    <div class="profile">
+        <div class="image">
+            <img src="{% gravatar_for_user document.user %}" alt="{{ document.user.username }}">
+        </div>
+        <div class="info">
+            <span>{% document_count_for_user user %} patterns</span>
+            <h4><a href="{% url auth_profile document.user.username %}">{{ document.user.username }}</a></h4>
+        </div>
+    </div>
+{% endblock %}
 {% block nav %}
 
     <ul>

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, FormView, ListView, RedirectView
@@ -10,17 +12,20 @@ from documents.resources import DocumentResource
 
 
 class DocumentMixin(object):
-
+    """
+    The mixin for retrieving Document from MongoDB.
+    """
     def get_document(self):
         resource = DocumentResource()
         return resource.obj_get(request=self.request, pk=self.kwargs.get("slug"))
+
 
 class HomeView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
         resource = DocumentResource()
-        most_rated_documents = resource.obj_sort([("star_count", -1)], limit=10)
+        most_rated_documents = resource.obj_sort([("star_count", -1)], limit=8)
         return {
             "most_rated_documents": most_rated_documents
         }
@@ -89,7 +94,8 @@ class NewDocumentView(FormView):
         resource = DocumentResource()
         self.object_id = resource.get_collection().insert({
             "title": form.cleaned_data.get("title"),
-            "user_id": self.request.user.pk
+            "user_id": self.request.user.pk,
+            "date_created": datetime.now()
         })
         return super(NewDocumentView, self).form_valid(form)
 
@@ -124,7 +130,8 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
             "entities": document.entities,
-            "fork_of": document.pk
+            "fork_of": document.pk,
+            "date_created": datetime.now()
         })
 
         # TODO: use atomic operations for incrementing!

@@ -165,32 +165,62 @@ body {
     }
 
 
-.my-documents ul {
+.documents ul {
     margin-left: 10px;
     padding: 0;
 }
 
-.my-documents ul li {
-    list-style-type: none;
-    font-size: 18px;
-    padding: 4px 10px;
-    border-left: 8px solid #2485c9;
-    margin-bottom: 10px;
+.documents ul li {
+        list-style-type: none;
+        font-size: 18px;
+        padding: 4px 10px 0 10px;
+        border-left: 8px solid #e9e8f1;
+        margin-bottom: 30px;
 
+    }
+
+    .documents ul li a {
+        text-decoration: none;
+        font-size: 25px;
+        color: #414141;
+    }
+
+
+    .documents .info {
+        padding: 2px 0;
+        margin-left: 0;
+        color: gray;
+    }
+
+    .documents .info a {
+        color: #2485c9;
+        font-size: 20px;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+/* ICONS */
+.icon {
+    display: inline-block;
+    padding-left: 30px;
+    background: url("/static/images/icons.png") no-repeat;
+    color: #2485c9;
 }
 
-.my-documents ul li a {
-    text-decoration: none;
-    font-size: 22px;
-    color: #414141;
+.fork {
+    background-position: 0 -45px;
+}
+
+.star {
+    background-position: 0 -8px;
+    padding-left: 35px;
 }
 
 .document-preview {
     margin: 0 10px 5px 0;
     width: 226px;
     padding: 10px 2px;
-    height: 200px;
-    overflow: hidden;
+
     float: left;
 }
 
@@ -205,6 +235,10 @@ body {
         margin: 0 0 5px;
     }
 
+    .document-preview .entity-list {
+        height: 155px;
+    }
+
     .document-preview .entity-preview {
         float: left;
         margin: 30px 4px 0 20px;
@@ -213,8 +247,10 @@ body {
         background-color: white;
         padding: 0;
         border: 1px solid #dddddd;
-        min-height: 120px;
+        height: 100px;
+        overflow: hidden;
         position: absolute;
+
     }
 
     .document-preview .entity-preview:first-of-type {
@@ -222,8 +258,12 @@ body {
         margin-left: 0;
     }
 
-    .document-preview .entity-preview:nth-child(4) {
-        margin-top: 55px;
+    .document-preview .entity-preview:nth-child(2) {
+        margin-top: 20px;
+    }
+
+    .document-preview .entity-preview:nth-child(3) {
+        margin-top: 45px;
         margin-left: 40px;
     }
 
@@ -235,8 +275,59 @@ body {
 
     .document-preview .entity-preview .name {
         font-weight: bold;
+        overflow: hidden;
+
     }
 
+/* PROFILES */
+
+.profile {
+    width: 300px;
+    bottom: 15px;
+    position: fixed;
+    z-index: 2;
+    height: 110px;
+}
+
+    .profile .image {
+        padding: 10px;
+        background-color: #2894df;
+        float: left;
+    }
+
+    .profile .image img {
+        border: 1px solid #195c8a;
+    }
+
+    .profile .info {
+        float: left;
+        margin: 32px 0 0;
+    }
+
+    .profile .info span {
+        display: inline-block;
+        padding-left: 5px;
+        font-size: 20px;
+        color: #4d4d4d;
+    }
+
+    .profile h4 {
+        margin: 0;
+        padding: 5px 20px 5px 0;
+        background-color: #2894df;
+        font-size: 24px;
+        font-weight: normal;
+        text-align: center;
+    }
+
+    .profile h4 a {
+        text-decoration: none;
+        color: white;
+    }
+
+#profile-detail .fork {
+    margin-left: -13px;
+}
 
 /*
 * ENTITIES

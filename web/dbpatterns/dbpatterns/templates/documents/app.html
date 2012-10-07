@@ -4,14 +4,14 @@
 
     <article id="document">
         <header role="banner" id="banner">
-            <nav class="tools">
-                {% block tools %}
+            {% block tools %}
+                <nav class="tools">
                     <ul>
                         <li><a href="#" class="new-entity">New entity</a></li>
                         <li><a href="#" class="save-document">Save</a></li>
                     </ul>
-                {% endblock %}
-            </nav>
+                </nav>
+            {% endblock %}
             <h1 class="edit-title">test</h1>
             <nav class="leave">
                 {% block nav %}
@@ -83,6 +83,9 @@
 {% endblock %}
 
 
+{% endblock %}
+
+
 {% block scripts %}
 
     {{ block.super }}
@@ -125,5 +128,4 @@
 
         });
     </script>
-{% endblock %}
 {% endblock %}

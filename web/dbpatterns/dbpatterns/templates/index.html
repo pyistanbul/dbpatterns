@@ -15,6 +15,7 @@
         {% for document in most_rated_documents %}
         <div class="document-preview">
             <h4><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></h4>
+            <div class="entity-list">
             {% for entity in document.entities|slice:":3" %}
             <ul class="entity-preview">
                 <li class="name">{{ entity.name }}</li>
@@ -23,6 +24,10 @@
                 {% endfor %}
             </ul>
             {% endfor %}
+            </div>
+            <span class="icon fork">{{ document.get_fork_count }} fork</span>
+            <span class="icon star">{{ document.star_count }} star</span>
+
         </div>
         {% endfor %}
 

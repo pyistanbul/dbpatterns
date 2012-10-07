@@ -37,6 +37,9 @@ class Document(dict):
     def get_stars(self):
         return self.stars or []
 
+    def get_fork_count(self):
+        return self.fork_count or 0
+
     @property
     def star_count(self):
         return len(self.get_stars())

@@ -10,7 +10,7 @@ class DocumentResource(MongoDBResource):
     id = fields.CharField(attribute="_id")
     title = fields.CharField(attribute="title", null=True)
     entities = fields.ListField(attribute="entities", null=True)
-    user_id = fields.CharField(attribute="user_id", readonly=True, null=True)
+    user_id = fields.IntegerField(attribute="user_id", readonly=True, null=True)
 
     class Meta:
         resource_name = "documents"
