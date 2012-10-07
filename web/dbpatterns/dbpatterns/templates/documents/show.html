@@ -19,6 +19,7 @@
     <ul>
         {% ifequal user document.user %}
         <li><a href="{% url my_documents %}">Back to list</a></li>
+        <li><a href="{% url edit_document document.pk %}">Edit</a></li>
         {% else %}
         <li><a href="{% url fork_document document.pk %}">Fork</a></li>
         {% endifequal %}

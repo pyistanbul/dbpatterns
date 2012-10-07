@@ -1,4 +1,7 @@
+from tastypie import http
 from tastypie import fields
+from tastypie.exceptions import ImmediateHttpResponse
+
 from api.auth import DocumentsAuthorization
 from api.resources import MongoDBResource
 
@@ -24,9 +27,12 @@ class DocumentResource(MongoDBResource):
         return map(Document, self.get_collection().find().sort(orderings).limit(limit))
 
     def obj_create(self, bundle, request=None, **kwargs):
-        """
-        Creates mongodb document from POST data.
-        """
         return super(DocumentResource, self).obj_create(bundle,
             user_id=request.user.pk)
 
+    def obj_update(self, bundle, request=None, **kwargs):
+
+        if self.obj_get(pk=kwargs.get("pk")).user_id != request.user.pk:
+            raise ImmediateHttpResponse(response=http.HttpUnauthorized())
+
+        return super(DocumentResource, self).obj_update(bundle, request, **kwargs)

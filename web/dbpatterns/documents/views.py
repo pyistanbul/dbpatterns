@@ -78,6 +78,12 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
     def redirect(self):
         return HttpResponseRedirect(reverse("show_document", kwargs=self.kwargs))
 
+    def get_context_data(self, **kwargs):
+        context = super(DocumentEditView, self).get_context_data(**kwargs)
+        context["edit"] = True
+        return context
+
+
 
 class NewDocumentView(LoginRequiredMixin, FormView):
     form_class = DocumentForm

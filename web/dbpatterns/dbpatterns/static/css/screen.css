@@ -385,13 +385,17 @@ article#document {
         height: 28px;
     }
 
-    .entity .attributes .attribute a.edit {
+    .entity .attributes .attribute a.name {
         padding: 3px 0 3px 10px;
         display: inline-block;
         color: black;
         text-decoration: none;
-        width: 87%;
+        width: 90%;
         float: left;
+    }
+
+    .entity .attributes .attribute a.edit {
+        width: 87%;
     }
 
     .entity .attributes .attribute a.destroy {

@@ -12,7 +12,7 @@
                     </ul>
                 </nav>
             {% endblock %}
-            <h1 class="edit-title">test</h1>
+            <h1 class="{% if edit %}edit-title{% endif %}">test</h1>
             <nav class="leave">
                 {% block nav %}
                     <ul>
@@ -66,12 +66,12 @@
 
         <script type="text/html" id="attribute-list-template">
             <section class="attributes"></section>
-            <a href="#" class="action new-attribute">new attribute</a>
+            {% if edit %}<a href="#" class="action new-attribute">new attribute</a>{% endif %}
         </script>
 
         <script type="text/html" id="attribute-template">
-            <a href="#" class="edit"><%= name %> <span><%= type %></span></a>
-            <a href="#" class="destroy" title="remove attribute">delete</a>
+            <a href="#" class="name {% if edit %}edit{% endif %}"><%= name %> <span><%= type %></span></a>
+            {% if edit %}<a href="#" class="destroy" title="remove attribute">delete</a>{% endif %}
         </script>
 
         <script type="text/html" id="entity-template">
@@ -79,9 +79,11 @@
                 <h3><%= name %></h3>
             </header>
             <section class="attributes"></section>
+
             <footer>
-                <a href="#" class="action destroy">remove entity</a>
+                {% if edit %}<a href="#" class="action destroy">remove entity</a>{% endif %}
             </footer>
+
         </script>
 
         <script type="text/html" id="dialog-template">
@@ -122,16 +124,15 @@
     <script type="text/javascript">
         $(function () {
 
-            window.app = new dbpatterns.models.Document({
+            var document = new dbpatterns.models.Document({
                 "resource_uri": "{{ document.get_resource_uri }}"
             });
 
             new dbpatterns.views.Document({
-                "model": window.app,
-                "entity_collection": (new dbpatterns.collections.Entity())
+                "model": document
             });
 
-            window.app.fetch();
+            document.fetch();
 
 
         });
