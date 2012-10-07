@@ -10,8 +10,8 @@ dbpatterns.views.Attribute = Backbone.View.extend({
     form_template: $("#attribute-form-template").html(),
 
     events: {
-        "click a": "show_attribute_form"
-//        "click em": "destroy"
+        "click a.edit": "show_attribute_form",
+        "click a.destroy": "destroy"
     },
 
     types: ["string", "integer", "boolean", "currency", "date", "time", "datetime"],

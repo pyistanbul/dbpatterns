@@ -84,11 +84,22 @@ body {
     }
 
 
+/* Footer */
+body > footer {
+    background-color: white;
+    padding: 10px;
+    bottom: 0;
+    position: fixed;
+    left: 50%;
+    margin-top: -100px;
+    margin-left: -250px;
+}
+
 
 /* Documents */
-    article#document {
+article#document {
 
-    }
+}
 
     article#document header {
 
@@ -325,9 +336,10 @@ body {
         color: white;
     }
 
-#profile-detail .fork {
-    margin-left: -13px;
-}
+    #profile-detail .fork {
+        margin-left: -13px;
+    }
+
 
 /*
 * ENTITIES
@@ -370,17 +382,37 @@ body {
         margin: 0;
         border-top: 1px solid #eaeaea;
         list-style-type: none;
+        height: 28px;
     }
 
-    .entity .attributes .attribute a {
-        padding: 3px 10px;
-        display: block;
+    .entity .attributes .attribute a.edit {
+        padding: 3px 0 3px 10px;
+        display: inline-block;
         color: black;
         text-decoration: none;
+        width: 87%;
+        float: left;
     }
 
-    .entity .attributes .attribute a:hover {
+    .entity .attributes .attribute a.destroy {
+        float: right;
+        text-indent: -9999px;
+        display: inline-block;
+
+        margin: 11px 5px 0 0;
+        background-color: #cacaca;
+        float: right;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+    }
+
+    .entity .attributes .attribute:hover {
         background-color: #f6f6f6;
+    }
+
+    .entity .attributes .attribute:hover .destroy {
+        background-color: #ba0000;
     }
 
     .entity .attributes .attribute a span {
@@ -389,18 +421,9 @@ body {
         display: inline-block;
     }
 
-    .entity .attributes .attribute a em {
-        background-color: #cacaca;
-        float: right;
-        width: 7px;
-        height: 7px;
-        display: inline-block;
-        margin: 8px -5px 0 5px;
-        border-radius: 50%;
-    }
 
     .entity .attribute-place-holder {
-        height: 27px;
+        height: 29px;
     }
 
     .entity footer {

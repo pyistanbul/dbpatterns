@@ -67,7 +67,8 @@
         </script>
 
         <script type="text/html" id="attribute-template">
-            <a href="#"><%= name %> <em></em> <span><%= type %></span> </a>
+            <a href="#" class="edit"><%= name %> <span><%= type %></span></a>
+            <a href="#" class="destroy" title="remove attribute">delete</a>
         </script>
 
         <script type="text/html" id="entity-template">
@@ -76,7 +77,7 @@
             </header>
             <section class="attributes"></section>
             <footer>
-                <a href="#" class="action destroy">delete entity</a>
+                <a href="#" class="action destroy">remove entity</a>
             </footer>
         </script>
 
