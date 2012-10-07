@@ -45,7 +45,7 @@ dbpatterns.models.Attribute = Backbone.Model.extend({
         var value = _(name.toLowerCase());
         if (value.startsWith("is_")) return "boolean";
         if (value.startsWith("date") || value.endsWith("date")) return "datetime";
-        if (value.endsWith("_id") || value == "id") return "integer";
+        if (value.endsWith("id")) return "integer";
         return "string"
     }
 });
