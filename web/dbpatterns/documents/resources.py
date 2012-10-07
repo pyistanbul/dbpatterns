@@ -32,7 +32,8 @@ class DocumentResource(MongoDBResource):
 
     def obj_update(self, bundle, request=None, **kwargs):
 
-        if self.obj_get(pk=kwargs.get("pk")).user_id != request.user.pk:
+        if request is not None and \
+           self.obj_get(pk=kwargs.get("pk")).user_id != request.user.pk:
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
 
         return super(DocumentResource, self).obj_update(bundle, request, **kwargs)
