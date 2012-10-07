@@ -1,3 +1,4 @@
 .idea
 settings_local.py
 data
+*.pyc
