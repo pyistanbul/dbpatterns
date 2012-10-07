@@ -312,7 +312,7 @@ article#document {
 
     .profile .info {
         float: left;
-        margin: 32px 0 0;
+        margin: 31px 0 0;
     }
 
     .profile .info span {
@@ -351,6 +351,7 @@ article#document {
 
 .entity {
     z-index: 1;
+    font-size: 16px;
 
     background-color: #fff;
     width: 200px;
@@ -470,8 +471,8 @@ article#document {
     top: 50%;
     left: 50%;
     width: 300px;
-    margin-top: -150px;
-    margin-left: -300px;
+    margin-top: -170px;
+    margin-left: -200px;
     z-index: 2;
     border: 6px solid #2894df;
     padding: 10px 30px;
