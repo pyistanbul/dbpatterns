@@ -100,6 +100,11 @@
 
     {{ block.super }}
 
+    <script type="text/javascript">
+        // underscore.string mixin
+        _.mixin(_.string.exports());
+    </script>
+
     <!-- namespaces -->
     <script type="text/javascript">
         var dbpatterns = {

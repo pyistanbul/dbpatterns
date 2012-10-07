@@ -3,10 +3,11 @@ dbpatterns.models.Attribute = Backbone.Model.extend({
     FOREIGN_KEY_SEPARATOR: "_",
 
     defaults: {
-        "type": "string"
+        "order": 0
     },
     initialize: function () {
         this.detect_foreign_key();
+        this.fill_defaults();
         this.on("fk_does_not_exist", this.invoke_foreign_key, this);
         this.on("change:name", this.detect_foreign_key, this);
     },
@@ -34,6 +35,18 @@ dbpatterns.models.Attribute = Backbone.Model.extend({
             "foreign_key_entity": "",
             "foreign_key_attribute": ""
         });
+    },
+    fill_defaults: function () {
+        if (!this.get("type")) {
+            this.set("type", this.get_default_type(this.get("name")))
+        }
+    },
+    get_default_type: function (name) {
+        var value = _(name.toLowerCase());
+        if (value.startsWith("is_")) return "boolean";
+        if (value.startsWith("date")) return "datetime";
+        if (value.endsWith("id")) return "integer";
+        return "string"
     }
 });
 
