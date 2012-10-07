@@ -133,17 +133,19 @@ article#document {
 .content form {
     padding: 30px;
     font-size: 20px;
+
+    margin: auto;
 }
 
     .content form label {
         display: inline-block;
-        width: 230px;
+        width: 150px;
     }
 
     .content form .helptext {
         color: gray;
         display: block;
-        margin-left: 230px;
+        margin-left: 150px;
         padding: 2px 5px;
     }
 
