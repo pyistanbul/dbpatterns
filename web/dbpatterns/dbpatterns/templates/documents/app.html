@@ -58,6 +58,9 @@
                     <label for="is_foreign_key">Foreign key</label>
                 </p>
 
+                <input type="submit" class="anchor save" value="Save" >
+                <input type="button" class="anchor close" value="Close" >
+
             </form>
         </script>
 
@@ -79,6 +82,10 @@
             <footer>
                 <a href="#" class="action destroy">remove entity</a>
             </footer>
+        </script>
+
+        <script type="text/html" id="dialog-template">
+        <h3><%= title %></h3>
         </script>
 
 {% endblock %}

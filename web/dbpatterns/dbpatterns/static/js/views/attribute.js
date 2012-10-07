@@ -124,8 +124,7 @@ dbpatterns.views.Attributes = Backbone.View.extend({
                     });
                 });
                 this.model.sort();
-                this.model.trigger("persist")
-                console.log(this.model.pluck("name"))
+                this.model.trigger("persist");
             }.bind(this)
         });
         return this;

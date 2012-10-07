@@ -458,17 +458,46 @@ article#document {
     }
 
 
-/* Utilities */
 
-.ui-widget {
-    font-size: 13px !important;
+/* UI views */
+.dialog {
+    background-color: #f2fcfe;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    margin-top: -150px;
+    margin-left: -300px;
+    z-index: 2;
+    border: 6px solid #2894df;
+    padding: 10px 30px;
+
+    -webkit-box-shadow: -2px 6px 30px gray;
 }
 
-.hidden {
-    display: none;
-}
+    .dialog h3 {
+        background-color: #2894df;
+        color: white;
+        margin: -10px -30px 20px;
+        padding: 7px 5px;
+    }
+
+    .dialog .anchor {
+        display: inline-block;
+        font-size: 17px;
+        margin-bottom: 10px;
+    }
+
+    .dialog .close {
+        background-color: #a4a4a4;
+    }
+
+
+/* jsPlumb */
 
 ._jsPlumb_overlay {
     z-index: 1;
 }
+
+
 

@@ -44,30 +44,41 @@ dbpatterns.views.EditInPlaceForm = Backbone.View.extend({
 });
 
 
-dbpatterns.views.FormDialog = Backbone.View.extend({
+dbpatterns.views.Dialog = Backbone.View.extend({
     tagName: "div",
     container: "body",
-    options: {
-        "form": null,
-        "model": null,
-        "title": "Dialog",
-        "submit_callback": function () {}
+    className: "dialog",
+    template: $("#dialog-template").html(),
+    render: function () {
+        this.$el.html(_.template(this.template, {
+            title: this.options.title || "Dialog"
+        })).appendTo(this.container);
+        $(this.$el).draggable();
     },
-    initialize: function (options) {
-        $.extend(this.options, options);
+    destroy: function () {
+        this.$el.remove();
+    }
+});
+
+
+dbpatterns.views.FormDialog = dbpatterns.views.Dialog.extend({
+    initialize: function () {
+        dbpatterns.views.Dialog.prototype.initialize.apply(this);
         this.form = $(this.options.form);
         this.form.submit(this.submit.bind(this));
+        this.options.submit_callback = function () {
+            return true;
+        }
+
+    },
+    events: {
+        "click .close": "destroy"
     },
     render: function () {
-        this.$el.appendTo(this.container).append(this.form);
-        this.$el.dialog({
-            modal: true,
-            title: this.options.title,
-            buttons: {
-                OK: this.submit.bind(this)
-            }
-        });
+        dbpatterns.views.Dialog.prototype.render.apply(this);
+        this.$el.append(this.form);
         this.load_data(this.model.toJSON());
+        this.$el.find("input").eq(0).focus();
         return this;
     },
     load_data: function (data) {
@@ -87,9 +98,10 @@ dbpatterns.views.FormDialog = Backbone.View.extend({
     submit: function () {
         this.save_data();
         if (this.options.submit_callback()) {
-            this.$el.dialog("destroy");
+            this.destroy();
             this.form.remove();
         }
+        return false;
     },
     success: function (callback) {
         this.options.submit_callback = callback;

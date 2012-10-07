@@ -25,7 +25,13 @@ class LoginView(FormView):
         return super(LoginView, self).form_valid(form)
 
     def get_success_url(self):
-        return reverse("home")
+        return self.request.GET.get("next") or reverse("home")
+
+    def get_context_data(self, **kwargs):
+        context = super(LoginView, self).get_context_data(**kwargs)
+        context["next"] = self.request.GET.get("next", "")
+        return context
+
 
 class LogoutView(RedirectView):
     def get(self, request, *args, **kwargs):
@@ -34,6 +40,7 @@ class LogoutView(RedirectView):
 
     def get_redirect_url(self, **kwargs):
         return reverse("home")
+
 
 
 class ProfileDetailView(DetailView):

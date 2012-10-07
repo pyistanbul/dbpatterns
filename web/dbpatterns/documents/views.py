@@ -5,19 +5,12 @@ from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView, FormView, ListView, RedirectView
 
 from tastypie.http import HttpNoContent
+from auth.mixins import LoginRequiredMixin
 
 from documents.forms import DocumentForm
+from documents.mixins import DocumentMixin
 from documents.models import Document
 from documents.resources import DocumentResource
-
-
-class DocumentMixin(object):
-    """
-    The mixin for retrieving Document from MongoDB.
-    """
-    def get_document(self):
-        resource = DocumentResource()
-        return resource.obj_get(request=self.request, pk=self.kwargs.get("slug"))
 
 
 class HomeView(TemplateView):
@@ -38,7 +31,7 @@ class DocumentDetailView(DocumentMixin, TemplateView):
             "document": self.get_document()
         }
 
-class StarDocumentView(RedirectView, DocumentMixin):
+class StarDocumentView(LoginRequiredMixin, RedirectView, DocumentMixin):
 
     def post(self, request, *args, **kwargs):
         document = self.get_document()
@@ -62,7 +55,7 @@ class StarDocumentView(RedirectView, DocumentMixin):
         return reverse("show_document", args=[self.kwargs.get("slug")])
 
 
-class DocumentEditView(DocumentDetailView):
+class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
     template_name = "documents/edit.html"
 
     def get(self, request, *args, **kwargs):
@@ -86,7 +79,7 @@ class DocumentEditView(DocumentDetailView):
         return HttpResponseRedirect(reverse("show_document", kwargs=self.kwargs))
 
 
-class NewDocumentView(FormView):
+class NewDocumentView(LoginRequiredMixin, FormView):
     form_class = DocumentForm
     template_name = "documents/new.html"
 
@@ -103,7 +96,7 @@ class NewDocumentView(FormView):
         return reverse("edit_document", args=[self.object_id])
 
 
-class MyDocumentsView(ListView):
+class MyDocumentsView(LoginRequiredMixin, ListView):
 
     template_name = "documents/list.html"
     context_object_name = "documents"

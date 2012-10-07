@@ -9,7 +9,7 @@
             <img src="{% gravatar_for_user document.user %}" alt="{{ document.user.username }}">
         </div>
         <div class="info">
-            <span>{% document_count_for_user user %} patterns</span>
+            <span>{% document_count_for_user document.user %} patterns</span>
             <h4><a href="{% url auth_profile document.user.username %}">{{ document.user.username }}</a></h4>
         </div>
     </div>

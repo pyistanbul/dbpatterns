@@ -6,7 +6,7 @@
     <section class="content">
         <h2>Login</h2>
 
-        <form action="{% url auth_login %}" method="post">
+        <form action="{% url auth_login %}?next={{ next }}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Login">

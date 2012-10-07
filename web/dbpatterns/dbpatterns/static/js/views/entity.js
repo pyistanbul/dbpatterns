@@ -44,7 +44,6 @@ dbpatterns.views.Entity = Backbone.View.extend({
     },
 
     on_drag: function (event, ui) {
-        console.log(arguments)
         this.model.set({
             "position": {
                 "top": ui.position.top,
