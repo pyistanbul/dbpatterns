@@ -1,1 +1,24 @@
-{% extends "base.html" %}
+{% extends "documents/app.html" %}
+
+{% block body-id %}document-show-view{% endblock %}
+
+{% block tools %}{% endblock %}
+{% block nav %}
+
+    <ul>
+        {% ifequal user document.user %}
+        <li><a href="{% url my_documents %}">Back to list</a></li>
+        {% else %}
+        <li><a href="{% url fork_document document.pk %}">Fork</a></li>
+        {% endifequal %}
+        <li><form action="{% url star_document document.pk %}" method="post">
+            {% csrf_token %}
+            {% if user.pk in document.stars %}
+            <input type="submit" class="anchor" value="Unstar ({{ document.star_count }})">
+            {% else %}
+            <input type="submit" class="anchor" value="Star ({{ document.star_count }})">
+            {% endif %}
+        </form></li>
+    </ul>
+
+{% endblock %}

@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <section class="landing">
+    <section class="content landing">
         <p>
             Dbpatterns is a service that allows you to create, share, explore
             database models on the web. And also you can <cite>fork</cite> already created database
@@ -9,140 +9,25 @@
         </p>
     </section>
 
-    <section class="latest">
+    <section class="content latest">
     <h2>Most rated patterns</h2>
 
+        {% for document in most_rated_documents %}
         <div class="document-preview">
-            <h4>Friendship modelling</h4>
+            <h4><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></h4>
+            {% for entity in document.entities|slice:":3" %}
             <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
+                <li class="name">{{ entity.name }}</li>
+                {% for attribute in entity.attributes|slice:":5" %}
+                <li>{{ attribute.name }}</li>
+                {% endfor %}
             </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
+            {% endfor %}
         </div>
-        <div class="document-preview">
-            <h4>Friendship modelling</h4>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-        </div>
-        <div class="document-preview">
-            <h4>Friendship modelling</h4>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-        </div>
-        <div class="document-preview">
-            <h4>Friendship modelling</h4>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-        </div>
-        <div class="document-preview">
-            <h4>Friendship modelling</h4>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-        </div>
-        <div class="document-preview">
-            <h4>Friendship modelling</h4>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-            <ul class="entity-preview">
-                <li class="name">users</li>
-                <li>id</li>
-                <li>first_name</li>
-                <li>last_name</li>
-            </ul>
-        </div>
+        {% endfor %}
+
 
     </section>
 
-    <footer>
-    selam
-    </footer>
 
 {% endblock %}

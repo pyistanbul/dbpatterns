@@ -1,3 +1,10 @@
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+    Tastypie MongoDB Resource
+    https://github.com/fatiherikli/tastypie-mongodb-resource
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 from bson import ObjectId
 from pymongo import Connection
 
@@ -23,6 +30,9 @@ class MongoDBResource(Resource):
     """
     A base resource that allows to make CRUD operations for mongodb.
     """
+    def get_object_class(self):
+        return self._meta.object_class
+
     def get_collection(self):
         """
         Encapsulates collection name.
@@ -36,13 +46,13 @@ class MongoDBResource(Resource):
         """
         Maps mongodb documents to Document class.
         """
-        return map(Document, self.get_collection().find())
+        return map(self.get_object_class(), self.get_collection().find())
 
     def obj_get(self, request=None, **kwargs):
         """
         Returns mongodb document from provided id.
         """
-        return Document(self.get_collection().find_one({
+        return self.get_object_class()(self.get_collection().find_one({
             "_id": ObjectId(kwargs.get("pk"))
         }))
 
@@ -70,6 +80,13 @@ class MongoDBResource(Resource):
         Removes all documents from collection
         """
         self.get_collection().remove()
+
+    def obj_delete(self, request=None, **kwargs):
+        """
+        Removes single document from collection
+        """
+        parameters = { "_id": ObjectId(kwargs.get("pk")) }
+        db.documents.remove(parameters)
 
     def get_resource_uri(self, item):
         """

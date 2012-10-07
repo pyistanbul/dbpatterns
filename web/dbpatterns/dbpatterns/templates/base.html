@@ -5,10 +5,10 @@
     <link rel="stylesheet" href="{{ STATIC_URL }}css/h5bp.css" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css" />
 </head>
-<body>
+<body id="{% block body-id%}dbpatterns{% endblock %}">
 
 {% block header %}
-    <header>
+    <header id="banner">
         <h1><a href="{% url home %}">db<span>patterns</span></a></h1>
         <nav>
             {% if user.is_anonymous %}
@@ -19,7 +19,7 @@
             </ul>
             {% else %}
             <ul>
-                <li><a href="{% url auth_logout %}">Logout</a></li>
+                <li><a href="{% url auth_logout %}">Logout ({{ user.username }})</a></li>
                 <li><a href="{% url my_documents %}">My Patterns</a></li>
                 <li><a href="{% url new_document %}">New Pattern</a></li>
             </ul>
@@ -30,6 +30,20 @@
 
 {% block content %}
 
+{% endblock %}
+
+{% block scripts %}
+    <!-- libs -->
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery-min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery-ui-min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.form2json.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.jsplumb.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/keymaster/keymaster.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/underscore/underscore.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/backbone/backbone.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/backbone/backbone.shortcuts.js"></script>
+
+    <link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.23/themes/base/jquery-ui.css" />
 {% endblock %}
 
 </body>

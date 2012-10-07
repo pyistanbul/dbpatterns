@@ -1,12 +1,42 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <section class="my-documents">
+    <section class="my-documents content">
     <h2>My Documents</h2>
-    <ul>
+    <ul>{% csrf_token %}
         {% for document in documents %}
-            <li><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></li>
+            <li>
+                <a href="{{ document.get_edit_url }}">{{ document.title }}</a>
+                <a href="{{ document.get_edit_url }}" data-method="delete">Delete</a>
+            </li>
+        {% empty %}
+            <li>You haven't got a created document.
+                <a href="{% url new_document %}">Click here for new document.</a>
+            </li>
         {% endfor %}
     </ul>
     </section>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+    $(function () {
+        // simulates http DELETE method.
+        $("a[data-method]").each(function () {
+            $(this).click(function () {
+                $.ajax({
+                    url: $(this).attr("href"),
+                    type: $(this).data("method"),
+                    beforeSend: function(xhr, settings) {
+                        xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                    }
+                }).complete(function () {
+                    $(this).parents("li").hide();
+                }.bind(this));
+                return false;
+            });
+        });
+    });
+    </script>
 {% endblock %}

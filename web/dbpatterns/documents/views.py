@@ -1,32 +1,95 @@
 from django.core.urlresolvers import reverse
-from django.views.generic import TemplateView, FormView, ListView
+from django.http import HttpResponseRedirect
+from django.views.generic import TemplateView, FormView, ListView, RedirectView
+
+from tastypie.http import HttpNoContent
+
 from documents.forms import DocumentForm
 from documents.models import Document
 from documents.resources import DocumentResource
-from documents.utils import reverse_tastypie_url
 
+
+class DocumentMixin(object):
+
+    def get_document(self):
+        resource = DocumentResource()
+        return resource.obj_get(request=self.request, pk=self.kwargs.get("slug"))
 
 class HomeView(TemplateView):
     template_name = "index.html"
 
-class DocumentDetailView(TemplateView):
+    def get_context_data(self, **kwargs):
+        resource = DocumentResource()
+        most_rated_documents = resource.obj_sort([("star_count", -1)], limit=10)
+        return {
+            "most_rated_documents": most_rated_documents
+        }
+
+class DocumentDetailView(DocumentMixin, TemplateView):
     template_name = "documents/show.html"
 
     def get_context_data(self, **kwargs):
         return {
-            "document_uri": reverse_tastypie_url("documents", kwargs.get("slug"))
+            "document": self.get_document()
         }
+
+class StarDocumentView(RedirectView, DocumentMixin):
+
+    def post(self, request, *args, **kwargs):
+        document = self.get_document()
+
+        stars = document.get_stars()
+
+        if request.user.pk in stars:
+            stars.remove(request.user.pk)
+        else:
+            stars.append(request.user.pk)
+
+        resource = DocumentResource()
+        resource.obj_update(bundle=resource.build_bundle(data={
+            "stars": stars,
+            "star_count": len(stars)
+        }), pk=document.pk)
+
+        return super(StarDocumentView, self).post(request, *args, **kwargs)
+
+    def get_redirect_url(self, **kwargs):
+        return reverse("show_document", args=[self.kwargs.get("slug")])
+
+
+class DocumentEditView(DocumentDetailView):
+    template_name = "documents/edit.html"
+
+    def get(self, request, *args, **kwargs):
+        if not self.is_authorized():
+            return self.redirect()
+
+        return super(DocumentEditView, self).get(request, *args, **kwargs)
+
+    def delete(self, *args, **kwargs):
+        if not self.is_authorized():
+            return self.redirect()
+
+        resource = DocumentResource()
+        resource.obj_delete(pk=self.kwargs.get("slug"))
+        return HttpNoContent()
+
+    def is_authorized(self):
+        return self.get_document().get_user() == self.request.user
+
+    def redirect(self):
+        return HttpResponseRedirect(reverse("show_document", kwargs=self.kwargs))
 
 
 class NewDocumentView(FormView):
     form_class = DocumentForm
     template_name = "documents/new.html"
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
         resource = DocumentResource()
         self.object_id = resource.get_collection().insert({
             "title": form.cleaned_data.get("title"),
-            "user_id": form
+            "user_id": self.request.user.pk
         })
         return super(NewDocumentView, self).form_valid(form)
 
@@ -43,3 +106,35 @@ class MyDocumentsView(ListView):
         resource = DocumentResource()
         collection = resource.get_collection().find({"user_id": self.request.user.pk})
         return map(Document, collection)
+
+
+class ForkDocumentView(DocumentMixin, NewDocumentView):
+    form_class = DocumentForm
+    template_name = "documents/fork.html"
+
+    def get_initial(self):
+        return {
+            "title": self.get_document().title
+        }
+
+    def form_valid(self, form, **kwargs):
+        resource = DocumentResource()
+        document = self.get_document()
+        self.object_id = resource.get_collection().insert({
+            "title": form.cleaned_data.get("title"),
+            "user_id": self.request.user.pk,
+            "entities": document.entities,
+            "fork_of": document.pk
+        })
+
+        # TODO: use atomic operations for incrementing!
+        resource.obj_update(bundle=resource.build_bundle(data={
+            "fork_count": (document.fork_count or 0) + 1
+        }), pk=document.pk)
+
+        return super(NewDocumentView, self).form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        data = super(ForkDocumentView, self).get_context_data(**kwargs)
+        data["document_id"] = self.get_document()._id
+        return data
