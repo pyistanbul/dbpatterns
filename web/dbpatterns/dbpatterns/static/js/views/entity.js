@@ -71,8 +71,12 @@ dbpatterns.views.Entity = Backbone.View.extend({
             "name": name
         });
         this.model.save();
-    }
+    },
 
+    focus: function () {
+        this.$el.find(".new-attribute").focus();
+        return this;
+    }
 
 });
 
@@ -91,7 +95,13 @@ dbpatterns.views.Entities = Backbone.View.extend({
         "left": 300
     },
 
+    shortcuts: {
+        "option+n": "new_entity"
+    },
+
     initialize: function () {
+        _.extend(this, new Backbone.Shortcuts);
+        this.delegateShortcuts();
         this.model.bind("reset", this.render_entities, this);
         this.model.bind("add", this.add_entity, this);
     },
@@ -108,6 +118,7 @@ dbpatterns.views.Entities = Backbone.View.extend({
             app_view: this.options.app_view
         });
         this.$el.find("#entities").append(entity_view.render().el);
+        entity_view.focus();
     },
 
     new_entity: function () {

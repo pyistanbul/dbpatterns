@@ -7,12 +7,19 @@ dbpatterns.views.Document = Backbone.View.extend({
         "click .save-document": "save_document"
     },
 
+    shortcuts: {
+        "option+r": "rename",
+        "option+s": "save_document"
+    },
+
     initialize: function () {
+        _.extend(this, new Backbone.Shortcuts);
+        this.delegateShortcuts();
         this.model.bind("change:title", this.render_title, this);
         this.entities_view = new dbpatterns.views.Entities({
             model: this.model.entities,
             app_view: this
-        })
+        });
     },
 
     render_title: function () {
