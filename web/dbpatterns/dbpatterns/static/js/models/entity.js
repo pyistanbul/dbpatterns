@@ -25,6 +25,7 @@ dbpatterns.models.Entity = Backbone.Model.extend({
 
     destroy: function () {
         this.collection.remove(this);
+        Backbone.Model.prototype.destroy.call(this);
     }
 
 

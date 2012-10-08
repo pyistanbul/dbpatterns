@@ -33,6 +33,7 @@ dbpatterns.views.Attribute = Backbone.View.extend({
 
     initialize: function () {
         this.model.bind("change", this.render, this);
+        this.model.bind("destroy", this.detach, this);
         this.model.bind("change connect", this.render_connection, this);
     },
 
@@ -89,12 +90,15 @@ dbpatterns.views.Attribute = Backbone.View.extend({
 
     },
 
+    detach: function () {
+        this.$el.remove();
+    },
+
     destroy: function () {
         if (this.connection) {
             this.connection.destroy();
         }
         this.model.destroy();
-        this.$el.remove();
     }
 });
 

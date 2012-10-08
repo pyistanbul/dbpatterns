@@ -14,6 +14,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
 
     initialize: function () {
         this.model.on("change:name", this.render_name, this);
+        this.model.on("destroy", this.detach, this);
     },
 
     render: function () {
@@ -43,6 +44,13 @@ dbpatterns.views.Entity = Backbone.View.extend({
         return this;
     },
 
+    detach: function () {
+        this.$el.fadeOut("fast", function () {
+            $(this).remove();
+        });
+        return this;
+    },
+
     on_drag: function (event, ui) {
         this.model.set({
             "position": {
@@ -55,9 +63,6 @@ dbpatterns.views.Entity = Backbone.View.extend({
 
     destroy: function () {
         this.model.destroy();
-        this.$el.fadeOut("fast", function () {
-            $(this).remove();
-        })
     },
 
     render_name: function () {

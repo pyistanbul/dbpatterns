@@ -13,6 +13,7 @@ dbpatterns.models.Attribute = Backbone.Model.extend({
     },
     destroy: function () {
         this.collection.remove(this);
+        Backbone.Model.prototype.destroy.call(this);
     },
     save: function () {
         this.collection.trigger("persist");
