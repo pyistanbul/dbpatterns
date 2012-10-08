@@ -49,6 +49,13 @@ dbpatterns.views.Dialog = Backbone.View.extend({
     container: "body",
     className: "dialog",
     template: $("#dialog-template").html(),
+    shortcuts: {
+        'esc': 'destroy'
+    },
+    initialize: function () {
+        _.extend(this, new Backbone.Shortcuts);
+        this.delegateShortcuts();
+    },
     render: function () {
         this.$el.html(_.template(this.template, {
             title: this.options.title || "Dialog"
