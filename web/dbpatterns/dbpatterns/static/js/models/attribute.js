@@ -11,10 +11,6 @@ dbpatterns.models.Attribute = Backbone.Model.extend({
         this.on("fk_does_not_exist", this.invoke_foreign_key, this);
         this.on("change:name", this.detect_foreign_key, this);
     },
-    destroy: function () {
-        this.collection.remove(this);
-        Backbone.Model.prototype.destroy.call(this);
-    },
     save: function () {
         this.collection.trigger("persist");
     },

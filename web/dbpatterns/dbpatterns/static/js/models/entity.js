@@ -21,13 +21,7 @@ dbpatterns.models.Entity = Backbone.Model.extend({
 
     save: function () {
         this.trigger("persist")
-    },
-
-    destroy: function () {
-        this.collection.remove(this);
-        Backbone.Model.prototype.destroy.call(this);
     }
-
 
 });
 
