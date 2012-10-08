@@ -33,7 +33,7 @@
 
     {% block app %}
         <script type="text/html" id="attribute-form-template">
-            <form action="#">
+            <form action="#" class="attribute-form">
                 <p>
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name">
@@ -57,6 +57,17 @@
                     <input type="checkbox" name="is_foreign_key" value="true" id="is_foreign_key">
                     <label for="is_foreign_key">Foreign key</label>
                 </p>
+
+                <p class="foreign-key-details">
+                    <label for="name">Entity</label>
+                    <input type="text" name="foreign_key_entity" id="foreign_key_entity">
+                </p>
+
+                <p class="foreign-key-details">
+                    <label for="name">Attribute</label>
+                    <input type="text" name="foreign_key_attribute" id="foreign_key_attribute">
+                </p>
+
 
                 <input type="submit" class="anchor save" value="Save" >
                 <input type="button" class="anchor close" value="Close" >
@@ -115,12 +126,12 @@
     </script>
 
     <!-- application -->
+    <script src="{{ STATIC_URL }}js/views/ui.js"></script>
     <script src="{{ STATIC_URL }}js/models/document.js"></script>
     <script src="{{ STATIC_URL }}js/models/entity.js"></script>
     <script src="{{ STATIC_URL }}js/views/document.js"></script>
     <script src="{{ STATIC_URL }}js/views/entity.js"></script>
     <script src="{{ STATIC_URL }}js/views/attribute.js"></script>
-    <script src="{{ STATIC_URL }}js/views/ui.js"></script>
     <script src="{{ STATIC_URL }}js/views/connection.js"></script>
     <script src="{{ STATIC_URL }}js/models/attribute.js"></script>
     <script src="{{ STATIC_URL }}js/utils/tastypie.js"></script>

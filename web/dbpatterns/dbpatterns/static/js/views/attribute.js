@@ -1,5 +1,20 @@
-
-
+dbpatterns.views.AttributeFormDialog = dbpatterns.views.FormDialog.extend({
+    events: function () {
+        return $.extend({
+            "click #is_foreign_key": "toggle_foreign_key"
+        }, dbpatterns.views.FormDialog.prototype.events)
+    },
+    toggle_foreign_key: function () {
+        this.$el.find(".foreign-key-details").toggle();
+    },
+    render: function () {
+        dbpatterns.views.FormDialog.prototype.render.apply(this);
+        if (this.model.get("is_foreign_key")) {
+            this.toggle_foreign_key();
+        }
+        return this;
+    }
+});
 
 dbpatterns.views.Attribute = Backbone.View.extend({
 
@@ -22,14 +37,14 @@ dbpatterns.views.Attribute = Backbone.View.extend({
     },
 
     show_attribute_form: function () {
-        var dialog = (new dbpatterns.views.FormDialog({
+        var dialog = (new dbpatterns.views.AttributeFormDialog({
             "form": _.template(this.form_template, this),
-            "title": "Attribute",
             "model": this.model,
-            "attach_to": this.$el.parents(".entity")
+            "title": "Attribute"
         })).success(function () {
             return true;
         }).render();
+
         return this;
     },
 

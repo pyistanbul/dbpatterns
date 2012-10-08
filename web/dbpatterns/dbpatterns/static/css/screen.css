@@ -433,6 +433,10 @@ article#document {
         height: 29px;
     }
 
+    .attribute-form .foreign-key-details {
+        display: none;
+    }
+
     .entity footer {
 
     }
