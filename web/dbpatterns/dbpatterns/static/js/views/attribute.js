@@ -91,13 +91,13 @@ dbpatterns.views.Attribute = Backbone.View.extend({
     },
 
     detach: function () {
+        if (this.connection) {
+            this.connection.destroy();
+        }
         this.$el.remove();
     },
 
     destroy: function () {
-        if (this.connection) {
-            this.connection.destroy();
-        }
         this.model.destroy();
     }
 });
