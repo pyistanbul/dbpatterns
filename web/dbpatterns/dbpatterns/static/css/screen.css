@@ -503,6 +503,16 @@ article#document {
         background-color: #a4a4a4;
     }
 
+    .dialog label {
+        display: inline-block;
+        width: 65px;
+    }
+
+    .dialog input + label {
+        width: auto;
+        margin-left: 5px;
+    }
+
 
 /* jsPlumb */
 
