@@ -84,6 +84,8 @@ dbpatterns.views.Entity = Backbone.View.extend({
 
 dbpatterns.views.Entities = Backbone.View.extend({
 
+    POSITION_TOP_INCREASE: 50,
+    POSITION_LEFT_INCREASE: 50,
 
     el: "article#document",
 
@@ -91,10 +93,6 @@ dbpatterns.views.Entities = Backbone.View.extend({
         "click .new-entity": "new_entity"
     },
 
-    DEFAULT_ENTITY_POSITION: {
-        "top": 20,
-        "left": 300
-    },
 
     shortcuts: {
         "option+n": "new_entity"
@@ -131,10 +129,24 @@ dbpatterns.views.Entities = Backbone.View.extend({
 
         var entity = new dbpatterns.models.Entity({
             name: entity_name,
-            position: this.DEFAULT_ENTITY_POSITION
+            position: this.get_entity_position()
         });
         this.model.add(entity);
-    }
+    },
 
+    get_entity_position: function () {
+        var previous = dbpatterns.views.Entities.prototype._default_position;
+        var position = {
+            "top": previous.top + this.POSITION_TOP_INCREASE,
+            "left": previous.left + this.POSITION_LEFT_INCREASE
+        };
+        dbpatterns.views.Entities.prototype._default_position = position;
+        return position;
+    },
+
+    _default_position: {
+        "top": 20,
+        "left": 100
+    }
 
 });
