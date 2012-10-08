@@ -135,18 +135,18 @@ dbpatterns.views.Entities = Backbone.View.extend({
     },
 
     get_entity_position: function () {
-        var previous = dbpatterns.views.Entities.prototype._default_position;
+        var previous = dbpatterns.views.Entities.prototype._previous_position;
         var position = {
             "top": previous.top + this.POSITION_TOP_INCREASE,
             "left": previous.left + this.POSITION_LEFT_INCREASE
         };
-        dbpatterns.views.Entities.prototype._default_position = position;
+        dbpatterns.views.Entities.prototype._previous_position = position;
         return position;
     },
 
-    _default_position: {
-        "top": 20,
-        "left": 100
+    _previous_position: {
+        "top": 0,
+        "left": 0
     }
 
 });
