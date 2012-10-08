@@ -521,7 +521,7 @@ article#document {
     bottom: 20px;
     right: 20px;
     width: 400px;
-
+    z-index: 1;
 }
 
     #help #help-content {
