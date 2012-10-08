@@ -42,9 +42,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
     },
 
     detach: function () {
-        this.$el.fadeOut("fast", function () {
-            $(this).remove();
-        });
+        this.remove();
         return this;
     },
 
