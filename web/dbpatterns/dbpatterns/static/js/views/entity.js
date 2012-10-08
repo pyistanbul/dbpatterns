@@ -1,6 +1,3 @@
-
-
-
 dbpatterns.views.Entity = Backbone.View.extend({
 
     tagName: "div",
@@ -8,7 +5,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
     template: $("#entity-template").html(),
 
     events: {
-        "click .destroy": "destroy",
+        "click .remove-entity": "destroy",
         "dblclick h3": "rename"
     },
 
@@ -62,6 +59,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
     },
 
     destroy: function () {
+        this.model.entity_attributes.trigger("detach");
         this.model.destroy();
     },
 

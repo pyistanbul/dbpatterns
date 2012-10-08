@@ -26,7 +26,7 @@ dbpatterns.views.Attribute = Backbone.View.extend({
 
     events: {
         "click a.edit": "show_attribute_form",
-        "click a.destroy": "destroy"
+        "click a.remove-attribute": "destroy"
     },
 
     types: ["string", "integer", "boolean", "currency", "date", "time", "datetime"],
@@ -35,6 +35,7 @@ dbpatterns.views.Attribute = Backbone.View.extend({
         this.model.bind("change", this.render, this);
         this.model.bind("destroy", this.detach, this);
         this.model.bind("change connect", this.render_connection, this);
+        this.model.collection.on("detach", this.detach, this);
     },
 
     show_attribute_form: function () {

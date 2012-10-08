@@ -401,7 +401,7 @@ article#document {
         width: 87%;
     }
 
-    .entity .attributes .attribute a.destroy {
+    .entity .attributes .attribute a.remove-attribute {
         float: right;
         text-indent: -9999px;
         display: inline-block;
@@ -418,7 +418,7 @@ article#document {
         background-color: #f6f6f6;
     }
 
-    .entity .attributes .attribute:hover .destroy {
+    .entity .attributes .attribute:hover .remove-attribute {
         background-color: #ba0000;
     }
 
