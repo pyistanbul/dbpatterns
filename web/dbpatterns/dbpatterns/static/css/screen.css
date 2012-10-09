@@ -558,7 +558,7 @@ article#document {
     top: -1px;
     left: 50%;
     margin-left: -200px;
-    /*background-color: red;*/
+    z-index: 2;
 }
 
 #notifications .notification {
