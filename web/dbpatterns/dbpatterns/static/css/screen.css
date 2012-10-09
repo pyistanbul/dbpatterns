@@ -107,11 +107,11 @@ article#document {
         font-size: 40px;
         margin-top: 14px;
         color: #707070;
-        margin-left: 10px;
+        margin-left: 20px;
     }
 
     #document-edit-view header, #document-show-view header  {
-        width: 97% !important;
+        width: 100% !important;
     }
 
     article#document nav.tools {
@@ -123,6 +123,7 @@ article#document {
 
     article#document nav.leave {
         float: right;
+        margin-right: 20px;
     }
 
 
