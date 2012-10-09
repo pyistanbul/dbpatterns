@@ -1,5 +1,10 @@
 dbpatterns.views.Document = Backbone.View.extend({
 
+    messages: {
+        save: "The document was saved successfully",
+        rename: "The document was renamed successfully."
+    },
+
     el: "article#document",
 
     events: {
@@ -15,7 +20,11 @@ dbpatterns.views.Document = Backbone.View.extend({
     initialize: function () {
         _.extend(this, new Backbone.Shortcuts);
         this.delegateShortcuts();
+
+        // bindings
         this.model.bind("change:title", this.render_title, this);
+
+        // sub views
         this.entities_view = new dbpatterns.views.Entities({
             model: this.model.entities,
             app_view: this
@@ -37,11 +46,15 @@ dbpatterns.views.Document = Backbone.View.extend({
         }
 
         this.model.set("title", title);
+        dbpatterns.notifications.trigger("flash", this.messages.rename);
         return this;
     },
 
     save_document: function () {
-        this.model.save();
+
+        this.model.save().success(function () {
+            dbpatterns.notifications.trigger("flash", this.messages.save);
+        }.bind(this));
     }
 
 });

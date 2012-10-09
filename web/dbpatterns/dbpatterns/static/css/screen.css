@@ -553,6 +553,26 @@ article#document {
         float: right;
     }
 
+
+/* Notifications */
+
+#notifications {
+    position: fixed;
+    width: 400px;
+    top: -1px;
+    left: 50%;
+    margin-left: -200px;
+    /*background-color: red;*/
+}
+
+#notifications .notification {
+    border-top: 1px solid #d9e8ff;
+    background-color: #d7ffff;
+    padding: 10px;
+    text-align: center;
+}
+
+
 /* jsPlumb */
 
 ._jsPlumb_overlay {
