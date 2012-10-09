@@ -52,7 +52,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
             var source = connection.source,
                 target = connection.target;
             if (target.is(this.$el)) {
-                jsPlumb.detach(connection);
+                jsPlumb.removeAllEndpoints(target);
             }
         }.bind(this));
     },
