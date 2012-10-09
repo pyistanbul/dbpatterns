@@ -23,7 +23,6 @@ dbpatterns.views.Entity = Backbone.View.extend({
         });
 
         jsPlumb.draggable($(this.el), {
-            containment: "#entities",
             "handle": "h3",
             "stop": this.on_drag.bind(this)
         });
@@ -107,7 +106,6 @@ dbpatterns.views.Entities = Backbone.View.extend({
 
     render_entities: function (entities) {
         _.forEach(entities.models, this.add_entity, this);
-        this.$el.find("#entities").height($(window).height() - $("header[role='banner']").height());
         this.options.app_view.trigger("load");
     },
 
