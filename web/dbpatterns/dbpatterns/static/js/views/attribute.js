@@ -95,6 +95,7 @@ dbpatterns.views.Attribute = Backbone.View.extend({
         if (this.connection) {
             this.connection.destroy();
         }
+
         this.$el.remove();
     },
 

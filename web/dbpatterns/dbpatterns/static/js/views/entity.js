@@ -41,8 +41,20 @@ dbpatterns.views.Entity = Backbone.View.extend({
     },
 
     detach: function () {
+        this.remove_reverse_relationships();
         this.remove();
         return this;
+    },
+
+    remove_reverse_relationships: function () {
+        // checks reverse relationships for jsPlump
+        _.each(jsPlumb.getConnections(), function (connection) {
+            var source = connection.source,
+                target = connection.target;
+            if (target.is(this.$el)) {
+                jsPlumb.detach(connection);
+            }
+        }.bind(this));
     },
 
     on_drag: function (event, ui) {
