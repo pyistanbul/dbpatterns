@@ -555,26 +555,32 @@ article#document {
 
 #notifications {
     position: fixed;
-    width: 400px;
+    width: 500px;
     top: -1px;
     left: 50%;
     margin-left: -200px;
     z-index: 2;
+    -webkit-box-shadow: -2px 6px 30px #d5d5d5;
 }
 
 #notifications .notification {
-    border-top: 1px solid #d9e8ff;
-    background-color: #d7ffff;
-    padding: 10px;
+    background-color: #fff;
+    padding: 15px 10px;
     text-align: center;
+    font-size: 20px;
+    color: #6a6a6a;
+    border: 1px #dfdfdf solid;
+    border-bottom-width: 0;
 }
 
+#notifications .notification:last-child {
+    border-bottom-width: 1px;
+    /*border-bottom-left-radius: 20px;*/
+    /*border-bottom-right-radius: 20px;*/
+}
 
 /* jsPlumb */
 
 ._jsPlumb_overlay {
     z-index: 1;
 }
-
-
-
