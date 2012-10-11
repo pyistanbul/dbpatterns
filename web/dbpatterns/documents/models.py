@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from documents import get_collection
 from documents.utils import reverse_tastypie_url
 
+
 class Document(dict):
     """
     A model that wraps MongoDB document.
@@ -41,11 +42,11 @@ class Document(dict):
     def pk(self):
         return self._id
 
-    def get_stars(self):
-        return self.stars or []
-
     def get_fork_count(self):
         return self.fork_count or 0
+
+    def get_stars(self):
+        return self.stars or []
 
     @property
     def star_count(self):

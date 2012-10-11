@@ -86,14 +86,26 @@ body {
 
 /* Footer */
 body > footer {
-    background-color: white;
+    background-color: #2894DF;
+    width: 960px;
     padding: 10px;
-    bottom: 0;
-    position: fixed;
-    left: 50%;
-    margin-top: -100px;
-    margin-left: -250px;
+    color: #fff;
+    margin: 40px auto 0;
+    font-size: 16px;
 }
+
+    body > footer a {
+        color: #fff;
+        text-decoration: none;
+        border-bottom: 1px solid white;
+        padding-bottom: 1px;
+        display: inline-block;
+    }
+
+    body> footer a.feedback {
+        float: right;
+        margin-right: 10px;
+    }
 
 
 /* Documents */
