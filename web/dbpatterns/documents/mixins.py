@@ -1,6 +1,5 @@
 from documents.resources import DocumentResource
 
-__author__ = 'fatiherikli'
 
 class DocumentMixin(object):
     """

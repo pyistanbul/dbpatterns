@@ -5,6 +5,7 @@ from tastypie.exceptions import ImmediateHttpResponse
 from api.auth import DocumentsAuthorization
 from api.resources import MongoDBResource
 
+from documents import get_collection
 from documents.models import Document
 
 
@@ -21,7 +22,9 @@ class DocumentResource(MongoDBResource):
         detail_allowed_methods = ["get", "put"]
         authorization = DocumentsAuthorization()
         object_class = Document
-        collection = "documents"
+
+    def get_collection(self):
+        return get_collection("documents")
 
     def obj_sort(self, orderings, limit=20):
         return map(Document, self.get_collection().find().sort(orderings).limit(limit))

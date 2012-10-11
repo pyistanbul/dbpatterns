@@ -7,6 +7,7 @@ from django.views.generic import TemplateView, FormView, ListView, RedirectView
 from tastypie.http import HttpNoContent
 from auth.mixins import LoginRequiredMixin
 
+from documents import get_collection
 from documents.forms import DocumentForm
 from documents.mixins import DocumentMixin
 from documents.models import Document
@@ -102,7 +103,7 @@ class NewDocumentView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form, **kwargs):
         resource = DocumentResource()
-        self.object_id = resource.get_collection().insert({
+        self.object_id = get_collection("documents").insert({
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
             "date_created": datetime.now()
@@ -120,7 +121,7 @@ class MyDocumentsView(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         resource = DocumentResource()
-        collection = resource.get_collection().find({"user_id": self.request.user.pk})
+        collection = get_collection("documents").find({"user_id": self.request.user.pk})
         return map(Document, collection)
 
 
@@ -136,7 +137,7 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
     def form_valid(self, form, **kwargs):
         resource = DocumentResource()
         document = self.get_document()
-        self.object_id = resource.get_collection().insert({
+        self.object_id = get_collection("documents").insert({
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
             "entities": document.entities,
