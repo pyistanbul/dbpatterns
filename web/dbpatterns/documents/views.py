@@ -31,6 +31,17 @@ class DocumentDetailView(DocumentMixin, TemplateView):
             "document": self.get_document()
         }
 
+
+class DocumentForksView(DocumentDetailView):
+    template_name = "documents/forks.html"
+
+    def get_context_data(self, **kwargs):
+        context = super(DocumentForksView, self).get_context_data(**kwargs)
+        context["forks"] = context.get("document").forks()
+        context["slm"] = "ok"
+        return context
+
+
 class StarDocumentView(LoginRequiredMixin, RedirectView, DocumentMixin):
 
     def post(self, request, *args, **kwargs):

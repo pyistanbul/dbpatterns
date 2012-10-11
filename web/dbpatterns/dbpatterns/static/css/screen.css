@@ -215,16 +215,17 @@ article#document {
     padding-left: 30px;
     background: url("/static/images/icons.png") no-repeat;
     color: #2485c9;
+    text-decoration: none;
 }
 
-.fork {
-    background-position: 0 -45px;
-}
+    .fork {
+        background-position: 0 -45px;
+    }
 
-.star {
-    background-position: 0 -8px;
-    padding-left: 35px;
-}
+    .star {
+        background-position: 0 -8px;
+        padding-left: 35px;
+    }
 
 .document-preview {
     margin: 0 10px 5px 0;

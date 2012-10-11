@@ -1,5 +1,7 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+
+from documents import get_collection
 from documents.utils import reverse_tastypie_url
 
 class Document(dict):
@@ -16,6 +18,11 @@ class Document(dict):
 
     def get_resource_uri(self):
         return reverse_tastypie_url("documents", self.pk)
+
+    def forks(self):
+        return map(self.__class__, get_collection("documents").find({
+            "fork_of": self.pk
+        }))
 
     def get_user(self):
         try:
