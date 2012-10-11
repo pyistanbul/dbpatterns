@@ -18,15 +18,18 @@ body {
         width: 300px;
         font-weight: normal;
         font-size: 55px;
+        letter-spacing: -1px;
     }
 
     header h1 a {
-        color: #bbbbbb;
+        color: #dadada;
         text-decoration: none;
+        text-shadow: #818181 0 1px 0;
     }
 
     header h1 span {
         color: #2894df;
+        text-shadow: #4b4b4b 0 1px 0;
     }
 
     header nav {
@@ -597,3 +600,4 @@ article#document {
 ._jsPlumb_overlay {
     z-index: 1;
 }
+
