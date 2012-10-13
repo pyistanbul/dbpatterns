@@ -1,6 +1,7 @@
 body {
     background-image: url("/static/images/background.png");
     margin: 0;
+
 }
 
     body header#banner, .content {
@@ -243,22 +244,24 @@ article#document {
     }
 
 .document-preview {
-    margin: 0 10px 5px 0;
-    width: 226px;
-    padding: 10px 2px;
+    margin: 0 55px 40px 0;
+    width: 230px;
+    padding: 10px 25px 25px 0;
 
     float: left;
+    /*border-right: 3px solid #2485c9;*/
 }
 
     .document-preview a {
         color: #2485c9;
+        text-decoration: none;
     }
 
     .document-preview h4 {
-        font-size: 18px;
-        text-align: center;
-        font-weight: normal;
-        margin: 0 0 5px;
+        font-size: 20px;
+        text-align: left;
+        margin: 0 2px 2px;
+        letter-spacing: -1px;
     }
 
     .document-preview .entity-list {
@@ -268,14 +271,15 @@ article#document {
     .document-preview .entity-preview {
         float: left;
         margin: 30px 4px 0 20px;
-        width: 130px;
-        font-size: 12px;
+        width: 160px;
+        font-size: 14px;
         background-color: white;
         padding: 0;
-        border: 1px solid #dddddd;
-        height: 100px;
+        border: 1px solid #eaeaea;
+        height: 120px;
         overflow: hidden;
         position: absolute;
+        color: gray;
 
     }
 
@@ -285,11 +289,11 @@ article#document {
     }
 
     .document-preview .entity-preview:nth-child(2) {
-        margin-top: 20px;
+        margin-top: 30px;
     }
 
     .document-preview .entity-preview:nth-child(3) {
-        margin-top: 45px;
+        margin-top: 53px;
         margin-left: 40px;
     }
 
@@ -302,8 +306,33 @@ article#document {
     .document-preview .entity-preview .name {
         font-weight: bold;
         overflow: hidden;
+        color: #5b5b5b;
 
     }
+
+    .document-preview .gravatar {
+        position: absolute;
+        margin-top: 135px;
+        margin-left: 130px;
+        -webkit-box-shadow: 0 0 2px gray;
+    }
+
+    .document-preview .gravatar img {
+        background-color: white;
+        padding: 3px;
+    }
+
+    .document-preview .document-info {
+        margin-top: 25px;
+        margin-left: 40px;
+        width: 100px;
+    }
+
+    .document-preview .document-info .icon {
+        padding-left: 35px;
+    }
+
+
 
 /* PROFILES */
 
@@ -313,6 +342,7 @@ article#document {
     position: fixed;
     z-index: 2;
     height: 110px;
+    margin-left: 20px;
 }
 
     .profile .image {

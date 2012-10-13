@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load gravatar_tags %}
 
 {% block content %}
     <section class="content landing">
@@ -10,7 +11,7 @@
     </section>
 
     <section class="content latest">
-    <h2>Most rated patterns</h2>
+    <h2>Trending patterns</h2>
 
         {% for document in most_rated_documents %}
         <div class="document-preview">
@@ -24,9 +25,17 @@
                 {% endfor %}
             </ul>
             {% endfor %}
+
+            <a class="gravatar" href="{% url auth_profile document.user.username %}">
+                <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_user document.user %}">
+            </a>
             </div>
+
+
+            <div class="document-info">
             <a class="icon fork" href="{% url show_document_forks document.pk %}">{{ document.get_fork_count }} fork</a>
-            <span class="icon star">{{ document.star_count }} star</span>
+            <a class="icon star" href="#">{{ document.star_count }} star</a>
+            </div>
 
         </div>
         {% endfor %}
@@ -37,7 +46,7 @@
     <footer>
         dbpatterns is an open-source project. you can contribute on
         <a href="http://github.com/fatiherikli/dbpatterns">github</a>.
-        <a href="#" class="feedback">feedback</a>
+        <a href="#" class=""></a>
     </footer>
 {% endblock %}
 
