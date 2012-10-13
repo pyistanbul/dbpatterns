@@ -1,7 +1,7 @@
 body {
     background-image: url("/static/images/background.png");
     margin: 0;
-
+    color: #565656;
 }
 
     body header#banner, .content {
