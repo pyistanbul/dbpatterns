@@ -244,9 +244,9 @@ article#document {
     }
 
 .document-preview {
-    margin: 0 55px 40px 0;
-    width: 230px;
-    padding: 10px 25px 25px 0;
+    margin: 20px 35px 40px 10px;
+    width: 270px;
+    padding: 0;
 
     float: left;
     /*border-right: 3px solid #2485c9;*/
@@ -279,6 +279,7 @@ article#document {
         height: 120px;
         overflow: hidden;
         position: absolute;
+        /*-webkit-box-shadow: -1px 0 2px gray;*/
         color: gray;
 
     }

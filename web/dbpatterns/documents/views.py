@@ -19,7 +19,7 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         resource = DocumentResource()
-        most_rated_documents = resource.obj_sort([("star_count", -1)], limit=8)
+        most_rated_documents = resource.obj_sort([("star_count", -1)], limit=9)
         return {
             "most_rated_documents": most_rated_documents
         }
@@ -39,7 +39,6 @@ class DocumentForksView(DocumentDetailView):
     def get_context_data(self, **kwargs):
         context = super(DocumentForksView, self).get_context_data(**kwargs)
         context["forks"] = context.get("document").forks()
-        context["slm"] = "ok"
         return context
 
 
