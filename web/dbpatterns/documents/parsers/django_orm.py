@@ -136,7 +136,7 @@ class DjangoORMParser(BaseParser):
                 elif field.get("type") == FOREIGN_KEY_FIELD:
 
                     field["name"] += "_id"
-                    field["type"] += TYPES_INTEGER
+                    field["type"] = TYPES_INTEGER
 
                 attributes.append(field)
 
