@@ -73,6 +73,7 @@ body {
 
     section.latest {
         margin-top: 30px;
+        margin-bottom: 50px;
         overflow: hidden;
     }
 
