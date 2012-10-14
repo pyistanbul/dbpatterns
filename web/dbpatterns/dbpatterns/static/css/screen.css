@@ -92,8 +92,12 @@ body > footer {
     width: 960px;
     padding: 10px;
     color: #fff;
-    margin: 40px auto 0;
+    margin: 40px 0 0 -480px;
     font-size: 16px;
+    position: fixed;
+    z-index: 2;
+    bottom: 0;
+    left: 50%;
 }
 
     body > footer a {
