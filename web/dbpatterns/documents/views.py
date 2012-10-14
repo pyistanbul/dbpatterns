@@ -9,7 +9,7 @@ from auth.mixins import LoginRequiredMixin
 
 from documents import get_collection
 from documents.constants import FIELD_TYPES
-from documents.forms import DocumentForm
+from documents.forms import DocumentForm, ForkDocumentForm
 from documents.mixins import DocumentMixin
 from documents.models import Document
 from documents.resources import DocumentResource
@@ -129,7 +129,7 @@ class MyDocumentsView(LoginRequiredMixin, ListView):
 
 
 class ForkDocumentView(DocumentMixin, NewDocumentView):
-    form_class = DocumentForm
+    form_class = ForkDocumentForm
     template_name = "documents/fork.html"
 
     def get_initial(self):

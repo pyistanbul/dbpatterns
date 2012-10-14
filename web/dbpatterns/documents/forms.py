@@ -43,3 +43,7 @@ class DocumentForm(forms.Form):
                 return parser.parsed
 
         return []
+
+
+class ForkDocumentForm(forms.Form):
+    title = forms.CharField(label="Document title")
