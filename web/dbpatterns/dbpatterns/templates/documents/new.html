@@ -10,3 +10,19 @@
         </form>
     </section>
 {% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function () {
+            var row = $("#id_entities").parent().hide();
+            $("#id_create_from").change(function () {
+                if ($(this).val()) {
+                    row.show();
+                } else {
+                    row.hide()
+                }
+            }).change();
+        });
+    </script>
+{% endblock %}

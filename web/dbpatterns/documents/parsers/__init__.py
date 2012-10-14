@@ -9,7 +9,7 @@ class BaseParser(object):
 
     def is_valid(self):
         try:
-            self.parsed = self.parse(self.text)
+            self.parsed = list(self.parse(self.text))
         except ParseError as e:
             return False
         return True

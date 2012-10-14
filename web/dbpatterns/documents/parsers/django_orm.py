@@ -102,12 +102,17 @@ class DjangoORMParser(BaseParser):
         else:
             visitor = ModelVisitor()
             visitor.visit(node)
-            return self.model_to_entity(visitor.models)
+            return self.normalize_models(visitor.models)
 
-    def model_to_entity(self, models):
+    def normalize_models(self, models):
+        """
+        The normalization process for django models.
 
-        entities = []
+            - Adds `id` field
+            - Separates many-to-many fields
+            - Converts foreign-key-fields to integer
 
+        """
         position_top = 0
         position_left = 0
 
@@ -124,46 +129,57 @@ class DjangoORMParser(BaseParser):
                     position_left += ENTITY_POSITION_LEFT_INCREASE
                     position_top += ENTITY_POSITION_TOP_INCREASE
 
-                    entities.append({
-                        "name": model.lower() + "_" + field.get("name"),
-                        "position": {
-                            "top": position_top,
-                            "left": position_left
-                        },
-                        "attributes": [
-                            {
-                                "name": "id",
-                                "type": TYPES_INTEGER,
-                                },
-                            {
-                                "name": model.lower() + "_id",
-                                "type": TYPES_INTEGER,
-                                "is_foreign_key": True,
-                                "foreign_key_entity": model.lower(),
-                                "foreign_key_attribute": "id"
-                            },
-                            {
-                                "name": field.get("relationship").lower() + "_id",
-                                "type": TYPES_INTEGER,
-                                "is_foreign_key": True,
-                                "foreign_key_entity": field.get("relationship").lower(),
-                                "foreign_key_attribute": "id"
-                            }
-                        ]
-                    })
-                else:
-                    attributes.append(field)
+                    yield self.m2m_to_entity(model, field, position_top, position_left)
+
+                    continue # skip the field addition
+
+                elif field.get("type") == FOREIGN_KEY_FIELD:
+
+                    field["name"] += "_id"
+                    field["type"] += TYPES_INTEGER
+
+                attributes.append(field)
 
             position_left += ENTITY_POSITION_LEFT_INCREASE
             position_top += ENTITY_POSITION_TOP_INCREASE
 
-            entities.append({
+            yield {
                 "name": model.lower(),
                 "attributes": attributes,
                 "position": {
                     "top": position_top,
                     "left": position_left
                 }
-            })
+            }
 
-        return entities
+    def m2m_to_entity(self, model, field, position_top, position_left):
+        """
+        Returns an entity that consist of provided m2m field.
+        """
+        return {
+            "name": model.lower() + "_" + field.get("name"),
+            "position": {
+                "top": position_top,
+                "left": position_left
+            },
+            "attributes": [
+                {
+                    "name": "id",
+                    "type": TYPES_INTEGER,
+                    },
+                {
+                    "name": model.lower() + "_id",
+                    "type": TYPES_INTEGER,
+                    "is_foreign_key": True,
+                    "foreign_key_entity": model.lower(),
+                    "foreign_key_attribute": "id"
+                },
+                {
+                    "name": field.get("relationship").lower() + "_id",
+                    "type": TYPES_INTEGER,
+                    "is_foreign_key": True,
+                    "foreign_key_entity": field.get("relationship").lower(),
+                    "foreign_key_attribute": "id"
+                }
+            ]
+        }

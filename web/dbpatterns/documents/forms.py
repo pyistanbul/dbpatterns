@@ -18,10 +18,10 @@ DOCUMENT_PARSERS = {
 }
 
 class DocumentForm(forms.Form):
-    title = forms.CharField("Document title")
-    create_from = forms.CharField("Create from", widget=forms.Select(
+    title = forms.CharField(label="Document title")
+    create_from = forms.CharField(label="Create from", widget=forms.Select(
         choices=DOCUMENT_PARSER_CHOICES), required=False)
-    entities = forms.CharField("Template", widget=forms.Textarea(), required=False)
+    entities = forms.CharField(label="Template", widget=forms.Textarea(), required=False)
 
     def clean_entities(self):
 
