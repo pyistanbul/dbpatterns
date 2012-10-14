@@ -17,7 +17,7 @@
 {% block nav %}
 
     <ul>
-        <li><a href="{% url home %}">Home</a></li>
+{#        <li><a href="{% url home %}">Home</a></li>#}
         {% ifequal user document.user %}
         <li><a href="{% url my_documents %}">Back to list</a></li>
         <li><a href="{% url edit_document document.pk %}">Edit</a></li>
