@@ -1,0 +1,18 @@
+from documents.parsers.exceptions import ParseError
+
+class BaseParser(object):
+
+    parsed = None
+
+    def __init__(self, text):
+        self.text = text
+
+    def is_valid(self):
+        try:
+            self.parsed = self.parse(self.text)
+        except ParseError as e:
+            return False
+        return True
+
+    def parse(self, text):
+        raise NotImplementedError

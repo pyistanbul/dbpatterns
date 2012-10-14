@@ -8,6 +8,7 @@ from tastypie.http import HttpNoContent
 from auth.mixins import LoginRequiredMixin
 
 from documents import get_collection
+from documents.constants import FIELD_TYPES
 from documents.forms import DocumentForm
 from documents.mixins import DocumentMixin
 from documents.models import Document
@@ -92,6 +93,7 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
     def get_context_data(self, **kwargs):
         context = super(DocumentEditView, self).get_context_data(**kwargs)
         context["edit"] = True
+        context["FIELD_TYPES"] = FIELD_TYPES
         return context
 
 
@@ -102,10 +104,12 @@ class NewDocumentView(LoginRequiredMixin, FormView):
 
     def form_valid(self, form, **kwargs):
         resource = DocumentResource()
+
         self.object_id = get_collection("documents").insert({
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
-            "date_created": datetime.now()
+            "date_created": datetime.now(),
+            "entities": form.cleaned_data.get("entities")
         })
         return super(NewDocumentView, self).form_valid(form)
 

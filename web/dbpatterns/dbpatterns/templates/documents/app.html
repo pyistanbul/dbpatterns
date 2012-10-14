@@ -42,9 +42,9 @@
                 <p>
                     <label for="type">Type</label>
                     <select name="type" id="type">
-                        <% for (var type in types) { %>
-                        <option value="<%= types[type] %>"><%= types[type] %></option>
-                        <% } %>
+                        {% for type, label in FIELD_TYPES %}
+                        <option value="{{ type }}">{{ label }}</option>
+                        {% endfor %}
                     </select>
                 </p>
 

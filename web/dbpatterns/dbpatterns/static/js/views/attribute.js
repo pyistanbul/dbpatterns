@@ -29,8 +29,6 @@ dbpatterns.views.Attribute = Backbone.View.extend({
         "click a.remove-attribute": "destroy"
     },
 
-    types: ["string", "integer", "boolean", "currency", "date", "time", "datetime"],
-
     initialize: function () {
         this.model.bind("change", this.render, this);
         this.model.bind("destroy", this.detach, this);
