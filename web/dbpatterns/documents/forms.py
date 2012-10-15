@@ -17,11 +17,21 @@ DOCUMENT_PARSERS = {
     DOCUMENT_PARSER_DJANGO_ORM: DjangoORMParser
 }
 
+EXAMPLE_DJANGO_MODEL = """
+class Foo(models.Model):
+    bar = models.CharField(max_length=255)
+
+
+class Bar(models.Model):
+    foo =  models.CharField(max_length=255)
+"""
+
 class DocumentForm(forms.Form):
     title = forms.CharField(label="Document title")
     create_from = forms.CharField(label="Create from", widget=forms.Select(
         choices=DOCUMENT_PARSER_CHOICES), required=False)
-    entities = forms.CharField(label="Template", widget=forms.Textarea(), required=False)
+    entities = forms.CharField(label="Template", widget=forms.Textarea(),
+        initial=EXAMPLE_DJANGO_MODEL, required=False)
 
     def clean_entities(self):
 
