@@ -15,17 +15,19 @@ class SqlExporter(BaseExporter):
         yield 'BEGIN;'
         for entity in self.document.entities:
             yield 'CREATE TABLE "%s" ('
-            yield ','.join(self.get_attributes(entity.get("attributes", [])))
+            if entity.get("attributes"):
+                yield ','.join(list(self.get_attributes(
+                entity.get("attributes"))))
             yield ');'
         yield 'COMMIT;'
 
     def get_attributes(self, attributes):
         for attribute in attributes:
-            yield '"%s" %s %s %s' % (
-                attribute.get("name"),
-                self.get_attribute_type(attribute.get("type")),
-                "NOT NULL",
-                "PRIMARY KEY" if attribute.get("is_primary_key") else "")
+            yield '"%(name)s %(type)s NOT NULL %(primary_key)s' % {
+                "name": attribute.get("name"),
+                "type": self.get_attribute_type(attribute.get("type")),
+                "primary_key": "PRIMARY KEY" if attribute.get("is_primary_key") else ""
+            }
 
     def get_attribute_type(self, attribute_type):
         return self.TYPE_MAPPING.get(attribute_type, self.DEFAULT_TYPE)
