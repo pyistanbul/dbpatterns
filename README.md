@@ -4,10 +4,9 @@ Dbpatterns is a service that allows you to create, share, explore database model
 
 ### Installation
 
-MongoDB installation:
+Install mongodb:
 
     sudo apt-get install mongodb
-
     # or on mac
     sudo brew install mongodb
 
@@ -32,18 +31,20 @@ Configure the database and secret key.
     cd dbpatterns/web/dbpatterns
     vim settings_local.py
 
-        DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': 'data',
-                'USER': '',
-                'PASSWORD': '',
-                'HOST': '',
-                'PORT': '',
-            }
-        }
+The example of configuration:
 
-        SECRET_KEY = '<SECRET-KEY>'
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'data',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
+            'PORT': '',
+        }
+    }
+
+    SECRET_KEY = '<SECRET-KEY>'
 
 And run the following commands:
 
