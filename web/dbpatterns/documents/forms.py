@@ -32,6 +32,7 @@ class DocumentForm(forms.Form):
         choices=DOCUMENT_PARSER_CHOICES), required=False)
     entities = forms.CharField(label="Template", widget=forms.Textarea(),
         initial=EXAMPLE_DJANGO_MODEL, required=False)
+    # TODO: The initial value solution is temporary. Change it.
 
     def clean_entities(self):
 
