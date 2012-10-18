@@ -8,7 +8,7 @@
         <li>
             <a href="{{ document.get_edit_url }}">{{ document.title }}</a>
             <div class="info">
-            <a href="{{ document.get_edit_url }}" class="delete" data-method="delete">Delete</a>
+            <a href="{{ document.get_edit_url }}" class="delete" data-method="delete" onclick='if(confirm("Are you sure?")) return true; else return false;'>Delete</a>
             <span class="icon fork">{{ document.get_fork_count }} fork</span>
             <span class="icon star">{{ document.star_count }} star</span>
             </div>
