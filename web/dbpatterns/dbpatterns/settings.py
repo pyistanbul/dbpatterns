@@ -105,7 +105,6 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
 
     'documents',
-
     'gravatar',
 
     'django.contrib.admin',

@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from django.db import models
 
 from documents import get_collection
 from documents.utils import reverse_tastypie_url
