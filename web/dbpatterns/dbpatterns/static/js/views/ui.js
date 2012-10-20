@@ -49,6 +49,9 @@ dbpatterns.views.Dialog = Backbone.View.extend({
     container: "body",
     className: "dialog",
     template: $("#dialog-template").html(),
+    events: {
+        "click .close": "destroy"
+    },
     shortcuts: {
         'esc': 'destroy'
     },

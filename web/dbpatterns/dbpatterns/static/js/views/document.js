@@ -9,7 +9,8 @@ dbpatterns.views.Document = Backbone.View.extend({
 
     events: {
         "click .edit-title": "rename",
-        "click .save-document": "save_document"
+        "click .save-document": "save_document",
+        "click .export": "export_document"
     },
 
     shortcuts: {
@@ -50,11 +51,22 @@ dbpatterns.views.Document = Backbone.View.extend({
         return this;
     },
 
-    save_document: function () {
+    save_document: function (callback) {
 
         this.model.save().success(function () {
             dbpatterns.notifications.trigger("flash", this.messages.save);
+            callback && callback();
         }.bind(this));
+    },
+
+    export_document: function () {
+
+        (new dbpatterns.views.ExportDialog().render());
+
     }
 
+});
+
+dbpatterns.views.ExportDialog = dbpatterns.views.Dialog.extend({
+    template: $("#export-list").html()
 });

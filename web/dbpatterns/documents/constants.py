@@ -20,3 +20,15 @@ FIELD_TYPES = (
     (TYPES_TIME, "time"),
     (TYPES_CURRENCY, "currency"),
 )
+
+EXPORTER_MYSQL = "mysql"
+EXPORTER_POSTGRES = "postgres"
+EXPORTER_ORACLE = "oracle"
+EXPORTER_SQLITE = "sqlite"
+
+EXPORTERS = (
+    (EXPORTER_MYSQL, "MySQL"),
+    (EXPORTER_POSTGRES, "Postgres"),
+    (EXPORTER_ORACLE, "Oracle"),
+    (EXPORTER_SQLITE, "SQLite"),
+)

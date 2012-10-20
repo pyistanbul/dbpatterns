@@ -537,7 +537,7 @@ article#document {
         background-color: #2894df;
         color: white;
         margin: -10px -30px 20px;
-        padding: 7px 5px;
+        padding: 2px 5px 5px 5px;
     }
 
     .dialog .anchor {
@@ -560,6 +560,29 @@ article#document {
         margin-left: 5px;
     }
 
+    .dialog .close {
+        float: right;
+        display: inline-block;
+    }
+
+
+/* Export  */
+
+.export-list {
+    margin: 10px 0;
+    padding: 0;
+}
+
+    .export-list li {
+        margin: 0;
+        padding: 5px 1px;
+        list-style-type: none;
+    }
+
+    .export-list li a {
+        text-decoration: none;
+        color: black;
+    }
 
 /* Help */
 

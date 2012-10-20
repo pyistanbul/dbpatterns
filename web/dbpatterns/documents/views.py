@@ -1,19 +1,26 @@
 from datetime import datetime
 
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
-from django.views.generic import TemplateView, FormView, ListView, RedirectView
+from django.views.generic import TemplateView, FormView, ListView, RedirectView, View
+from django import http
 
 from tastypie.http import HttpNoContent
-from auth.mixins import LoginRequiredMixin
 
+from auth.mixins import LoginRequiredMixin
 from documents import get_collection
-from documents.constants import FIELD_TYPES
+from documents.constants import FIELD_TYPES, EXPORTER_ORACLE, EXPORTER_SQLITE, EXPORTER_POSTGRES, EXPORTER_MYSQL, EXPORTERS
+from documents.exporters.sql import MysqlExporter, PostgresExporter, SQLiteExporter, OracleExporter
 from documents.forms import DocumentForm, ForkDocumentForm
 from documents.mixins import DocumentMixin
 from documents.models import Document
 from documents.resources import DocumentResource
 
+DOCUMENT_EXPORTERS = {
+    EXPORTER_MYSQL: MysqlExporter,
+    EXPORTER_POSTGRES: PostgresExporter,
+    EXPORTER_SQLITE: SQLiteExporter,
+    EXPORTER_ORACLE: OracleExporter
+}
 
 class HomeView(TemplateView):
     template_name = "index.html"
@@ -30,8 +37,23 @@ class DocumentDetailView(DocumentMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         return {
-            "document": self.get_document()
+            "document": self.get_document(),
+            "exporters": EXPORTERS
         }
+
+
+class ExportDocumentView(DocumentMixin, View):
+
+    def get(self, *args, **kwargs):
+        klass = DOCUMENT_EXPORTERS.get(kwargs.get("exporter"))
+
+        if klass is None:
+            return http.HttpResponseBadRequest()
+
+        document = self.get_document()
+        exporter = klass(document)
+
+        return http.HttpResponse(exporter.as_text(), content_type="text/plain")
 
 
 class DocumentForksView(DocumentDetailView):
@@ -88,7 +110,7 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
         return self.get_document().get_user() == self.request.user
 
     def redirect(self):
-        return HttpResponseRedirect(reverse("show_document", kwargs=self.kwargs))
+        return http.HttpResponseRedirect(reverse("show_document", kwargs=self.kwargs))
 
     def get_context_data(self, **kwargs):
         context = super(DocumentEditView, self).get_context_data(**kwargs)
