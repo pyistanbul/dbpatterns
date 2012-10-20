@@ -576,6 +576,7 @@ article#document {
     position: fixed;
     bottom: 50px;
     left: 134px;
+    z-index: 2;
 }
 
     #export-list li {
@@ -704,9 +705,24 @@ article#document {
 
 #notifications .notification:last-child {
     border-bottom-width: 1px;
-    /*border-bottom-left-radius: 20px;*/
-    /*border-bottom-right-radius: 20px;*/
 }
+
+
+/* Document Detail specific definitions */
+#document-show-view nav.tools {
+    left: auto;
+    right: 20px;
+}
+
+#document-show-view #export-list {
+    left: auto;
+    right: 60px;
+}
+
+#document-show-view .export-dialog pre {
+    height: 450px;
+}
+
 
 /* jsPlumb */
 

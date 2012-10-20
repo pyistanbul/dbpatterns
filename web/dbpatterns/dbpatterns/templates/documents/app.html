@@ -168,7 +168,7 @@
             // load document view.
             new dbpatterns.views.Document({
                 "model": document,
-                "edit": "{{ edit|yesno:"true,false" }}"
+                "edit": {{ edit|yesno:"true,false" }}
             });
 
             // retrieve document by the provided resource uri.

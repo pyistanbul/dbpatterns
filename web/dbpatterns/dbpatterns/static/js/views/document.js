@@ -52,7 +52,6 @@ dbpatterns.views.Document = Backbone.View.extend({
     },
 
     save_document: function (callback) {
-
         this.model.save().success(function () {
             dbpatterns.notifications.trigger("flash", this.messages.save);
             callback && callback();
@@ -61,13 +60,17 @@ dbpatterns.views.Document = Backbone.View.extend({
 
     export_document: function () {
         var exporter_link = $(event.target);
-        this.save_document(function () {
-            (new dbpatterns.views.ExportDialog({
-                title: exporter_link.html(),
-                url: exporter_link.attr("href")
-            })).render();
-        }.bind(this));
+        var dialog = (new dbpatterns.views.ExportDialog({
+            title: exporter_link.html(),
+            url: exporter_link.attr("href")
+        }));
+        if (this.options.edit) {
+            this.save_document(function () {
+                dialog.render();
+            }.bind(this));
+        } else {
+            dialog.render();
+        }
         return false;
     }
-
-})
+});

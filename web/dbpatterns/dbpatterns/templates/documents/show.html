@@ -13,6 +13,11 @@
             <h4><a href="{% url auth_profile document.user.username %}">{{ document.user.username }}</a></h4>
         </div>
     </div>
+    <nav class="tools">
+    <ul>
+        <li><a href="#export-list" data-toggle="true">Export</a></li>
+    </ul>
+    </nav>
 {% endblock %}
 {% block nav %}
 
