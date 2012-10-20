@@ -568,21 +568,37 @@ article#document {
 
 /* Export  */
 
-.export-list {
+#export-list {
     margin: 10px 0;
     padding: 0;
+    display: none;
+    width: 200px;
+    position: fixed;
+    bottom: 50px;
+    left: 134px;
 }
 
-    .export-list li {
-        margin: 0;
-        padding: 5px 1px;
+    #export-list li {
+        margin: 5px 0;
         list-style-type: none;
     }
 
-    .export-list li a {
+    #export-list li a {
+        padding: 10px 20px;
+        display: inline-block;
         text-decoration: none;
-        color: black;
+        color: #fff;
+        font-size: 20px;
+        width: 200px;
+        background-color: #2894df;
     }
+
+    #export-list li a:hover {
+        background-color: orange;
+        color: white;
+    }
+
+
 
 /* Help */
 

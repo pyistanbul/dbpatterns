@@ -61,12 +61,7 @@ dbpatterns.views.Document = Backbone.View.extend({
 
     export_document: function () {
 
-        (new dbpatterns.views.ExportDialog().render());
 
     }
 
-});
-
-dbpatterns.views.ExportDialog = dbpatterns.views.Dialog.extend({
-    template: $("#export-list").html()
 });

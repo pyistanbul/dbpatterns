@@ -8,7 +8,7 @@
                 <nav class="tools">
                     <ul>
                         <li><a href="#" class="new-entity">New entity</a></li>
-                        <li><a href="#" class="export">Export</a></li>
+                        <li><a href="#export-list" data-toggle="true" class="export">Export</a></li>
                         <li><a href="#" class="save-document">Save</a></li>
                     </ul>
                 </nav>
@@ -27,21 +27,20 @@
         <div id="entities"></div>
 
         <div id="notifications"></div>
+
+        <ul id="export-list">
+            {% for key, label in exporters %}
+                <li><a target="_blank" href="{% url export_document document.pk key %}">{{ label }}</a></li>
+            {% endfor %}
+        </ul>
+
     </article>
 
 
     <!-- templates -->
 
     {% block app %}
-        <script type="text/html" id="export-list">
-            <h3>Export</h3>
-            <ul class="export-list">
-                {% for key, label in exporters %}
-                <li><a target="_blank" href="{% url export_document document.pk key %}">{{ label }}</a></li>
-                {% endfor %}
-            </ul>
-            <button class="anchor close">Close</button>
-        </script>
+
 
         <script type="text/html" id="attribute-form-template">
             <form action="#" class="attribute-form">
