@@ -121,3 +121,28 @@ dbpatterns.views.FormDialog = dbpatterns.views.Dialog.extend({
 });
 
 
+dbpatterns.views.ExportDialog = dbpatterns.views.Dialog.extend({
+    template: $("#export-dialog-template").html(),
+    className: "export-dialog",
+    events: {
+        "click .close": "destroy",
+        "click .new-window": "new_window"
+    },
+    initialize: function () {
+        dbpatterns.views.Dialog.prototype.initialize.apply(this);
+    },
+    render: function () {
+        this.$el.html(_.template(this.template, {
+            title: this.options.title,
+            code: "Loading"
+        })).appendTo(this.container);
+
+        $.get(this.options.url, function (response) {
+            this.$el.find("code").html(response);
+            prettyPrint();
+        }.bind(this))
+    },
+    new_window: function () {
+        window.open(this.options.url);
+    }
+});

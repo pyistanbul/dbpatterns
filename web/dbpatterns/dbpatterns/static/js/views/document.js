@@ -60,8 +60,14 @@ dbpatterns.views.Document = Backbone.View.extend({
     },
 
     export_document: function () {
-
-
+        var exporter_link = $(event.target);
+        this.save_document(function () {
+            (new dbpatterns.views.ExportDialog({
+                title: exporter_link.html(),
+                url: exporter_link.attr("href")
+            })).render();
+        }.bind(this));
+        return false;
     }
 
-});
+})

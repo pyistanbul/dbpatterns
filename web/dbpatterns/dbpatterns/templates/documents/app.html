@@ -8,7 +8,7 @@
                 <nav class="tools">
                     <ul>
                         <li><a href="#" class="new-entity">New entity</a></li>
-                        <li><a href="#export-list" data-toggle="true" class="export">Export</a></li>
+                        <li><a href="#export-list" data-toggle="true">Export</a></li>
                         <li><a href="#" class="save-document">Save</a></li>
                     </ul>
                 </nav>
@@ -30,7 +30,7 @@
 
         <ul id="export-list">
             {% for key, label in exporters %}
-                <li><a target="_blank" href="{% url export_document document.pk key %}">{{ label }}</a></li>
+                <li><a target="_blank" class="export" href="{% url export_document document.pk key %}">{{ label }}</a></li>
             {% endfor %}
         </ul>
 
@@ -40,8 +40,6 @@
     <!-- templates -->
 
     {% block app %}
-
-
         <script type="text/html" id="attribute-form-template">
             <form action="#" class="attribute-form">
                 <p>
@@ -109,6 +107,13 @@
 
         <script type="text/html" id="dialog-template">
         <h3><%= title %></h3>
+        </script>
+
+        <script type="text/html" id="export-dialog-template">
+            <h3><%= title %></h3>
+            <pre class="prettyprint"><code><%= code %></code></pre>
+            <a href="#" class="anchor close">Close</a>
+            <a href="#" class="anchor new-window">Plain version</a>
         </script>
 
 {% endblock %}

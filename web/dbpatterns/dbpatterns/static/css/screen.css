@@ -598,6 +598,46 @@ article#document {
         color: white;
     }
 
+    .export-dialog {
+        margin-top: 10px;
+        top: auto;
+        z-index: 4;
+        position: fixed;
+        width: 90%;
+        left: 5%;
+    }
+
+    .export-dialog h3 {
+        background-color: #666666;
+        margin: 0;
+        padding: 2px 20px;
+        color: #f0f0f0;
+        float: left;
+        font-size: 24px;
+        line-height: 1.5em;
+        font-weight: normal;
+    }
+
+    .export-dialog pre {
+        height: 480px;
+        overflow: auto;
+        -webkit-box-shadow: -2px 6px 50px #696969;
+    }
+
+    .export-dialog a {
+        float: right;
+        text-align: center;
+        background-color: #666666;
+        margin-left: 10px;
+    }
+
+    .export-dialog a.close {
+        width: 70px;
+    }
+
+    .export-dialog a.new-window {
+        width: 150px;
+    }
 
 
 /* Help */
