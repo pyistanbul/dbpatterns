@@ -7,6 +7,7 @@
             Dbpatterns is a service that allows you to create, share, explore
             database models on the web. And also you can <cite>fork</cite> already created database
             models.
+            <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://dbpatterns.com">Tweet</a>
         </p>
     </section>
 
@@ -48,5 +49,11 @@
         <a href="http://github.com/fatiherikli/dbpatterns">github</a>.
         <a href="#" class=""></a>
     </footer>
+{% endblock %}
+
+{% block scripts %}
+{{ block.super }}
+<!-- twitter share button -->
+<script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock %}
 

@@ -755,7 +755,7 @@ hr.or {
     border: none;
     display: inline-block;
     position: absolute;
-    left: 50%;
+    left: 47%;
     top: 200px;
 }
 hr.or:after {
@@ -764,9 +764,17 @@ hr.or:after {
     color: gray;
 }
 
+
 /* jsPlumb */
 
 ._jsPlumb_overlay {
     z-index: 1;
+}
+
+/* Social Links */
+
+.twitter-share-button {
+    float: right;
+    margin-top: 10px;
 }
 

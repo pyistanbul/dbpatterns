@@ -17,12 +17,7 @@
         <hr class="or">
 
         <div class="two-column">
-            <h2>Connect via Github</h2>
-            <div class="github-login">
-                <form action="{% url socialauth_begin "github" %}" method="get">
-                <input type="submit" value="Login">
-                </form>
-            </div>
+            {% include "auth/login_github.html" %}
         </div>
 
 
