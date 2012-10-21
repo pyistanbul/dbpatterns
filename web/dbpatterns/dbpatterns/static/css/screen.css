@@ -211,16 +211,16 @@ article#document {
 
     .documents ul li a {
         text-decoration: none;
-        font-size: 18px;
-        color: #1f70a9;
+        font-size: 25px;
+        color: #414141;
     }
 
 
     .documents .info {
-        padding: 2px 0;
-        margin-left: 0;
-        color: gray;
-    }
+            padding: 2px 0;
+            margin-left: 0;
+            color: gray;
+        }
 
     .documents .info a {
         color: #2485c9;
