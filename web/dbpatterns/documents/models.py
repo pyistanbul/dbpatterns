@@ -52,3 +52,6 @@ class Document(dict):
     @property
     def star_count(self):
         return len(self.get_stars())
+
+    def get_stargazers(self):
+        return User.objects.filter(id__in=self.get_stars())

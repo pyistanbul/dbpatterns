@@ -70,6 +70,9 @@ class DocumentForksView(DocumentDetailView):
         context["forks"] = context.get("document").forks()
         return context
 
+class DocumentStarsView(DocumentDetailView):
+    template_name = "documents/stars.html"
+
 
 class StarDocumentView(LoginRequiredMixin, RedirectView, DocumentMixin):
 

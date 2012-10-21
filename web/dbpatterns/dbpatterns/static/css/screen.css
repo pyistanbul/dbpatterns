@@ -795,6 +795,29 @@ section.news h2 {
 section.news ul {
     margin-top: 50px;
 }
+/* Stars */
+
+.stars .gravatar {
+    float: left;
+    width: 120px;
+    text-align: center;
+    margin-top: 30px;
+    color: #2894df;
+    text-decoration: none;
+}
+
+    .stars .gravatar img {
+        background-color: white;
+        padding: 3px;
+        border: 1px solid #bfdbf8;
+    }
+
+    .stars .gravatar span {
+        display: block;
+        text-align: center;
+        margin-top: 3px;
+    }
+
 
 /* jsPlumb */
 

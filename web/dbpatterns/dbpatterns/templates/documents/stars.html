@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load gravatar document_tags %}
+
+{% block body-id %}document-forks{% endblock %}
+
+{% block content %}
+    <section class="content stars">
+        <h2>Stars of &quot;{{ document.title }}&quot; pattern</h2>
+        {% for stargazer in document.get_stargazers %}
+            <a class="gravatar" href="{% url auth_profile stargazer.username %}">
+                <img alt="gravatar of {{ stargazer.username }}" src="{% gravatar_for_user stargazer %}">
+                <span>{{ stargazer.username }}</span>
+            </a>
+        {% endfor %}
+
+    </section>
+
+
+
+{% endblock %}
