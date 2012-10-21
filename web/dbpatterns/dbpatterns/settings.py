@@ -158,14 +158,12 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
 )
 
-GITHUB_APP_ID = "eedfafe4da690b036f98"
-GITHUB_API_SECRET = "b643494600ac37655ad53ac08d2382854aeb0f42"
-
 LOGIN_REDIRECT_URL = '/'
 
 SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
 SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
 SOCIAL_AUTH_CREATE_USERS = True
+SOCIAL_AUTH_FORCE_RANDOM_USERNAME = False
 
 MONGODB_DATABASE = "dbpatterns"
 
