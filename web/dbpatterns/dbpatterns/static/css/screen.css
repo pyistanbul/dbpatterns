@@ -764,6 +764,21 @@ hr.or:after {
     color: gray;
 }
 
+/* News definitions */
+
+section.news h2 {
+    background-color: rgba(90, 223, 249, 0.15);
+    color: #676767;
+    text-align: left;
+    margin-left: 0px;
+    font-size: 20px;
+    float: left;
+    padding: 2px 10px;
+}
+
+section.news ul {
+    margin-top: 50px;
+}
 
 /* jsPlumb */
 
@@ -775,6 +790,7 @@ hr.or:after {
 
 .twitter-share-button {
     float: right;
-    margin-top: 10px;
+    margin-right: -17px;
+    margin-top: 2px;
 }
 
