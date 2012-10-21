@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.db import models
+from auth.models import AnonymousProfile
 
 from documents import get_collection
 from documents.utils import reverse_tastypie_url
@@ -30,7 +30,7 @@ class Document(dict):
         try:
             return User.objects.get(id=self.user_id)
         except User.DoesNotExist:
-            return None
+            return AnonymousProfile()
 
     @property
     def user(self):

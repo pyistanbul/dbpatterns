@@ -137,7 +137,7 @@ article#document {
     article#document nav.tools {
         position: fixed;
         bottom: 20px;
-        left: 0;
+        right: 20px;
         z-index: 2;
     }
 
@@ -228,6 +228,23 @@ article#document {
         display: inline-block;
         margin-right: 10px;
     }
+
+    .documents .gravatar {
+        position: absolute;
+        margin-left: -90px;
+        margin-top: -4px;
+    }
+
+    .documents .gravatar img {
+        height: 68px;
+    }
+
+/* Forks */
+
+.forks.documents ul {
+    margin-left: 70px;
+}
+
 
 /* ICONS */
 .icon {
@@ -712,7 +729,6 @@ article#document {
 /* Document Detail specific definitions */
 #document-show-view nav.tools {
     left: auto;
-    right: 20px;
 }
 
 #document-show-view #export-list {

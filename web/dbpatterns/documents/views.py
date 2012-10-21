@@ -26,10 +26,16 @@ class HomeView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
-        resource = DocumentResource()
-        most_rated_documents = resource.obj_sort([("star_count", -1)], limit=9)
+        documents = get_collection("documents")
+        most_rated_documents = map(Document,
+            documents.find().sort([("star_count", -1)]).limit(9))
+        recently_added_documents = map(Document,
+            documents.find({
+                "$where": "this.entities && this.entities.length > 1"
+            }).sort([("date_created", -1)]).limit(9))
         return {
-            "most_rated_documents": most_rated_documents
+            "most_rated_documents": most_rated_documents,
+            "recently_added_documents": recently_added_documents
         }
 
 class DocumentDetailView(DocumentMixin, TemplateView):

@@ -1,0 +1,24 @@
+{% load gravatar_tags %}
+<div class="document-preview">
+    <h4><a href="{{ document.get_absolute_url }}">{{ document.title }}</a></h4>
+    <div class="entity-list">
+        {% for entity in document.entities|slice:":3" %}
+            <ul class="entity-preview">
+                <li class="name">{{ entity.name }}</li>
+                {% for attribute in entity.attributes|slice:":5" %}
+                    <li>{{ attribute.name }}</li>
+                {% endfor %}
+            </ul>
+        {% endfor %}
+
+        <a class="gravatar" href="{% url auth_profile document.user.username %}">
+            <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_user document.user %}">
+        </a>
+    </div>
+
+    <div class="document-info">
+        <a class="icon fork" href="{% url show_document_forks document.pk %}">{{ document.get_fork_count }} fork</a>
+        <a class="icon star" href="#">{{ document.star_count }} star</a>
+    </div>
+
+</div>
