@@ -1,4 +1,5 @@
+pymongo==2.3
 django==1.4.1
 django-gravatar==0.1.0
 django-tastypie==0.9.11
-pymongo==2.3
+django-social-auth==0.7.7

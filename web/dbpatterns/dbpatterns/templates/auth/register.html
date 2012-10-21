@@ -4,13 +4,27 @@
 {% block content %}
 
     <section class="content">
-        <h2>Registration</h2>
 
+        <div class="two-column">
+        <h2>Register</h2>
         <form action="{% url auth_registration %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Register">
         </form>
+        </div>
+
+        <hr class="or">
+
+        <div class="two-column">
+            <h2>Connect via Github</h2>
+            <div class="github-login">
+                <form action="{% url socialauth_begin "github" %}" method="get">
+                    <input type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+
     </section>
 
 

@@ -14,8 +14,9 @@
             </div>
         </li>
         {% empty %}
-        <li>You haven't got a created document.
-            <a href="{% url new_document %}">Click here for new document.</a>
+        <li>
+            You haven't got a created document.
+            <a class="" href="{% url new_document %}">Click here for new document.</a>
         </li>
         {% endfor %}
     </ul>

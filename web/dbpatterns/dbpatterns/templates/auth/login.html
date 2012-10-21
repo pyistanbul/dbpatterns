@@ -4,14 +4,31 @@
 {% block content %}
 
     <section class="content">
-        <h2>Login</h2>
 
+        <div class="two-column">
+        <h2>Login</h2>
         <form action="{% url auth_login %}?next={{ next }}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <input type="submit" value="Login">
         </form>
+        </div>
+
+        <hr class="or">
+
+        <div class="two-column">
+            <h2>Connect via Github</h2>
+            <div class="github-login">
+                <form action="{% url socialauth_begin "github" %}" method="get">
+                <input type="submit" value="Login">
+                </form>
+            </div>
+        </div>
+
+
     </section>
+
+
 
 
 {% endblock %}

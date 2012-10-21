@@ -87,6 +87,7 @@ body {
     }
 
 
+
 /* Footer */
 body > footer {
     background-color: #2894DF;
@@ -154,15 +155,15 @@ article#document {
 }
 
     .content form label {
-        display: inline-block;
-        width: 150px;
+        display: block;
     }
 
     .content form .helptext {
         color: gray;
         display: block;
-        margin-left: 150px;
+        /*margin-left: 150px;*/
         padding: 2px 5px;
+        font-size: 16px;
     }
 
     .content input {
@@ -170,7 +171,7 @@ article#document {
     }
 
     .content input[type='submit'] {
-        margin-left: 240px;
+        margin-left: 25%;
         padding: 2px 10px;
         background-color: #2485c9;
         color: white;
@@ -210,8 +211,8 @@ article#document {
 
     .documents ul li a {
         text-decoration: none;
-        font-size: 25px;
-        color: #414141;
+        font-size: 18px;
+        color: #1f70a9;
     }
 
 
@@ -723,6 +724,45 @@ article#document {
     height: 450px;
 }
 
+/* Simple Grid Definitions */
+
+.two-column {
+    float: left;
+    width: 50%;
+    margin-top: 40px;
+}
+
+.two-column:nth-child(2) {
+
+}
+
+
+/* Github Login Definitions */
+
+.github-login {
+    /*margin-top: 40px;*/
+    background: url(/static/images/octocat.png) no-repeat top center;
+    height: 400px;
+}
+
+.github-login input[type="submit"] {
+    display: inline-block;
+    margin-top: 220px;
+    margin-left: 180px;
+}
+
+hr.or {
+    border: none;
+    display: inline-block;
+    position: absolute;
+    left: 50%;
+    top: 200px;
+}
+hr.or:after {
+    content: "or";
+    font-size: 40px;
+    color: gray;
+}
 
 /* jsPlumb */
 
