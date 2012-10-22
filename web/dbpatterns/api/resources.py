@@ -93,7 +93,10 @@ class MongoDBResource(Resource):
         Returns resource URI for bundle or object.
         """
         if isinstance(item, Bundle):
-            pk = item.obj._id
+            if isinstance(item.obj, ObjectId):
+                pk = str(item.obj)
+            else:
+                pk = item.obj._id
         else:
             pk = item._id
         return reverse("api_dispatch_detail", kwargs={

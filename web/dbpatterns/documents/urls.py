@@ -18,7 +18,4 @@ urlpatterns = patterns('',
     url(r'^fork/(?P<slug>[-\w]+)/$', ForkDocumentView.as_view(), name='fork_document'),
     url(r'^star/(?P<slug>[-\w]+)/$', StarDocumentView.as_view(), name='star_document'),
 
-    # api
-    url(r'^api/', include(DocumentResource().urls)),
-
 )
