@@ -109,6 +109,7 @@ INSTALLED_APPS = (
     'social_auth',
 
     'documents',
+    'auth',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -176,7 +177,7 @@ SOCIAL_AUTH_PIPELINE = (
 
 MONGODB_DATABASE = "dbpatterns"
 
-ASSETS_VERSION = "1.0.3"
+ASSETS_VERSION = "1.0.4"
 
 try:
     from settings_local import *

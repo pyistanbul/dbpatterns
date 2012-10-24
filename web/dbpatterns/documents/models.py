@@ -53,5 +53,11 @@ class Document(dict):
     def star_count(self):
         return len(self.get_stars())
 
+    @property
+    def comment_count(self):
+        return get_collection("comments").find({
+            "document_id": self.pk
+        }).count()
+
     def get_stargazers(self):
         return User.objects.filter(id__in=self.get_stars())

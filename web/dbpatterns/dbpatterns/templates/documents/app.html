@@ -35,7 +35,7 @@
         </ul>
 
         <div id="comments">
-
+            <div class="info no-comment">There are no comments yet.</div>
         </div>
 
     </article>
@@ -45,14 +45,19 @@
 
     {% block app %}
         <script type="text/html" id="comment-form-template">
-            <textarea name="comment" id="id_comment" placeholder="Write a comment"></textarea>
+            <textarea name="body" id="id_body" placeholder="Write a comment"></textarea>
             <input type="button" value="Close" class="anchor close">
             <input type="submit" value="Send" class="anchor">
         </script>
 
         <script type="text/html" id="comment-item-template">
             <a href="<%= profile_url %>" class="gravatar"><img src="<%= avatar_url %>" /></a>
-            <p><a href="<%= profile_url %>" class="username"><%= username %></a> <%= body %></p>
+            <p>
+                <a href="<%= profile_url %>" class="username"><%= username %></a> <%= body %>
+                <% if (has_delete_permission) { %>
+                <a href="#" class="delete">delete</a>
+                <% } %>
+            </p>
         </script>
 
         <script type="text/html" id="attribute-form-template">
@@ -168,6 +173,7 @@
     <script src="{{ STATIC_URL }}js/views/entity.js?v={{ ASSETS_VERSION }}"></script>
     <script src="{{ STATIC_URL }}js/views/attribute.js?v={{ ASSETS_VERSION }}"></script>
     <script src="{{ STATIC_URL }}js/views/connection.js?v={{ ASSETS_VERSION }}"></script>
+    <script src="{{ STATIC_URL }}js/views/comment.js?v={{ ASSETS_VERSION }}"></script>
     <script src="{{ STATIC_URL }}js/views/notifier.js?v={{ ASSETS_VERSION }}"></script>
 
     <!-- bootstrap -->
@@ -190,12 +196,6 @@
 
             // retrieve document by the provided resource uri.
             document.fetch();
-
-            d = document
-
-            c = new dbpatterns.collections.Comments({
-                document: document
-            })
 
         });
     </script>

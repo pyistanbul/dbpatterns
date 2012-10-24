@@ -1,8 +1,7 @@
 dbpatterns.models.Comment = Backbone.Model.extend({
-
-    urlRoot: "/api/comments"
-
-
+    defaults: {
+        has_delete_permission: false
+    }
 });
 
 dbpatterns.collections.Comments = Backbone.Collection.extend({
@@ -11,6 +10,6 @@ dbpatterns.collections.Comments = Backbone.Collection.extend({
         this.document = options.document;
     },
     url: function() {
-        return this.document.get("resource_uri") + 'comments';
+        return this.document.get("comments_uri");
     }
 });

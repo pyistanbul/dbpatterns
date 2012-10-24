@@ -17,6 +17,10 @@ class Comment(dict):
         return gravatar_for_email(self.user.email, size=40)
 
     @property
+    def username(self):
+        return self.user.username
+
+    @property
     def user(self):
         if not self._cached_user:
             self._cached_user = self.get_user()
@@ -25,6 +29,6 @@ class Comment(dict):
 
     def get_user(self):
         try:
-            User.objects.get(id=self.user_id)
+            return User.objects.get(id=self.user_id)
         except User.DoesNotExist:
             return AnonymousProfile()

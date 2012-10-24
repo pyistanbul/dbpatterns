@@ -10,7 +10,8 @@ dbpatterns.views.Document = Backbone.View.extend({
     events: {
         "click .edit-title": "rename",
         "click .save-document": "save_document",
-        "click .export": "export_document"
+        "click .export": "export_document",
+        "click #show-comments": "render_comments"
     },
 
     shortcuts: {
@@ -30,6 +31,7 @@ dbpatterns.views.Document = Backbone.View.extend({
             model: this.model.entities,
             app_view: this
         });
+        this.comments_view = null; // it's lazy.
     },
 
     render_title: function () {
@@ -56,6 +58,19 @@ dbpatterns.views.Document = Backbone.View.extend({
             dbpatterns.notifications.trigger("flash", this.messages.save);
             callback && callback();
         }.bind(this));
+    },
+
+    render_comments: function () {
+
+        if (this.comments_view) {
+            this.comments_view.show();
+            return;
+        }
+
+        this.comments_view = (new dbpatterns.views.Comments({
+            document: this.model
+        })).render();
+
     },
 
     export_document: function () {

@@ -86,7 +86,7 @@ class MongoDBResource(Resource):
         Removes single document from collection
         """
         parameters = { "_id": ObjectId(kwargs.get("pk")) }
-        db.documents.remove(parameters)
+        self.get_collection().remove(parameters)
 
     def get_resource_uri(self, item):
         """

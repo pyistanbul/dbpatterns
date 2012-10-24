@@ -1,4 +1,6 @@
 from django.conf.urls import url
+from django.core.urlresolvers import reverse
+
 from tastypie import http
 from tastypie import fields
 from tastypie.exceptions import ImmediateHttpResponse
@@ -7,7 +9,6 @@ from tastypie.utils import trailing_slash
 from api.auth import DocumentsAuthorization
 from api.resources import MongoDBResource
 from comments.resources import CommentResource
-
 from documents import get_collection
 from documents.models import Document
 
@@ -42,6 +43,13 @@ class DocumentResource(MongoDBResource):
         return super(DocumentResource, self).obj_update(bundle, request, **kwargs)
 
     # nested resources
+
+    def dehydrate(self, bundle):
+        bundle.data["comments_uri"] = reverse("api_get_comments", kwargs={
+            "resource_name": "documents",
+            "pk": bundle.data.get("id")
+        })
+        return bundle
 
     def override_urls(self):
         return [
