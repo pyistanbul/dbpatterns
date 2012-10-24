@@ -877,21 +877,22 @@ section.news ul {
         #comments form #id_body {
             padding: 10px;
             border: 1px solid #d5eaf9;
-            width: 250px;
+            width: 240px;
             height: 44px;
             float: left;
         }
 
         #comments form .anchor {
             float: left;
-            margin-top: 2px;
+            margin-top: 3px;
             margin-left: 5px;
             font-size: 18px;
-            width: 80px;
+            width: 92px;
             padding: 2px;
         }
 
         #comments form .close {
+            margin-top: 0;
             background-color: #a9a9a9;
         }
 
