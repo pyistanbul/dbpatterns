@@ -739,6 +739,11 @@ article#document {
     height: 450px;
 }
 
+#document-edit-view article#document nav.tools {
+    left: 0;
+    right: auto;
+}
+
 /* Simple Grid Definitions */
 
 .two-column {

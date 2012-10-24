@@ -119,6 +119,11 @@ dbpatterns.views.Attributes = Backbone.View.extend({
     },
 
     add_attribute: function (attribute) {
+
+        if (!attribute.get("name")) {
+            return
+        }
+
         this.$el.find("section.attributes").append(new dbpatterns.views.Attribute({
             model: attribute,
             app_view: this.options.app_view
