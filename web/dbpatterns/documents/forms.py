@@ -1,4 +1,5 @@
 from django import forms
+from documents.fields import SearchInput
 
 from documents.parsers.django_orm import DjangoORMParser
 from documents.parsers.dummy import DummyParser
@@ -58,3 +59,7 @@ class DocumentForm(forms.Form):
 
 class ForkDocumentForm(forms.Form):
     title = forms.CharField(label="Document title")
+
+class SearchForm(forms.Form):
+    keyword = forms.CharField(
+        widget=SearchInput(placeholder="Type a keyword"))

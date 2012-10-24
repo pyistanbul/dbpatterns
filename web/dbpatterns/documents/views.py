@@ -10,10 +10,11 @@ from auth.mixins import LoginRequiredMixin
 from documents import get_collection
 from documents.constants import FIELD_TYPES, EXPORTER_ORACLE, EXPORTER_SQLITE, EXPORTER_POSTGRES, EXPORTER_MYSQL, EXPORTERS
 from documents.exporters.sql import MysqlExporter, PostgresExporter, SQLiteExporter, OracleExporter
-from documents.forms import DocumentForm, ForkDocumentForm
+from documents.forms import DocumentForm, ForkDocumentForm, SearchForm
 from documents.mixins import DocumentMixin
 from documents.models import Document
 from documents.resources import DocumentResource
+from documents.utils import extract_keywords
 
 DOCUMENT_EXPORTERS = {
     EXPORTER_MYSQL: MysqlExporter,
@@ -35,7 +36,8 @@ class HomeView(TemplateView):
             }).sort([("date_created", -1)]).limit(9))
         return {
             "most_rated_documents": most_rated_documents,
-            "recently_added_documents": recently_added_documents
+            "recently_added_documents": recently_added_documents,
+            "search_form": SearchForm()
         }
 
 class DocumentDetailView(DocumentMixin, TemplateView):
@@ -134,13 +136,12 @@ class NewDocumentView(LoginRequiredMixin, FormView):
     template_name = "documents/new.html"
 
     def form_valid(self, form, **kwargs):
-        resource = DocumentResource()
-
         self.object_id = get_collection("documents").insert({
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
             "date_created": datetime.now(),
-            "entities": form.cleaned_data.get("entities")
+            "entities": form.cleaned_data.get("entities"),
+            "_keywords": extract_keywords(form.cleaned_data.get("title"))
         })
         return super(NewDocumentView, self).form_valid(form)
 
@@ -154,10 +155,48 @@ class MyDocumentsView(LoginRequiredMixin, ListView):
     context_object_name = "documents"
 
     def get_queryset(self):
-        resource = DocumentResource()
         collection = get_collection("documents").find({"user_id": self.request.user.pk})
         return map(Document, collection)
 
+
+class SearchDocumentView(ListView):
+
+    template_name = "documents/search.html"
+    context_object_name = "documents"
+
+    def get_queryset(self):
+
+        form = self.get_form()
+
+        if not form.is_valid():
+            return []
+
+        keyword = form.cleaned_data.get("keyword")
+
+        collection = get_collection("documents").find({
+            "$or": [
+                {
+                    "_keywords": keyword
+                } ,
+                {
+                    "title": {
+                        "$regex": keyword
+                    }
+                }
+            ]
+        })
+
+        return map(Document, collection)
+
+    def get_context_data(self, **kwargs):
+        return super(SearchDocumentView, self).get_context_data(
+            search_form = self.form,
+            keyword=self.request.GET.get("keyword"),
+            **kwargs)
+
+    def get_form(self):
+        self.form = SearchForm(self.request.GET)
+        return self.form
 
 class ForkDocumentView(DocumentMixin, NewDocumentView):
     form_class = ForkDocumentForm
@@ -176,7 +215,8 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
             "user_id": self.request.user.pk,
             "entities": document.entities,
             "fork_of": document.pk,
-            "date_created": datetime.now()
+            "date_created": datetime.now(),
+            "_keywords": extract_keywords(form.cleaned_data.get("title"))
         })
 
         # TODO: use atomic operations for incrementing!

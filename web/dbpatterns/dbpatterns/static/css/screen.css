@@ -910,6 +910,31 @@ section.news ul {
             color: #b4b4b4;
         }
 
+/* Search Form */
+
+.search form {
+    width: 500px;
+    margin: 0 auto;
+    padding: 0;
+}
+
+    .search form p {
+        float: left;
+    }
+
+    .search form label {
+        display: none;
+    }
+
+    .search form #id_keyword {
+        padding: 7px 10px;
+        font-size: 22px;
+        width: 350px;
+    }
+
+    .search form .button {
+        padding: 2px 10px;
+    }
 
 
 /* jsPlumb */

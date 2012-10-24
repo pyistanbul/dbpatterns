@@ -1,14 +1,14 @@
-from django.conf.urls import include, patterns, url
+from django.conf.urls import patterns, url
 
-from documents.resources import DocumentResource
 from documents.views import (HomeView, DocumentDetailView, ExportDocumentView, DocumentForksView,
                              DocumentStarsView, NewDocumentView, MyDocumentsView, DocumentEditView,
-                             ForkDocumentView, StarDocumentView)
+                             ForkDocumentView, StarDocumentView, SearchDocumentView)
 
 urlpatterns = patterns('',
 
     url(r'^$', HomeView.as_view(), name='home'),
     url(r'^my-documents/$$', MyDocumentsView.as_view(), name='my_documents'),
+    url(r'^search/$$', SearchDocumentView.as_view(), name='search_document'),
     url(r'^new/$$', NewDocumentView.as_view(), name='new_document'),
     url(r'^show/(?P<slug>[-\w]+)/$', DocumentDetailView.as_view(), name='show_document'),
     url(r'^show/(?P<slug>[-\w]+)/forks$', DocumentForksView.as_view(), name='show_document_forks'),

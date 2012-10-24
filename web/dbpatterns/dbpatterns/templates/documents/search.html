@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% load gravatar document_tags %}
+
+{% block body-id %}document-search{% endblock %}
+
+{% block content %}
+
+    <section class="content search">
+        {% include "documents/search_form.html" %}
+    </section>
+
+    <section class="content search-result documents">
+        <ul>
+            {% for document in documents %}
+                <li>
+                    <a class="gravatar" title="{{ document.user }}" href="{% url auth_profile document.user.username %}">
+                        <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_user document.user  %}">
+                    </a>
+                    <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                    <div class="info">
+                        <span class="icon fork">{{ document.get_fork_count }} fork</span>
+                        <span class="icon star">{{ document.star_count }} star</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li>No document found for &quot;{{ keyword }}&quot;</li>
+            {% endfor %}
+        </ul>
+    </section>
+
+{% endblock %}
