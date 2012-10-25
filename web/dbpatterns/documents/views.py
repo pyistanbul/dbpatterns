@@ -174,16 +174,7 @@ class SearchDocumentView(ListView):
         keyword = form.cleaned_data.get("keyword")
 
         collection = get_collection("documents").find({
-            "$or": [
-                {
-                    "_keywords": keyword
-                } ,
-                {
-                    "title": {
-                        "$regex": keyword
-                    }
-                }
-            ]
+            "_keywords": keyword
         })
 
         return map(Document, collection)
