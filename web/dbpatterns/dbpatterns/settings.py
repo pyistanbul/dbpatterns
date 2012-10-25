@@ -177,7 +177,7 @@ SOCIAL_AUTH_PIPELINE = (
 
 MONGODB_DATABASE = "dbpatterns"
 
-ASSETS_VERSION = "1.0.6"
+ASSETS_VERSION = "1.0.7"
 
 try:
     from settings_local import *

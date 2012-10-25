@@ -270,7 +270,6 @@ article#document {
     padding: 0;
 
     float: left;
-    /*border-right: 3px solid #2485c9;*/
 }
 
     .document-preview a {
@@ -283,6 +282,8 @@ article#document {
         text-align: left;
         margin: 0 2px 2px;
         letter-spacing: -1px;
+        height: 1.4em;
+        overflow: hidden;
     }
 
     .document-preview .entity-list {
