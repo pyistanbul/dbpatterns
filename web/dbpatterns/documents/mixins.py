@@ -1,3 +1,6 @@
+from bson.errors import InvalidId
+from django.http import Http404
+
 from documents.resources import DocumentResource
 
 
@@ -7,4 +10,7 @@ class DocumentMixin(object):
     """
     def get_document(self):
         resource = DocumentResource()
-        return resource.obj_get(request=self.request, pk=self.kwargs.get("slug"))
+        try:
+            return resource.obj_get(request=self.request, pk=self.kwargs.get("slug"))
+        except (TypeError, InvalidId):
+            raise Http404("Document is not found.")

@@ -1,5 +1,7 @@
 {% extends "documents/base.html" %}
 
+{% load compress %}
+
 {% block content %}
 
     <article id="document">
@@ -142,9 +144,7 @@
 
 
 {% block scripts %}
-
     {{ block.super }}
-
     <script type="text/javascript">
         // underscore.string mixin
         _.mixin(_.string.exports());
@@ -161,7 +161,8 @@
         _.extend(dbpatterns.notifications, Backbone.Events);
     </script>
 
-    <!-- models  -->
+    <!-- app  -->
+    {% compress js %}
     <script src="{{ STATIC_URL }}js/models/document.js?v={{ ASSETS_VERSION }}"></script>
     <script src="{{ STATIC_URL }}js/models/entity.js?v={{ ASSETS_VERSION }}"></script>
     <script src="{{ STATIC_URL }}js/models/attribute.js?v={{ ASSETS_VERSION }}"></script>
@@ -175,6 +176,7 @@
     <script src="{{ STATIC_URL }}js/views/connection.js?v={{ ASSETS_VERSION }}"></script>
     <script src="{{ STATIC_URL }}js/views/comment.js?v={{ ASSETS_VERSION }}"></script>
     <script src="{{ STATIC_URL }}js/views/notifier.js?v={{ ASSETS_VERSION }}"></script>
+    {% endcompress %}
 
     <!-- bootstrap -->
     <script type="text/javascript">

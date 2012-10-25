@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
     <title>dbpatterns - create, share, explore database patterns</title>
+    {% load compress %}
+    {% compress css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/h5bp.css?v={{ ASSETS_VERSION }}" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/screen.css?v={{ ASSETS_VERSION }}" />
     <link rel="stylesheet" href="{{ STATIC_URL }}css/prettify.css?v={{ ASSETS_VERSION }}" />
+    {% endcompress %}
     {% block extra-head %}{% endblock %}
 </head>
 <body id="{% block body-id%}dbpatterns{% endblock %}">
@@ -38,22 +41,20 @@
 {% endblock %}
 
 {% block scripts %}
-    <!-- libs -->
-    <script src="{{ STATIC_URL }}js/libs/prettify/prettify.min.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.min.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/jquery/jquery-ui.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.0/jquery-ui.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.2/underscore-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/backbone.js/0.9.2/backbone-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/underscore.string/2.3.0/underscore.string.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/prettify/188.0.0/prettify.js"></script>
+    {% compress js %}
     <script src="{{ STATIC_URL }}js/libs/jquery/jquery.form2json.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.jsplumb.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/keymaster/keymaster.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/underscore/underscore.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/underscore/underscore.string.min.js"></script>
-    <script src="{{ STATIC_URL }}js/libs/backbone/backbone.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/jquery/jquery.jsplumb.min.js"></script>
+    <script src="{{ STATIC_URL }}js/libs/keymaster/keymaster.min.js"></script>
     <script src="{{ STATIC_URL }}js/libs/backbone/backbone.shortcuts.js"></script>
     <script src="{{ STATIC_URL }}js/libs/backbone/tastypie.js"></script>
-
-
-    <!-- utilities -->
     <script src="{{ STATIC_URL }}js/utilities.js"></script>
+    {% endcompress %}
 {% endblock %}
 
     <!-- google analytic snippet -->

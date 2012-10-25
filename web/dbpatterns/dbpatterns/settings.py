@@ -56,6 +56,7 @@ STATIC_URL = '/static/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(os.path.dirname(__file__), "static"),
+
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -67,6 +68,7 @@ STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
 #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'compressor.finders.CompressorFinder',
 )
 
 
@@ -107,6 +109,7 @@ INSTALLED_APPS = (
 
     'gravatar',
     'social_auth',
+    'compressor',
 
     'documents',
     'auth',
@@ -178,6 +181,13 @@ SOCIAL_AUTH_PIPELINE = (
 MONGODB_DATABASE = "dbpatterns"
 
 ASSETS_VERSION = "1.0.7"
+
+COMPRESS_ENABLED = True
+COMPRESS_CSS_FILTERS = [
+    "compressor.filters.cssmin.CSSMinFilter"
+]
+
+COMPRESS_ROOT = os.path.join(os.path.dirname(__file__), "static")
 
 try:
     from settings_local import *
