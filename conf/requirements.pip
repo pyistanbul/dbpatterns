@@ -3,3 +3,4 @@ django==1.4.1
 django-gravatar==0.1.0
 django-tastypie==0.9.11
 django-social-auth==0.7.7
+topia.termextract==1.1.0

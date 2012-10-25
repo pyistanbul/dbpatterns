@@ -8,7 +8,10 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
 
-        get_collection("documents").ensure_index([("_keywords", 1)])
+        get_collection("documents").ensure_index([
+                ("_keywords", 1),
+                ("title", 1),
+            ])
 
         for document in get_collection("documents").find():
 
