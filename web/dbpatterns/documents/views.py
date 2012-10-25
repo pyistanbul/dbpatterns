@@ -174,7 +174,9 @@ class SearchDocumentView(ListView):
         keyword = form.cleaned_data.get("keyword")
 
         collection = get_collection("documents").find({
-            "_keywords": keyword
+            "_keywords": {
+                "$all": keyword.split()
+            }
         })
 
         return map(Document, collection)
