@@ -124,7 +124,6 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
-    'dbpatterns.context_processors.assets_version',
 )
 
 
@@ -179,8 +178,6 @@ SOCIAL_AUTH_PIPELINE = (
 
 
 MONGODB_DATABASE = "dbpatterns"
-
-ASSETS_VERSION = "1.0.7"
 
 COMPRESS_ENABLED = True
 COMPRESS_CSS_FILTERS = [

@@ -39,6 +39,10 @@ class CommentResource(MongoDBResource):
         return get_collection("comments")
 
     def obj_get_list(self, request=None, **kwargs):
+
+        if not "document_id" in kwargs:
+            return super(CommentResource, self).obj_get_list(request, **kwargs)
+
         return map(self.get_object_class(), self.get_collection().find({
             "document_id": kwargs.get("document_id")
         }).sort([['_id', 1]]))
