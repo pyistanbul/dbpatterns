@@ -264,6 +264,7 @@ article#document {
         padding-left: 35px;
     }
 
+
 .document-preview {
     margin: 20px 35px 40px 10px;
     width: 270px;
@@ -744,6 +745,24 @@ article#document {
     left: 0;
     right: auto;
 }
+
+
+.fork-of {
+    position: fixed;
+    top: 10px;
+}
+
+    .fork-of a {
+        width: 20px;
+        display: inline-block;
+        height: 30px;
+
+    }
+
+.fork-of + .document-title {
+    text-indent: 15px;
+}
+
 
 /* Simple Grid Definitions */
 

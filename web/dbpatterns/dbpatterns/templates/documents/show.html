@@ -40,3 +40,12 @@
     </ul>
 
 {% endblock %}
+
+{% block app-header %}
+{% if document.fork_of %}
+<h3 class="fork-of">
+    <a title="fork-of" class="icon fork" href="{% url show_document document.fork_of %}"></a>
+</h3>
+{% endif %}
+{{ block.super }}
+{% endblock %}

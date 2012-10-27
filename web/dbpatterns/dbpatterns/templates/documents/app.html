@@ -15,7 +15,9 @@
                     </ul>
                 </nav>
             {% endblock %}
-            <h1 class="{% if edit %}edit-title{% endif %}">{{ document.title }}</h1>
+            {% block app-header %}
+            <h1 class="{% if edit %}edit-title{% endif %} document-title">{{ document.title }}</h1>
+            {% endblock %}
             <nav class="leave">
                 {% block nav %}
                     <ul>
