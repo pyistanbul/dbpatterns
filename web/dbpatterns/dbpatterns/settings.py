@@ -186,6 +186,10 @@ COMPRESS_CSS_FILTERS = [
 
 COMPRESS_ROOT = os.path.join(os.path.dirname(__file__), "static")
 
+COMMENTS_FROM_EMAIL = "comments@dbpatterns.com"
+
+SITE_URL = "http://dbpatterns.com"
+
 try:
     from settings_local import *
 except ImportError:

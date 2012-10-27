@@ -1,8 +1,12 @@
+from bson import ObjectId
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from gravatar.templatetags.gravatar import gravatar_for_email
 from auth.models import AnonymousProfile
+from documents import get_collection
+from documents.models import Document
 
 class Comment(dict):
     # dictionary-like object for mongodb documents.
@@ -32,3 +36,9 @@ class Comment(dict):
             return User.objects.get(id=self.user_id)
         except User.DoesNotExist:
             return AnonymousProfile()
+
+    @property
+    def document(self):
+        return Document(get_collection("documents").find_one({
+            "_id": ObjectId(self.document_id)
+        }))

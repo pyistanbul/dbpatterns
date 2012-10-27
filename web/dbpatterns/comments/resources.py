@@ -1,12 +1,17 @@
 from datetime import datetime
 from bson import ObjectId
+from django.conf import settings
+from django.core.mail import send_mail
+from django.dispatch import receiver
 
 from tastypie import fields, http
 from tastypie.authorization import Authorization
 from tastypie.exceptions import ImmediateHttpResponse
 
 from api.resources import MongoDBResource
+from comments.constants import COMMENT_TEMPLATE
 from comments.models import Comment
+from comments.signals import comment_done
 from documents import get_collection
 
 class CommentResource(MongoDBResource):
@@ -49,7 +54,6 @@ class CommentResource(MongoDBResource):
 
 
     def obj_delete(self, request=None, **kwargs):
-        print self.obj_get(**kwargs).get("user_id")
         if request.user.is_anonymous() \
             or request.user.pk != self.obj_get(**kwargs).get("user_id"):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
@@ -57,8 +61,35 @@ class CommentResource(MongoDBResource):
         super(CommentResource, self).obj_delete(request, **kwargs)
 
     def obj_create(self, bundle, request=None, **kwargs):
-        return super(CommentResource, self).obj_create(bundle,
+        bundle = super(CommentResource, self).obj_create(bundle,
             user_id=request.user.id,
             document_id=kwargs.get("document_id"),
             date_created=datetime.now()
         )
+
+        comment_done.send(sender=self,
+            comment_id=bundle.obj
+        )
+
+        return bundleadd
+
+
+@receiver(comment_done)
+def comment_on(sender, comment_id, **kwargs):
+
+    comment = Comment(get_collection("comments").find_one({
+        "_id": ObjectId(comment_id)
+    }))
+
+    document = comment.document
+
+    send_mail(
+        subject = "You have new comment(s) on your pattern",
+        message = COMMENT_TEMPLATE % {
+            "document_title": document.title,
+            "document_link": settings.SITE_URL + document.get_absolute_url()
+        },
+        from_email = settings.COMMENTS_FROM_EMAIL,
+        recipient_list = [document.user.email],
+        fail_silently = True
+    )
