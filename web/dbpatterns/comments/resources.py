@@ -91,6 +91,6 @@ def comment_on(sender, comment_id, **kwargs):
         },
         from_email = settings.COMMENTS_FROM_EMAIL,
         recipient_list = ['"%s" <%s>' % (
-            document.user.get_full_name() or document.user.username, comment.user.email)],
+            document.user.get_full_name() or document.user.username, document.user.email)],
         fail_silently = True
     )
