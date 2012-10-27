@@ -90,6 +90,7 @@ def comment_on(sender, comment_id, **kwargs):
             "document_link": settings.SITE_URL + document.get_absolute_url()
         },
         from_email = settings.COMMENTS_FROM_EMAIL,
-        recipient_list = [document.user.email],
+        recipient_list = ['"%s" <%s>' % (
+            comment.full_name or comment.username, comment.user.email)],
         fail_silently = True
     )

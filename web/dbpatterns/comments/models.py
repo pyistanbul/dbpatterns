@@ -25,6 +25,10 @@ class Comment(dict):
         return self.user.username
 
     @property
+    def full_name(self):
+        return self.user.get_full_name() or None
+
+    @property
     def user(self):
         if not self._cached_user:
             self._cached_user = self.get_user()
