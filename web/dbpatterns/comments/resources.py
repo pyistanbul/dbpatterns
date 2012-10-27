@@ -71,7 +71,7 @@ class CommentResource(MongoDBResource):
             comment_id=bundle.obj
         )
 
-        return bundleadd
+        return bundle
 
 
 @receiver(comment_done)
