@@ -772,11 +772,6 @@ article#document {
     margin-top: 40px;
 }
 
-.two-column:nth-child(2) {
-
-}
-
-
 /* Github Login Definitions */
 
 .github-login {
@@ -788,7 +783,7 @@ article#document {
 .github-login input[type="submit"] {
     display: inline-block;
     margin-top: 220px;
-    margin-left: 180px;
+    margin-left: 165px;
 }
 
 hr.or {
