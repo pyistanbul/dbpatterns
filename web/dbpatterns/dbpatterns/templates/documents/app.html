@@ -57,7 +57,7 @@
         <script type="text/html" id="comment-item-template">
             <a href="<%= profile_url %>" class="gravatar"><img src="<%= avatar_url %>" /></a>
             <p>
-                <a href="<%= profile_url %>" class="username"><%= username %></a> <%= body %>
+                <a href="<%= profile_url %>" class="username"><%= _.escape(username) %></a> <%= _.escape(body) %>
                 <% if (has_delete_permission) { %>
                 <a href="#" class="delete">delete</a>
                 <% } %>
@@ -113,13 +113,13 @@
         </script>
 
         <script type="text/html" id="attribute-template">
-            <a href="#" class="name {% if edit %}edit{% endif %}"><%= name %> <span><%= type %></span></a>
+            <a href="#" class="name {% if edit %}edit{% endif %}"><%= _.escape(name) %> <span><%= _.escape(type) %></span></a>
             {% if edit %}<a href="#" class="remove-attribute" title="remove attribute">delete</a>{% endif %}
         </script>
 
         <script type="text/html" id="entity-template">
             <header>
-                <h3><%= name %></h3>
+                <h3><%= _.escape(name) %></h3>
             </header>
             <section class="attributes"></section>
 
@@ -130,12 +130,12 @@
         </script>
 
         <script type="text/html" id="dialog-template">
-        <h3><%= title %></h3>
+        <h3><%= _.escape(title) %></h3>
         </script>
 
         <script type="text/html" id="export-dialog-template">
-            <h3><%= title %></h3>
-            <pre class="prettyprint"><code><%= code %></code></pre>
+            <h3><%= _.escape(title) %></h3>
+            <pre class="prettyprint"><code><%= _.escape(code) %></code></pre>
             <a href="#" class="anchor close">Close</a>
             <a href="#" class="anchor new-window">Plain version</a>
         </script>

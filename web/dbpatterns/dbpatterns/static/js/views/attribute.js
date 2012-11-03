@@ -82,7 +82,7 @@ dbpatterns.views.Attribute = Backbone.View.extend({
             el: source,
             target: target,
             label: function (model) {
-                return model.get("name") + " -> " + model.get("foreign_key_attribute");
+                return model.escape("name") + " -> " + model.escape("foreign_key_attribute");
             }
         })).render();
 

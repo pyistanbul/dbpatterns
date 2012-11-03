@@ -73,8 +73,8 @@ dbpatterns.views.Entity = Backbone.View.extend({
     },
 
     render_name: function () {
-        this.$el.find("h3").html(this.model.get("name"));
-        this.$el.attr("data-entity", this.model.get("name"));
+        this.$el.find("h3").html(this.model.escape("name"));
+        this.$el.attr("data-entity", this.model.escape("name"));
     },
 
     rename: function () {
