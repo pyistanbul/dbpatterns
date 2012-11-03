@@ -26,7 +26,8 @@ class SQLExporter(BaseExporter):
         return self.QUOTATION_LITERAL + text + self.QUOTATION_LITERAL
 
     def export(self):
-        for entity in self.document.entities:
+
+        for entity in self.document.get("entities", []):
 
             yield 'CREATE TABLE %s (' % self.quote(entity.get("name"))
             if entity.get("attributes"):
