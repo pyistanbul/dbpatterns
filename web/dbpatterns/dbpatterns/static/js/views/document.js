@@ -36,7 +36,7 @@ dbpatterns.views.Document = Backbone.View.extend({
 
     render_title: function () {
         this.$el.find("header h1").html(this.model.escape("title"));
-        window.document.title = this.model.escape("title");
+        window.document.title = this.model.get("title");
         return this;
     },
 
