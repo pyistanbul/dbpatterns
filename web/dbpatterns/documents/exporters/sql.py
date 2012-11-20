@@ -27,7 +27,7 @@ class SQLExporter(BaseExporter):
 
     def export(self):
 
-        for entity in self.document.get("entities", []):
+        for entity in self.document.get("entities") or []:
 
             yield 'CREATE TABLE %s (' % self.quote(entity.get("name"))
             if entity.get("attributes"):
