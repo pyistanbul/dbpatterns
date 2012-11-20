@@ -142,8 +142,9 @@ article#document {
     }
 
     article#document nav.leave {
+        position: absolute;
         float: right;
-        margin-right: 20px;
+        right: 20px;
     }
 
 

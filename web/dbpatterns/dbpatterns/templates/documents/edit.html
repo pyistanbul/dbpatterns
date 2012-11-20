@@ -3,6 +3,13 @@
 
 {% block body-id %}document-edit-view{% endblock %}
 
+{% block nav %}
+    <ul>
+        <li><a href="{% url my_documents %}">Back to list</a></li>
+        <li><a class="show" href="{% url show_document document.id %}">Show</a></li>
+    </ul>
+{% endblock %}
+
 {% block content %}
 {{ block.super }}
 <div id="help">

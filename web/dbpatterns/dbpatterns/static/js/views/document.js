@@ -11,6 +11,7 @@ dbpatterns.views.Document = Backbone.View.extend({
         "click .edit-title": "rename",
         "click .save-document": "save_document",
         "click .export": "export_document",
+        "click .show": "show_document",
         "click #show-comments": "render_comments"
     },
 
@@ -86,6 +87,13 @@ dbpatterns.views.Document = Backbone.View.extend({
         } else {
             dialog.render();
         }
+        return false;
+    },
+
+    show_document: function (event) {
+        this.save_document(_.delay(function () {
+            window.location = $(event.target).attr("href");
+        }, 500));
         return false;
     }
 });
