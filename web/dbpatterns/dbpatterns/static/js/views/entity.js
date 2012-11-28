@@ -58,18 +58,23 @@ dbpatterns.views.Entity = Backbone.View.extend({
     },
 
     on_drag: function (event, ui) {
+        var top = ui.position.top,
+            left = ui.position.left;
         this.model.set({
             "position": {
-                "top": ui.position.top,
-                "left": ui.position.left
+                "top": top,
+                "left": left
             }
         });
+
         this.model.save();
     },
 
     destroy: function () {
-        this.model.entity_attributes.trigger("detach");
-        this.model.destroy();
+        if (window.confirm("Are you sure?")) {
+            this.model.entity_attributes.trigger("detach");
+            this.model.destroy();
+        }
     },
 
     render_name: function () {

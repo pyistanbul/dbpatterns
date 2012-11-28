@@ -421,16 +421,13 @@ article#document {
 .entity {
     z-index: 2;
     font-size: 16px;
-
     background-color: #fff;
     width: 200px;
     border: 1px solid #d5d5d5;
     color: #505050;
     margin-bottom: 10px;
-
     position: absolute !important; /* prevent jquery ui draggable position definition */
 }
-
     .entity header {
         margin: 0;
         padding: 0;
@@ -462,12 +459,12 @@ article#document {
         text-decoration: none;
         width: 90%;
         float: left;
+        height: 1em;
+        overflow: hidden;
     }
 
     .entity .attributes .attribute a.edit {
         width: 87%;
-        overflow: hidden;
-        height: 1em;
     }
 
     .entity .attributes .attribute a.remove-attribute {
@@ -959,6 +956,7 @@ section.news ul {
 
 ._jsPlumb_overlay {
     z-index: 1;
+    color: #848484;
 }
 
 /* Social Links */
