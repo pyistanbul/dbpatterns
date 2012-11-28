@@ -16,6 +16,13 @@
     </section>
 
     <section class="content latest">
+        <h2>Featured patterns</h2>
+        {% for document in featured_documents %}
+            {% include "documents/preview.html" %}
+        {% endfor %}
+    </section>
+
+    <section class="content latest">
         <h2>Trending patterns</h2>
         {% for document in most_rated_documents %}
             {% include "documents/preview.html" %}

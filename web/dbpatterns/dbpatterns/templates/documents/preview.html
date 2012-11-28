@@ -11,9 +11,11 @@
             </ul>
         {% endfor %}
 
+        {% if document.user.is_authenticated %}
         <a class="gravatar" href="{% url auth_profile document.user.username %}">
             <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_user document.user %}">
         </a>
+        {% endif %}
     </div>
 
     <div class="document-info">
