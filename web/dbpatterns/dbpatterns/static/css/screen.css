@@ -466,6 +466,8 @@ article#document {
 
     .entity .attributes .attribute a.edit {
         width: 87%;
+        overflow: hidden;
+        height: 1em;
     }
 
     .entity .attributes .attribute a.remove-attribute {
