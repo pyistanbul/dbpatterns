@@ -1,4 +1,5 @@
 from datetime import datetime
+from itertools import imap
 
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, FormView, ListView, RedirectView, View
@@ -28,15 +29,23 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
         documents = get_collection("documents")
-        featured_documents = map(Document, documents.find({
+
+        documents.ensure_index([
+            ("featured", 1),
+            ("star_count", 1)
+        ])
+
+        featured_documents = imap(Document, documents.find({
            "featured": True
-        }))
-        most_rated_documents = map(Document,
+        }).limit(9))
+
+        most_rated_documents = imap(Document,
             documents.find().sort([("star_count", -1)]).limit(9))
-        recently_added_documents = map(Document,
-            documents.find({
-                "$where": "this.entities && this.entities.length > 1"
-            }).sort([("date_created", -1)]).limit(9))
+
+        recently_added_documents = imap(Document, documents.find({
+            "$where": "this.entities && this.entities.length > 1"
+        }).sort([("date_created", -1)]).limit(9))
+
         return {
             "featured_documents": featured_documents,
             "most_rated_documents": most_rated_documents,

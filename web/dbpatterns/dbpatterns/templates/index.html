@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load cache %}
+
 {% block content %}
     <section class="content landing">
         <p>
@@ -15,6 +17,7 @@
         {% include "documents/search_form.html" %}
     </section>
 
+    {% cache 3000 index %}
     <section class="content latest">
         <h2>Featured patterns</h2>
         {% for document in featured_documents %}
@@ -35,6 +38,7 @@
             {% include "documents/preview.html" %}
         {% endfor %}
     </section>
+    {% endcache %}
 {% endblock %}
 
 {% block footer %}

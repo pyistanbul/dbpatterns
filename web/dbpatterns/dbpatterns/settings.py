@@ -85,8 +85,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    # Uncomment the next line for simple clickjacking protection:
-    # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware'
 )
 
 ROOT_URLCONF = 'dbpatterns.urls'
@@ -110,6 +109,7 @@ INSTALLED_APPS = (
     'gravatar',
     'social_auth',
     'compressor',
+    'debug_toolbar',
 
     'documents',
     'auth',
@@ -156,6 +156,8 @@ LOGGING = {
     }
 }
 
+# Social Auth Settings
+
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.github.GithubBackend',
     'django.contrib.auth.backends.ModelBackend',
@@ -176,8 +178,11 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.user.update_user_details',
 )
 
+# MONGODB Settings
 
 MONGODB_DATABASE = "dbpatterns"
+
+# Django Compressor Settings
 
 COMPRESS_ENABLED = True
 COMPRESS_CSS_FILTERS = [
@@ -189,6 +194,14 @@ COMPRESS_ROOT = os.path.join(os.path.dirname(__file__), "static")
 COMMENTS_FROM_EMAIL = "comments@dbpatterns.com"
 
 SITE_URL = "http://dbpatterns.com"
+
+# DEBUG Toolbar Settings
+
+INTERNAL_IPS = ('127.0.0.1', )
+
+DEBUG_TOOLBAR_CONFIG = {
+    "INTERCEPT_REDIRECTS": False
+}
 
 try:
     from settings_local import *

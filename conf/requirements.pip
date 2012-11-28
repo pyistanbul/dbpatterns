@@ -4,5 +4,6 @@ django-compressor==1.2
 django-gravatar==0.1.0
 django-tastypie==0.9.11
 django-social-auth==0.7.7
+django-debug-toolbar==0.9.4
 nltk==2.0.3
 numpy==1.6.2
