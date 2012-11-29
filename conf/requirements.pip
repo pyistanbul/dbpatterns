@@ -1,3 +1,4 @@
+python-memcached==1.48
 pymongo==2.3
 django==1.4.1
 django-compressor==1.2
