@@ -37,7 +37,7 @@ class HomeView(TemplateView):
 
         featured_documents = imap(Document, documents.find({
            "featured": True
-        }).limit(9))
+        }).sort([("date_created", -1)]).limit(9))
 
         most_rated_documents = imap(Document,
             documents.find().sort([("star_count", -1)]).limit(9))
