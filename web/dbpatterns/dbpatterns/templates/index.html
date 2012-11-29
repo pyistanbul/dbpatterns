@@ -17,7 +17,7 @@
         {% include "documents/search_form.html" %}
     </section>
 
-    {% cache 3000 index %}
+    {% cache 60 index %}
     <section class="content latest">
         <h2>Featured patterns</h2>
         {% for document in featured_documents %}
