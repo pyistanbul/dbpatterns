@@ -1,5 +1,7 @@
 dbpatterns.views.Entity = Backbone.View.extend({
 
+    HEADER_THRESHOLD: 10,
+
     tagName: "div",
     className: "entity",
     template: $("#entity-template").html(),
@@ -17,10 +19,7 @@ dbpatterns.views.Entity = Backbone.View.extend({
     render: function () {
         this.$el.html(_.template(this.template, this.model.toJSON()));
 
-        this.$el.css({
-            "top": this.model.get("position").top,
-            "left": this.model.get("position").left
-        });
+        this.$el.css(this.get_entity_positions());
 
         jsPlumb.draggable($(this.el), {
             "handle": "h3",
@@ -68,6 +67,14 @@ dbpatterns.views.Entity = Backbone.View.extend({
         });
 
         this.model.save();
+    },
+
+    get_entity_positions: function () {
+        var top = this.model.get("position").top,
+            left = this.model.get("position").left;
+        if (top < this.HEADER_THRESHOLD)
+            top = this.HEADER_THRESHOLD;
+        return { "top": top, "left": left }
     },
 
     destroy: function () {

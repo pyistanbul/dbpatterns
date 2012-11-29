@@ -138,13 +138,14 @@ article#document {
         position: fixed;
         bottom: 20px;
         right: 20px;
-        z-index: 2;
+        z-index: 3;
     }
 
     article#document nav.leave {
         position: absolute;
         float: right;
         right: 20px;
+        z-index: 3;
     }
 
 
@@ -364,7 +365,7 @@ article#document {
     width: 300px;
     bottom: 15px;
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     height: 110px;
     margin-left: 20px;
 }
