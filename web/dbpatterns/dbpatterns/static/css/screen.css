@@ -926,6 +926,24 @@ section.news ul {
             color: #b4b4b4;
         }
 
+        #comments #anonymous-user {
+            position: absolute;
+            z-index: 2;
+            width: 370px;
+            height: 70px;
+            padding-top: 10px;
+            background-color: rgba(255, 255, 255, 0.32);
+        }
+
+        #comments #anonymous-user p {
+            margin: 0;
+        }
+
+        #comments .blury {
+            filter: blur(3px);
+            -webkit-filter: blur(3px);
+        }
+
 /* Search Form */
 
 .search form {

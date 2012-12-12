@@ -49,9 +49,18 @@
 
     {% block app %}
         <script type="text/html" id="comment-form-template">
-            <textarea name="body" id="id_body" placeholder="Write a comment"></textarea>
-            <input type="button" value="Close" class="anchor close">
-            <input type="submit" value="Send" class="anchor">
+            {% if user.is_anonymous %}
+            <div id="anonymous-user">
+                <p>Please login to leave comment.</p>
+                <a href="{% url auth_login %}">Login</a>
+                <a href="{% url auth_registration %}">Register</a>
+            </div>
+            {% endif %}
+            <fieldset{% if user.is_anonymous %} class="blury"{% endif %}>
+                <textarea name="body" id="id_body" placeholder="Write a comment"></textarea>
+                <input type="button" value="Close" class="anchor close">
+                <input type="submit" value="Send" class="anchor">
+            </fieldset>
         </script>
 
         <script type="text/html" id="comment-item-template">

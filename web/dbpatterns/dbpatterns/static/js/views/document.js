@@ -72,6 +72,9 @@ dbpatterns.views.Document = Backbone.View.extend({
             document: this.model
         })).render();
 
+
+        return false;
+
     },
 
     export_document: function () {
