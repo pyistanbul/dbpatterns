@@ -105,14 +105,17 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.admin',
+    'django.contrib.humanize',
 
+    'south',
     'gravatar',
     'social_auth',
     'compressor',
     'debug_toolbar',
 
     'documents',
-    'auth',
+    'profiles',
+    'newsfeed',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

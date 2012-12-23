@@ -7,7 +7,7 @@ from django import http
 
 from tastypie.http import HttpNoContent
 
-from auth.mixins import LoginRequiredMixin
+from profiles.mixins import LoginRequiredMixin
 from documents import get_collection
 from documents.constants import FIELD_TYPES, EXPORTER_ORACLE, EXPORTER_SQLITE, EXPORTER_POSTGRES, EXPORTER_MYSQL, EXPORTERS
 from documents.exporters.sql import MysqlExporter, PostgresExporter, SQLiteExporter, OracleExporter
@@ -16,6 +16,7 @@ from documents.mixins import DocumentMixin
 from documents.models import Document
 from documents.resources import DocumentResource
 from documents.utils import extract_keywords
+from newsfeed.models import Entry
 
 DOCUMENT_EXPORTERS = {
     EXPORTER_MYSQL: MysqlExporter,
@@ -28,28 +29,12 @@ class HomeView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
-        documents = get_collection("documents")
 
-        documents.ensure_index([
-            ("featured", 1),
-            ("star_count", 1)
-        ])
-
-        featured_documents = imap(Document, documents.find({
-           "featured": True
-        }).sort([("date_created", -1)]).limit(9))
-
-        most_rated_documents = imap(Document,
-            documents.find().sort([("star_count", -1)]).limit(9))
-
-        recently_added_documents = imap(Document, documents.find({
-            "$where": "this.entities && this.entities.length > 1"
-        }).sort([("date_created", -1)]).limit(9))
+        newsfeed = imap(Entry, get_collection("newsfeed").find()\
+                        .sort([("date_created", -1)]).limit(100))
 
         return {
-            "featured_documents": featured_documents,
-            "most_rated_documents": most_rated_documents,
-            "recently_added_documents": recently_added_documents,
+            "newsfeed": newsfeed,
             "search_form": SearchForm()
         }
 

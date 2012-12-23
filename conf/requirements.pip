@@ -8,3 +8,4 @@ django-social-auth==0.7.7
 django-debug-toolbar==0.9.4
 nltk==2.0.3
 numpy==1.6.2
+south==0.7.6

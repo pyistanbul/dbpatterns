@@ -14,7 +14,7 @@ urlpatterns = patterns('',
     url(r'^documents/', include('documents.urls')),
 
     # registration
-    url(r'^accounts/', include('auth.urls')),
+    url(r'^accounts/', include('profiles.urls')),
 
     # api
     url(r'^api/', include('api.urls')),

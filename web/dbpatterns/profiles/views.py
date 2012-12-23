@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.views.generic import FormView, CreateView, TemplateView, RedirectView, DetailView
 
-from auth.forms import RegistrationForm
+from profiles.forms import RegistrationForm
 from documents.models import Document
 from documents.resources import DocumentResource
 

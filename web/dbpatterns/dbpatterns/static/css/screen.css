@@ -978,6 +978,176 @@ section.news ul {
     }
 
 
+#timeline {
+    margin-top: 30px;
+}
+
+    #timeline .stripe {
+        border-left: 5px solid #2894df;
+        margin-left: 150px;
+        padding-top: 10px;
+    }
+
+        #timeline .entry {
+            margin-bottom: 10px;
+            clear: both;
+        }
+
+            #timeline article {
+                margin-top: 14px;
+                margin-left: 50px;
+                float: left;
+                background-color: white;
+                width: 400px;
+                box-shadow: 0 0 10px #bcbcbc;
+                border-left: 8px solid #2894df;
+                margin-bottom: 30px;
+            }
+
+                #timeline article h3 {
+                    margin: 0;
+                    padding: 6px 15px 0;
+                    font-weight: normal;
+                    letter-spacing: -1px;
+                    color: #2894df;
+                    font-size: 24px;
+                }
+
+                    #timeline article h3 a {
+                        color: #2894df;
+                    }
+
+                #timeline article h4 {
+                    margin: 2px 14px;
+                    padding: 0;
+                    font-weight: normal;
+                }
+
+                    #timeline article h4 a {
+                        font-size: 20px;
+                        text-decoration: none;
+                        color: #848484;
+                    }
+
+                    #timeline article h4 a:before {
+                        content: '“';
+                        color: #bababa;
+                        margin-right: 2px;
+                    }
+
+                    #timeline article h4 a:after {
+                        content: '”';
+                        color: #bababa;
+                        margin-left: 2px;
+                    }
+
+                    #timeline article blockquote {
+                        font-size: 20px;
+                        margin: 2px 20px 3px 35px;
+                        padding: 0;
+                        color: #848484;
+                        letter-spacing: -1px;
+                        line-height: 22px;
+                    }
+
+                    #timeline article blockquote:before,
+                    #timeline article blockquote:after
+                    {
+                        content: '“';
+                        color: #bababa;
+                        font-size: 60px;
+                        position: absolute;
+                        margin-top: 13px;
+                        margin-left: -24px;
+                    }
+
+                    #timeline article blockquote:after {
+                        content: '”';
+                        margin-top: 19px;
+                        margin-left: 4px;
+                    }
+
+                #timeline article time {
+                    color: gray;
+                    display: block;
+                    padding: 3px 15px 10px;
+                }
+
+                #timeline article:before {
+                    content: "";
+                    text-indent: -9999px;
+                    display: inline-block;
+                    position: absolute;
+                    margin-left: -20px;
+                    margin-top: 22px;
+                    width: 0;
+                    height: 0;
+                    border-style: solid;
+                    border-width: 10px 15px 10px 0;
+                    border-color: transparent #2894df transparent transparent;
+
+                }
+
+            #timeline aside {
+                float: left;
+                margin-left: -140px;
+                border: 8px solid #f4f4f4;
+                border-radius: 50%;
+            }
+
+            #timeline aside:hover {
+                box-shadow: 0 0 10px #545454;
+            }
+
+                #timeline aside img {
+                    width: 80px;
+                    height: 80px;
+                    border-radius: 50%;
+                }
+
+            #timeline aside:before {
+                content: "";
+                border-radius: 50%;
+                width: 30px;
+                height: 30px;
+                text-indent: -9999px;
+                display: inline-block;
+                position: absolute;
+                margin-top: 22px;
+                margin-left: 114px;
+                background: url(../images/timeline-icons.png) top left #2894df;
+            }
+
+            #timeline aside:after {
+                z-index: -1;
+                content: "";
+                position: absolute;
+                display: inline-block;
+                width: 87px;
+                height: 1px;
+                border-top: 1px dotted #7dc8d8;
+                margin-left: 85px;
+                margin-top: -43px;
+            }
+
+            /* Timeline Icons */
+            #timeline .entry.registration aside:before {
+                background-position: 3px 4px;
+            }
+
+            #timeline .entry.comment aside:before {
+                background-position: -22px 5px;
+            }
+
+            #timeline .entry.document aside:before {
+                background-position: -47px 5px;
+            }
+
+            #timeline .entry.fork aside:before {
+                background-position: -73px 4px;
+            }
+
+
 /* jsPlumb */
 
 ._jsPlumb_overlay {

@@ -1,8 +1,9 @@
 {% extends 'base.html' %}
 
-{% load cache %}
+{% load cache gravatar_tags humanize %}
 
 {% block content %}
+
     <section class="content landing">
         <p>
             Dbpatterns is a service that allows you to create, share, explore
@@ -12,33 +13,44 @@
         </p>
     </section>
 
-    <section class="content search">
-        <h2>Search pattern</h2>
-        {% include "documents/search_form.html" %}
+
+    <section class="content" id="timeline">
+        <div class="stripe">
+            {% for entry in newsfeed %}
+            <section class="entry {{ entry.news_type }}">
+                <aside>
+                <a class="gravatar" href="{% url auth_profile entry.user.username %}">
+                    <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_email entry.user.email %}">
+                </a>
+                </aside>
+                <article>
+                    {% if entry.news_type == "registration" %}
+                        <h3>
+                            <a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a>
+                            joined to dbpatterns
+                        </h3>
+                    {% elif entry.news_type == "document" %}
+                        <h3>
+                            {{ entry.user.username }} created new <a href="{{ entry.related_object.get_absolute_url }}">pattern</a>
+                        </h3>
+                        <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
+                    {% elif entry.news_type == "fork" %}
+                        <h3>{{ entry.user.username }} forked a <a href="{{ entry.related_object.get_absolute_url }}">pattern</a></h3>
+                        <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
+                    {% elif entry.news_type == "comment" %}
+                        <h3>
+                            <a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a>
+                            commented on a <a href="{{ entry.related_object.document.get_absolute_url }}">pattern</a>
+                        </h3>
+                        <blockquote>{{ entry.related_object.body }}</blockquote>
+                    {% endif %}
+                    <time>{{ entry.date_created|naturaltime }}</time>
+                </article>
+            </section>
+            {% endfor %}
+        </div>
     </section>
 
-    {% cache 60 index %}
-    <section class="content latest">
-        <h2>Featured patterns</h2>
-        {% for document in featured_documents %}
-            {% include "documents/preview.html" %}
-        {% endfor %}
-    </section>
-
-    <section class="content latest">
-        <h2>Trending patterns</h2>
-        {% for document in most_rated_documents %}
-            {% include "documents/preview.html" %}
-        {% endfor %}
-    </section>
-
-    <section class="content latest">
-        <h2>Recently added patterns</h2>
-        {% for document in recently_added_documents %}
-            {% include "documents/preview.html" %}
-        {% endfor %}
-    </section>
-    {% endcache %}
 {% endblock %}
 
 {% block footer %}

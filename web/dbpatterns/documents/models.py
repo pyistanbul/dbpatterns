@@ -1,15 +1,26 @@
+from bson import ObjectId
+
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from auth.models import AnonymousProfile
+from profiles.models import AnonymousProfile
 from documents import get_collection
 from documents.utils import reverse_tastypie_url
+
+class DocumentManager(object):
+
+    def get(self, **kwargs):
+        return Document(get_collection("documents").find_one(kwargs))
 
 class Document(dict):
     """
     A model that wraps MongoDB document.
     """
     __getattr__ = dict.get
+    objects = DocumentManager()
+
+    def __repr__(self):
+        return self.title
 
     def get_absolute_url(self):
         return reverse("show_document", args=[self.pk])

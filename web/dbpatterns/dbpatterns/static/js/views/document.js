@@ -17,7 +17,8 @@ dbpatterns.views.Document = Backbone.View.extend({
 
     shortcuts: {
         "option+r": "rename",
-        "option+s": "save_document"
+        "option+s": "save_document",
+        "esc": "hide_comments"
     },
 
     initialize: function () {
@@ -75,6 +76,12 @@ dbpatterns.views.Document = Backbone.View.extend({
 
         return false;
 
+    },
+
+    hide_comments: function () {
+        if (this.comments_view) {
+            this.comments_view.hide();
+        }
     },
 
     export_document: function () {
