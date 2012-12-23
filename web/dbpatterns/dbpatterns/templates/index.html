@@ -6,16 +6,17 @@
 
     <section class="content landing">
         <p>
-            Dbpatterns is a service that allows you to create, share, explore
+            Dbpatterns is a service that allows you to create, share, explore, fork
             database models on the web. And also you can <cite>fork</cite> already created database
             models.
             <a href="https://twitter.com/share" class="twitter-share-button" data-url="http://dbpatterns.com">Tweet</a>
         </p>
     </section>
 
-
+    <div class="dashboard">
     <section class="content" id="timeline">
         <div class="stripe">
+            <div class="newsfeed">
             {% for entry in newsfeed %}
             <section class="entry {{ entry.news_type }}">
                 <aside>
@@ -25,23 +26,26 @@
                 </aside>
                 <article>
                     {% if entry.news_type == "registration" %}
-                        <h3>
-                            <a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a>
-                            joined to dbpatterns
-                        </h3>
+                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> joined to dbpatterns</h3>
                     {% elif entry.news_type == "document" %}
-                        <h3>
-                            {{ entry.user.username }} created new <a href="{{ entry.related_object.get_absolute_url }}">pattern</a>
-                        </h3>
+                        <h3>{{ entry.user.username }} created new <a href="{{ entry.related_object.get_absolute_url }}">pattern</a></h3>
                         <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
+
+                        {% with entry.related_object as document %}
+                            {% include "documents/preview.html" %}
+                        {% endwith %}
+
+
                     {% elif entry.news_type == "fork" %}
-                        <h3>{{ entry.user.username }} forked a <a href="{{ entry.related_object.get_absolute_url }}">pattern</a></h3>
+                        <h3>{{ entry.user.username }} forked a pattern</h3>
                         <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
+
+                        {% with entry.related_object as document %}
+                            {% include "documents/preview.html" %}
+                        {% endwith %}
+
                     {% elif entry.news_type == "comment" %}
-                        <h3>
-                            <a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a>
-                            commented on a <a href="{{ entry.related_object.document.get_absolute_url }}">pattern</a>
-                        </h3>
+                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> commented on a <a href="{{ entry.related_object.document.get_absolute_url }}">pattern</a></h3>
                         <blockquote>{{ entry.related_object.body }}</blockquote>
                     {% endif %}
                     <time>{{ entry.date_created|naturaltime }}</time>
@@ -49,7 +53,9 @@
             </section>
             {% endfor %}
         </div>
+        </div>
     </section>
+    </div>
 
 {% endblock %}
 

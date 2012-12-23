@@ -181,6 +181,8 @@ SOCIAL_AUTH_PIPELINE = (
     'social_auth.backends.pipeline.user.update_user_details',
 )
 
+AUTH_PROFILE = "profiles.Profile"
+
 # MONGODB Settings
 
 MONGODB_DATABASE = "dbpatterns"

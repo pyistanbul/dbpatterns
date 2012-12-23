@@ -90,16 +90,16 @@ body {
 
 /* Footer */
 body > footer {
+    clear: both;
     background-color: #2894DF;
     width: 960px;
     padding: 10px;
     color: #fff;
-    margin: 40px 0 0 -480px;
+    margin: 0 auto;
     font-size: 16px;
-    position: fixed;
+    /*position: fixed;*/
     z-index: 2;
-    bottom: 0;
-    left: 50%;
+
 }
 
     body > footer a {
@@ -268,11 +268,9 @@ article#document {
 
 
 .document-preview {
-    margin: 20px 35px 40px 10px;
-    width: 270px;
+    margin: 10px;
     padding: 0;
-
-    float: left;
+    overflow: hidden;
 }
 
     .document-preview a {
@@ -290,42 +288,28 @@ article#document {
     }
 
     .document-preview .entity-list {
-        height: 155px;
     }
 
     .document-preview .entity-preview {
         float: left;
-        margin: 30px 4px 0 20px;
-        width: 160px;
+        margin: 10px;
+        width: 120px;
         font-size: 14px;
         background-color: white;
         padding: 0;
         border: 1px solid #eaeaea;
-        height: 120px;
         overflow: hidden;
-        position: absolute;
         color: gray;
-
-    }
-
-    .document-preview .entity-preview:first-of-type {
-        margin-top: 5px;
-        margin-left: 0;
-    }
-
-    .document-preview .entity-preview:nth-child(2) {
-        margin-top: 30px;
-    }
-
-    .document-preview .entity-preview:nth-child(3) {
-        margin-top: 53px;
-        margin-left: 40px;
     }
 
     .document-preview .entity-preview li {
         list-style-type: none;
         margin: 0;
         padding: 2px 5px;
+    }
+
+    .document-preview .entity-preview .attribute {
+        border-top: 1px solid #f1f1f1;
     }
 
     .document-preview .entity-preview .name {
@@ -800,21 +784,6 @@ hr.or:after {
     color: gray;
 }
 
-/* News definitions */
-
-section.news h2 {
-    background-color: rgba(90, 223, 249, 0.15);
-    color: #676767;
-    text-align: left;
-    margin-left: 0px;
-    font-size: 20px;
-    float: left;
-    padding: 2px 10px;
-}
-
-section.news ul {
-    margin-top: 50px;
-}
 /* Stars */
 
 .stars .gravatar {
@@ -944,52 +913,28 @@ section.news ul {
             -webkit-filter: blur(3px);
         }
 
-/* Search Form */
-
-.search form {
-    width: 500px;
-    margin: 0 auto;
-    padding: 0;
+.dashboard {
+    width: 960px;
+    margin: auto;
 }
-
-    .search form p {
-        float: left;
-    }
-
-    .search form label {
-        display: none;
-    }
-
-    .search form #id_keyword {
-        padding: 7px 10px;
-        font-size: 22px;
-        width: 350px;
-    }
-
-    .search form .button::-moz-focus-inner {
-        padding: 0 ;
-        border: none;
-    }
-    .search form .button {
-        padding: 2px 10px 0;
-        line-height: 1em;
-        margin: 0 0 0 10px;
-        height: 42px;
-    }
-
 
 #timeline {
-    margin-top: 30px;
+    margin: 0;
+    border-top: 5px solid #2894df;
+
 }
+    #timeline .newsfeed {
+        margin-top: 10px;
+
+    }
 
     #timeline .stripe {
         border-left: 5px solid #2894df;
-        margin-left: 150px;
-        padding-top: 10px;
+        margin-left: 140px;
+        padding-top: 20px;
     }
 
         #timeline .entry {
-            margin-bottom: 10px;
             clear: both;
         }
 
@@ -998,10 +943,10 @@ section.news ul {
                 margin-left: 50px;
                 float: left;
                 background-color: white;
-                width: 400px;
-                box-shadow: 0 0 10px #bcbcbc;
-                border-left: 8px solid #2894df;
-                margin-bottom: 30px;
+                width: 700px;
+                box-shadow: 0 0 8px #ababab;
+                border-left: 5px solid #2894df;
+                margin-bottom: 40px;
             }
 
                 #timeline article h3 {
@@ -1046,8 +991,8 @@ section.news ul {
                         margin: 2px 20px 3px 35px;
                         padding: 0;
                         color: #848484;
-                        letter-spacing: -1px;
-                        line-height: 22px;
+                        letter-spacing: 0;
+                        line-height: 25px;
                     }
 
                     #timeline article blockquote:before,
@@ -1096,7 +1041,7 @@ section.news ul {
             }
 
             #timeline aside:hover {
-                box-shadow: 0 0 10px #545454;
+                box-shadow: 0 0 10px #acacac;
             }
 
                 #timeline aside img {
@@ -1146,6 +1091,7 @@ section.news ul {
             #timeline .entry.fork aside:before {
                 background-position: -73px 4px;
             }
+
 
 
 /* jsPlumb */

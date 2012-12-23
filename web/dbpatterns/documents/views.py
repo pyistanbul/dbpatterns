@@ -6,6 +6,7 @@ from django.views.generic import TemplateView, FormView, ListView, RedirectView,
 from django import http
 
 from tastypie.http import HttpNoContent
+from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK
 
 from profiles.mixins import LoginRequiredMixin
 from documents import get_collection
@@ -30,13 +31,23 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
 
-        newsfeed = imap(Entry, get_collection("newsfeed").find()\
-                        .sort([("date_created", -1)]).limit(100))
+        newsfeed = imap(Entry, self.get_newsfeed())
+
 
         return {
             "newsfeed": newsfeed,
             "search_form": SearchForm()
         }
+
+    def get_newsfeed(self):
+        newsfeed = get_collection("newsfeed").find({
+            "news_type": {
+                "$in": [NEWS_TYPE_COMMENT,
+                              NEWS_TYPE_DOCUMENT,
+                              NEWS_TYPE_FORK]
+            }
+        })
+        return newsfeed.sort([("date_created", -1)]).limit(20)
 
 class DocumentDetailView(DocumentMixin, TemplateView):
     template_name = "documents/show.html"
