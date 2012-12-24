@@ -945,7 +945,7 @@ hr.or:after {
                 background-color: white;
                 width: 700px;
                 box-shadow: 0 0 8px #ababab;
-                border-left: 5px solid #2894df;
+                border-left: 8px solid #2894df;
                 margin-bottom: 40px;
             }
 
@@ -1093,6 +1093,30 @@ hr.or:after {
             }
 
 
+/* Profile details */
+
+#profile {
+    margin-top: 26px;
+}
+
+    #profile aside {
+        width: 20%;
+        float: left;
+        margin-top: 66px;
+        text-align: center;
+    }
+
+    #profile aside h3 {
+        padding: 1px;
+        margin: 10px 2px;
+        font-size: 25px;
+        font-weight: normal;
+    }
+
+    #profile .documents {
+        width: 80%;
+        float: left;
+    }
 
 /* jsPlumb */
 

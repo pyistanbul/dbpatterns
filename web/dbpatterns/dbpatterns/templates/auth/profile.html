@@ -4,20 +4,29 @@
 {% block body-id %}profile-detail{% endblock %}
 
 {% block content %}
-    <section class="content documents">
-        <h2>{{ profile }}</h2>
-        <ul>
-            {% for document in documents %}
-                <li>
-                    <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
-                    <div class="info">
-                        <span class="icon fork">{{ document.get_fork_count }} fork</span>
-                        <span class="icon star">{{ document.star_count }} star</span>
-                    </div>
-                </li>
-            {% empty %}
-                <li>{{ profile }} hasn't got any document.</li>
-            {% endfor %}
-        </ul>
-    </section>
+    <div id="profile" class="content">
+        <aside>
+            <a class="gravatar" href="{% url auth_profile profile.username %}">
+                <img alt="gravatar of {{ profile.username }}" src="{% gravatar_for_user profile 160 %}">
+            </a>
+            <h3>{{ profile.username }}</h3>
+
+        </aside>
+        <section class="documents">
+            <h2>Documents</h2>
+            <ul>
+                {% for document in documents %}
+                    <li>
+                        <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                        <div class="info">
+                            <span class="icon fork">{{ document.get_fork_count }} fork</span>
+                            <span class="icon star">{{ document.star_count }} star</span>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li>{{ profile }} does not have any pattern yet.</li>
+                {% endfor %}
+            </ul>
+        </section>
+    </div>
 {% endblock %}
