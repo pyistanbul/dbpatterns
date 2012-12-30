@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
 from gravatar.templatetags.gravatar import gravatar_for_email
+from newsfeed.constants import NEWS_TYPE_COMMENT
 
 from profiles.models import AnonymousProfile
 from documents import get_collection
@@ -56,3 +57,6 @@ class Comment(dict):
     @property
     def pk(self):
         return self._id
+
+    def get_news_type(self):
+        return NEWS_TYPE_COMMENT

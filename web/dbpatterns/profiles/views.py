@@ -1,12 +1,16 @@
+from itertools import imap
+import json
 from django.contrib.auth import logout, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from django.views.generic import FormView, CreateView, TemplateView, RedirectView, DetailView
+from django.http import HttpResponse
+from django.views.generic import FormView, CreateView, TemplateView, RedirectView, DetailView, ListView
 
 from profiles.forms import RegistrationForm
 from documents.models import Document
 from documents.resources import DocumentResource
+from profiles.models import FollowedProfile
 
 
 class RegistrationView(CreateView):
@@ -50,8 +54,42 @@ class ProfileDetailView(DetailView):
     model = User
 
     def get_context_data(self, **kwargs):
-        context = super(ProfileDetailView, self).get_context_data(**kwargs)
+        user_id = self.get_object().pk
         resource = DocumentResource()
-        collection = resource.get_collection().find({"user_id": self.get_object().pk})
-        context["documents"] = map(Document, collection)
-        return context
+
+        collection = resource.get_collection().find({"user_id": user_id})
+
+        followed_by_authenticated_user = self.request.user.following.filter(
+                                            following_id=user_id).exists()
+
+        return super(ProfileDetailView, self).get_context_data(
+            documents=imap(Document, collection),
+            is_followed=followed_by_authenticated_user
+        )
+
+    def delete(self, request, **kwargs):
+        """
+        Removes `FollowedProfile` object for authenticated user.
+        """
+        user = self.get_object()
+        user.followers.filter(follower=request.user).delete()
+        return HttpResponse(json.dumps({
+            "success": True
+        }))
+
+    def post(self, request, **kwargs):
+        """
+        Creates `FollowedProfile` object for authenticated user.
+        """
+        user = self.get_object()
+
+        if user.followers.filter(follower=request.user).exists():
+            return HttpResponse(json.dumps({
+                "error": "You already following this people."
+            }))
+
+        user.followers.create(follower=request.user)
+
+        return HttpResponse(json.dumps({
+            "success": True
+        }))

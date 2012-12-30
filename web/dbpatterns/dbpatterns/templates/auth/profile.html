@@ -6,11 +6,44 @@
 {% block content %}
     <div id="profile" class="content">
         <aside>
-            <a class="gravatar" href="{% url auth_profile profile.username %}">
+            <h3>{{ profile.username }}</h3>
+            <a class="gravatar profile-image" href="{% url auth_profile profile.username %}">
                 <img alt="gravatar of {{ profile.username }}" src="{% gravatar_for_user profile 160 %}">
             </a>
-            <h3>{{ profile.username }}</h3>
 
+            <nav class="actions">
+                {% if is_followed %}
+                    <a href="{% url auth_profile profile.username %}" data-method="delete">Unfollow {{ profile.username }}</a>
+                {% else %}
+                    <a href="{% url auth_profile profile.username %}" data-method="post">Follow {{ profile.username }}</a>
+                {% endif %}
+            </nav>
+
+            <h2>following ({{ profile.following.count }})</h2>
+            <ul class="following">
+                {% for relationship in profile.following.all %}
+                    <li>
+                        <a href="{% url auth_profile relationship.following.username %}">
+                        <img alt="gravatar of {{ relationship.following }}" src="{% gravatar_for_user relationship.following 40 %}">
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="empty">{{ profile }} is not following anyone.</li>
+                {% endfor %}
+            </ul>
+
+            <h2>followers ({{ profile.followers.count }})</h2>
+            <ul class="following">
+                {% for relationship in profile.followers.all %}
+                    <li>
+                        <a href="{% url auth_profile relationship.follower.username %}">
+                            <img alt="gravatar of {{ relationship.follower }}" src="{% gravatar_for_user relationship.follower 40 %}">
+                        </a>
+                    </li>
+                {% empty %}
+                    <li class="empty">{{ profile }} has no follower.</li>
+                {% endfor %}
+            </ul>
         </aside>
         <section class="documents">
             <h2>Documents</h2>
@@ -29,4 +62,26 @@
             </ul>
         </section>
     </div>
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script type="text/javascript">
+        $(function () {
+            $("nav.actions a").each(function () {
+                $(this).click(function () {
+                    $.ajax({
+                        url: $(this).attr("href"),
+                        type: $(this).data("method"),
+                        beforeSend: function(xhr, settings) {
+                            xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+                        }
+                    }).complete(function () {
+                        window.location.reload()
+                    }.bind(this));
+                    return false;
+                });
+            });
+        });
+    </script>
 {% endblock %}

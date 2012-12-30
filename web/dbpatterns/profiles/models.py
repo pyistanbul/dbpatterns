@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import AnonymousUser, User
-from django.dispatch import receiver
 from django.utils.encoding import smart_unicode
 
 
@@ -12,19 +11,13 @@ class AnonymousProfile(AnonymousUser):
         return self.username
 
 
-class Profile(models.Model):
+class FollowedProfile(models.Model):
     """
-    Extra information for the user model of django.
+    A relationship model for following users
     """
-    user = models.ForeignKey(User)
-    following = models.ManyToManyField("self",
-                    symmetrical=False, related_name="followers")
+    follower = models.ForeignKey(User, related_name="following")
+    following = models.ForeignKey(User, related_name="followers")
 
     def __unicode__(self):
-        return smart_unicode(self.user.username)
-
-
-@receiver(models.signals.post_save, sender=User)
-def create_profile(instance, created, **kwargs):
-    if created:
-        Profile.objects.get_or_create(user=instance)
+        return smart_unicode("%s following %s" % (self.follower.username,
+                                                  self.following.username))

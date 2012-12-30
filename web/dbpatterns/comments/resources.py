@@ -1,5 +1,6 @@
 from datetime import datetime
 from bson import ObjectId
+
 from django.conf import settings
 from django.core.mail import send_mail
 from django.dispatch import receiver
@@ -67,8 +68,12 @@ class CommentResource(MongoDBResource):
             date_created=datetime.now()
         )
 
+        comment_id = bundle.obj
+        comment = Comment.objects.get(_id=ObjectId(comment_id))
+
         comment_done.send(sender=self,
-            comment_id=bundle.obj
+            comment_id=comment_id,
+            instance=comment
         )
 
         return bundle

@@ -1,11 +1,13 @@
 from datetime import datetime
 from itertools import imap
+from bson import ObjectId
 
 from django.core.urlresolvers import reverse
 from django.views.generic import TemplateView, FormView, ListView, RedirectView, View
 from django import http
 
 from tastypie.http import HttpNoContent
+from documents.signals import document_done, fork_done
 from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK
 
 from profiles.mixins import LoginRequiredMixin
@@ -152,6 +154,8 @@ class NewDocumentView(LoginRequiredMixin, FormView):
             "entities": form.cleaned_data.get("entities"),
             "_keywords": extract_keywords(form.cleaned_data.get("title"))
         })
+        document = Document.objects.get(_id=ObjectId(self.object_id))
+        document_done.send(sender=self, instance=document)
         return super(NewDocumentView, self).form_valid(form)
 
     def get_success_url(self):
@@ -212,6 +216,7 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
     def form_valid(self, form, **kwargs):
         resource = DocumentResource()
         document = self.get_document()
+
         self.object_id = get_collection("documents").insert({
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
@@ -225,6 +230,9 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
         resource.obj_update(bundle=resource.build_bundle(data={
             "fork_count": (document.fork_count or 0) + 1
         }), pk=document.pk)
+
+        fork_done.send(sender=self,
+            instance=Document.objects.get(_id=ObjectId(self.object_id)))
 
         return super(NewDocumentView, self).form_valid(form)
 

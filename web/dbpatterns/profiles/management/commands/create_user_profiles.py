@@ -11,5 +11,7 @@ class Command(BaseCommand):
     """
     def handle(self, *args, **options):
 
+        Profile.objects.all().delete()
+
         for user in User.objects.all():
-            Profile.objects.create(user=user)
+            Profile.objects.get_or_create(user=user)

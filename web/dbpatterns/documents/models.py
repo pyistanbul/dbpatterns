@@ -2,6 +2,7 @@ from bson import ObjectId
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
+from newsfeed.constants import NEWS_TYPE_FORK, NEWS_TYPE_DOCUMENT
 
 from profiles.models import AnonymousProfile
 from documents import get_collection
@@ -71,3 +72,8 @@ class Document(dict):
 
     def get_stargazers(self):
         return User.objects.filter(id__in=self.get_stars())
+
+    def get_news_type(self):
+        if self.fork_of is not None:
+            return NEWS_TYPE_FORK
+        return NEWS_TYPE_DOCUMENT
