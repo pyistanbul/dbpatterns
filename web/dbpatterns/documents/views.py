@@ -7,8 +7,8 @@ from django.views.generic import TemplateView, FormView, ListView, RedirectView,
 from django import http
 
 from tastypie.http import HttpNoContent
-from documents.signals import document_done, fork_done
-from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK
+from documents.signals import document_done, fork_done, star_done
+from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING
 
 from profiles.mixins import LoginRequiredMixin
 from documents import get_collection
@@ -35,9 +35,9 @@ class HomeView(TemplateView):
 
         newsfeed = imap(Entry, self.get_newsfeed())
 
-
         return {
             "newsfeed": newsfeed,
+            "notification_count": self.get_notification_count(),
             "search_form": SearchForm()
         }
 
@@ -45,11 +45,28 @@ class HomeView(TemplateView):
         newsfeed = get_collection("newsfeed").find({
             "news_type": {
                 "$in": [NEWS_TYPE_COMMENT,
-                              NEWS_TYPE_DOCUMENT,
-                              NEWS_TYPE_FORK]
+                        NEWS_TYPE_DOCUMENT,
+                        NEWS_TYPE_FORK,
+                        NEWS_TYPE_STAR,
+                        NEWS_TYPE_FOLLOWING]
             }
         })
         return newsfeed.sort([("date_created", -1)]).limit(20)
+
+    def get_notification_count(self):
+
+        if self.request.user.is_anonymous():
+            return 0
+
+        get_collection("notifications").ensure_index([
+            ("recipient", 1),
+        ])
+
+        return get_collection("notifications").find({
+            "recipient": self.request.user.id,
+            "is_read": False
+        }).count()
+
 
 class DocumentDetailView(DocumentMixin, TemplateView):
     template_name = "documents/show.html"
@@ -98,6 +115,8 @@ class StarDocumentView(LoginRequiredMixin, RedirectView, DocumentMixin):
             stars.remove(request.user.pk)
         else:
             stars.append(request.user.pk)
+            star_done.send(sender=self, instance=document,
+                                        user=request.user)
 
         resource = DocumentResource()
         resource.obj_update(bundle=resource.build_bundle(data={

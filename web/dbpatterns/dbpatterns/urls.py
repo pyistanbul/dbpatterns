@@ -10,6 +10,9 @@ urlpatterns = patterns('',
 
     url(r'^$', HomeView.as_view(), name='home'),
 
+    # notifications
+    url(r'^notifications/', include('notifications.urls')),
+
     # documents
     url(r'^documents/', include('documents.urls')),
 

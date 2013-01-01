@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% load gravatar document_tags humanize %}
+
+{% block body-id %}notifications-view{% endblock %}
+
+{% block content %}
+    <section class="content stars">
+        <h2>Notifications</h2>
+        {% include "notifications/notifications.html" %}
+    </section>
+{% endblock %}

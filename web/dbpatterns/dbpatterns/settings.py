@@ -116,6 +116,7 @@ INSTALLED_APPS = (
     'documents',
     'profiles',
     'newsfeed',
+    'notifications',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (

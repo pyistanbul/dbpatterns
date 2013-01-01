@@ -10,7 +10,7 @@ from django.views.generic import FormView, CreateView, TemplateView, RedirectVie
 from profiles.forms import RegistrationForm
 from documents.models import Document
 from documents.resources import DocumentResource
-from profiles.models import FollowedProfile
+from profiles.management.signals import follow_done
 
 
 class RegistrationView(CreateView):
@@ -57,7 +57,9 @@ class ProfileDetailView(DetailView):
         user_id = self.get_object().pk
         resource = DocumentResource()
 
-        collection = resource.get_collection().find({"user_id": user_id})
+        collection = resource.get_collection().find({
+            "user_id": user_id
+        })
 
         followed_by_authenticated_user = self.request.user.following.filter(
                                             following_id=user_id).exists()
@@ -89,6 +91,9 @@ class ProfileDetailView(DetailView):
             }))
 
         user.followers.create(follower=request.user)
+
+        follow_done.send(sender=self,
+                        follower=request.user, following=user)
 
         return HttpResponse(json.dumps({
             "success": True

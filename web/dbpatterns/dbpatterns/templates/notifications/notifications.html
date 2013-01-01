@@ -1,0 +1,12 @@
+{% load gravatar document_tags humanize %}
+<ul class="notification-list">
+{% for notification in notifications %}
+    <li>
+        <a href="{{ notification.get_absolute_url }}">
+            <img alt="gravatar of {{ notification.sender.username }}" src="{% gravatar_for_email notification.sender.email %}">
+            <span>{{ notification.as_text }}</span>
+        </a>
+        <time>{{ notification.date_created|naturaltime }}</time>
+    </li>
+{% endfor %}
+</ul>

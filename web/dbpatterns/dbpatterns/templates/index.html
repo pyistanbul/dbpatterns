@@ -47,7 +47,14 @@
                     {% elif entry.news_type == "comment" %}
                         <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> commented on a <a href="{{ entry.related_object.document.get_absolute_url }}">pattern</a></h3>
                         <blockquote>{{ entry.related_object.body }}</blockquote>
+
+                    {% elif entry.news_type == "star" %}
+                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> starred <a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a> pattern</h3>
+
+                    {% elif entry.news_type == "following" %}
+                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> following <a href="{% url auth_profile entry.related_object.username %}">{{ entry.related_object.username }}</a></h3>
                     {% endif %}
+
                     <time><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.date_created|naturaltime }}</a></time>
                 </article>
             </section>
