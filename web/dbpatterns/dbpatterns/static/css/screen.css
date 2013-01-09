@@ -1113,7 +1113,7 @@ hr.or:after {
                 position: absolute;
                 margin-top: 22px;
                 margin-left: 114px;
-                background: url(../images/timeline-icons.png) top left #2894df;
+                background: url(/static/images/timeline-icons.png) top left #2894df;
             }
 
             #timeline aside:after {
