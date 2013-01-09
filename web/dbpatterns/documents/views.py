@@ -3,12 +3,13 @@ from itertools import imap
 from bson import ObjectId
 
 from django.core.urlresolvers import reverse
+from django.utils.http import urlencode
 from django.views.generic import TemplateView, FormView, ListView, RedirectView, View
 from django import http
 
 from tastypie.http import HttpNoContent
 from documents.signals import document_done, fork_done, star_done
-from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING
+from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING, NEWSFEED_LIMIT
 
 from profiles.mixins import LoginRequiredMixin
 from documents import get_collection
@@ -33,39 +34,67 @@ class HomeView(TemplateView):
 
     def get_context_data(self, **kwargs):
 
-        newsfeed = imap(Entry, self.get_newsfeed())
+        if self.request.user.is_anonymous():
+            is_public = True
+        else:
+            is_public = self.request.GET.get("public") == "true"
+
+        try:
+            page_number = int(self.request.GET.get("page"))
+        except (ValueError, TypeError):
+            page_number = 1
+
+        newsfeed = self.get_newsfeed(
+            public=is_public,
+            offset=NEWSFEED_LIMIT * (page_number - 1))
+
+        if NEWSFEED_LIMIT * page_number < newsfeed.count():
+            next_page_url = self.get_next_page_url(self.request, page_number)
+        else:
+            next_page_url = None
 
         return {
-            "newsfeed": newsfeed,
-            "notification_count": self.get_notification_count(),
-            "search_form": SearchForm()
+            "is_public": is_public,
+            "newsfeed": imap(Entry, newsfeed),
+            "next_page_url": next_page_url
         }
 
-    def get_newsfeed(self):
-        newsfeed = get_collection("newsfeed").find({
+    def get_newsfeed(self, public=True, offset=0, limit=NEWSFEED_LIMIT):
+        """
+        Fetches news items from the newsfeed database
+        """
+        parameters = {
             "news_type": {
                 "$in": [NEWS_TYPE_COMMENT,
                         NEWS_TYPE_DOCUMENT,
                         NEWS_TYPE_FORK,
                         NEWS_TYPE_STAR,
-                        NEWS_TYPE_FOLLOWING]
+                        NEWS_TYPE_FOLLOWING],
+                }
+        }
+
+        if not public:
+            parameters["recipients"] = {
+                "$in": [self.request.user.pk]
             }
-        })
-        return newsfeed.sort([("date_created", -1)]).limit(20)
 
-    def get_notification_count(self):
+        newsfeed = Entry.objects.collection\
+                        .find(parameters).sort([("date_created", -1)])
 
-        if self.request.user.is_anonymous():
-            return 0
+        return newsfeed[offset:offset+limit]
 
-        get_collection("notifications").ensure_index([
-            ("recipient", 1),
-        ])
+    def get_next_page_url(self, request, page_number):
+        """
+        Builds the next page link from GET parameters.
+        """
+        return "%(newsfeed_url)s?%(parameters)s" % {
+            "newsfeed_url": reverse("home"),
+            "parameters": urlencode({
+                "public": request.GET.get("public") or "false",
+                "page": page_number + 1
+            })
+        }
 
-        return get_collection("notifications").find({
-            "recipient": self.request.user.id,
-            "is_read": False
-        }).count()
 
 
 class DocumentDetailView(DocumentMixin, TemplateView):

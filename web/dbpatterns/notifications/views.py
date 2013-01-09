@@ -1,10 +1,10 @@
-from itertools import imap
 import json
-from django.http import HttpResponse
-from django.views.decorators.csrf import csrf_exempt
 
-from django.views.generic import ListView
+from itertools import imap
 from pymongo import DESCENDING
+
+from django.http import HttpResponse
+from django.views.generic import ListView
 
 from notifications.models import Notification
 from documents import get_collection
@@ -27,9 +27,8 @@ class NotificationListView(ListView):
 
     def get_notifications(self):
 
-        notifications = get_collection("notifications").find({
-            "recipient": self.request.user.id,
-        })
+        notifications = Notification.objects.filter_by_user_id(
+                            self.request.user.id)
 
         if self.request.is_ajax():
 
@@ -48,12 +47,7 @@ class NotificationListView(ListView):
         return [self.template_name]
 
     def put(self, request, **kwargs):
-        get_collection("notifications").update(
-            { "recipient": request.user.id,
-              "is_read": False },
-            { "$set": {
-                "is_read": True }}
-        )
+        Notification.objects.mark_as_read(user_id=request.user.pk)
         return HttpResponse(json.dumps({
             "success": True
         }))

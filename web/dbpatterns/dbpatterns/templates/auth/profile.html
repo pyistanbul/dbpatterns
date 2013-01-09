@@ -8,16 +8,18 @@
         <aside>
             <h3>{{ profile.username }}</h3>
             <a class="gravatar profile-image" href="{% url auth_profile profile.username %}">
-                <img alt="gravatar of {{ profile.username }}" src="{% gravatar_for_user profile 160 %}">
+                <img alt="gravatar of {{ profile.username }}" width="160" height="160" src="{% gravatar_for_user profile 160 %}">
             </a>
 
+            {% if can_follow %}
             <nav class="actions">
                 {% if is_followed %}
-                    <a href="{% url auth_profile profile.username %}" data-method="delete">Unfollow {{ profile.username }}</a>
+                    <a href="{% url auth_profile profile.username %}" class="anchor" data-method="delete">Unfollow</a>
                 {% else %}
-                    <a href="{% url auth_profile profile.username %}" data-method="post">Follow {{ profile.username }}</a>
+                    <a href="{% url auth_profile profile.username %}" class="anchor" data-method="post">Follow</a>
                 {% endif %}
             </nav>
+            {% endif %}
 
             <h2>following ({{ profile.following.count }})</h2>
             <ul class="following">

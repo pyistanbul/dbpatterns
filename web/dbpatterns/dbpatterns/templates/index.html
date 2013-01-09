@@ -1,7 +1,5 @@
 {% extends 'base.html' %}
 
-{% load cache gravatar_tags humanize %}
-
 {% block content %}
 
     <section class="content landing">
@@ -13,57 +11,13 @@
     </section>
 
     <div class="dashboard">
-    <section class="content" id="timeline">
-    <h2>Public Newsfeed</h2>
-        <div class="stripe">
-            <div class="newsfeed">
-            {% for entry in newsfeed %}
-            <section class="entry {{ entry.news_type }}">
-                <aside>
-                <a class="gravatar" href="{% url auth_profile entry.user.username %}">
-                    <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_email entry.user.email %}">
-                </a>
-                </aside>
-                <article>
-                    {% if entry.news_type == "registration" %}
-                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> joined to dbpatterns</h3>
-                    {% elif entry.news_type == "document" %}
-                        <h3>{{ entry.user.username }} created new <a href="{{ entry.related_object.get_absolute_url }}">pattern</a></h3>
-                        <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
-
-                        {% with entry.related_object as document %}
-                            {% include "documents/preview.html" %}
-                        {% endwith %}
-
-
-                    {% elif entry.news_type == "fork" %}
-                        <h3>{{ entry.user.username }} forked a pattern</h3>
-                        <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
-
-                        {% with entry.related_object as document %}
-                            {% include "documents/preview.html" %}
-                        {% endwith %}
-
-                    {% elif entry.news_type == "comment" %}
-                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> commented on a <a href="{{ entry.related_object.document.get_absolute_url }}">pattern</a></h3>
-                        <blockquote>{{ entry.related_object.body }}</blockquote>
-
-                    {% elif entry.news_type == "star" %}
-                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> starred <a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a> pattern</h3>
-
-                    {% elif entry.news_type == "following" %}
-                        <h3><a href="{% url auth_profile entry.user.username %}">{{ entry.user.username }}</a> following <a href="{% url auth_profile entry.related_object.username %}">{{ entry.related_object.username }}</a></h3>
-                    {% endif %}
-
-                    <time><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.date_created|naturaltime }}</a></time>
-                </article>
-            </section>
-            {% endfor %}
-            <div class="clearfix"></div>
-        </div>
-        </div>
-    </section>
+        {% if is_public %}
+            {% include "newsfeed/public_newsfeed.html" %}
+        {% else %}
+            {% include "newsfeed/private_newsfeed.html" %}
+        {% endif %}
     </div>
+
 
 {% endblock %}
 
@@ -76,6 +30,14 @@
 
 {% block scripts %}
 {{ block.super }}
+    <script type="text/javascript">
+        new hipo.InfinityScroll({
+            "pagination_selector": ".load-more",
+            "next_link_selector": ".next",
+            "content_selector": ".newsfeed",
+            "max_page": 5
+        })
+    </script>
     <!-- twitter share button -->
     <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 {% endblock %}

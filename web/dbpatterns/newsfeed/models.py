@@ -1,15 +1,17 @@
-from datetime import datetime
 from bson import ObjectId
-from django.db import models
+from datetime import datetime
+
 from django.dispatch import receiver
 
 from comments.models import Comment
 from comments.signals import comment_done
-from documents import signals, get_collection
+from documents import get_collection
 from documents.models import Document
 from documents.signals import document_done, fork_done, star_done
-from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING
-from profiles.management.signals import follow_done
+from profiles.management.signals import follow_done, unfollow_done
+from newsfeed.constants import (NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT,
+                                NEWS_TYPE_FORK, NEWS_TYPE_STAR,
+                                NEWS_TYPE_FOLLOWING)
 
 RELATED_MODELS = {
     NEWS_TYPE_COMMENT: Comment,
@@ -18,10 +20,71 @@ RELATED_MODELS = {
     NEWS_TYPE_STAR: Document
 }
 
+
+class EntryManager(object):
+    """
+    A manager that allows you to manage newsfeed items.
+    """
+    collection = get_collection("newsfeed")
+
+    def create(self, object_id, news_type, sender, related_object=None):
+        """
+        Creates newsfeed item from provided parameters
+        """
+
+        followers = sender.followers.values_list(
+                        "follower_id", flat=True)
+
+        entry_bundle = {
+            "object_id": object_id,
+            "news_type": news_type,
+            "date_created": datetime.now(),
+            "sender": {
+                "username": sender.username,
+                "email": sender.email # it's required for gravatar
+            },
+            "recipients": list(followers) + [sender.pk]
+        }
+
+        # sometimes we have to create custom related object bundle.
+        # for example: following actions. because user actions are
+        # holding on relational database.
+        if related_object is not None:
+            entry_bundle["related_object"] = related_object
+
+        self.collection.insert(entry_bundle)
+
+    def add_to_recipients(self, following, follower):
+        """
+        Adds the id of follower to the recipients of followed profile's entries.
+        """
+        self.collection.update({
+            "sender.username": following.username
+        }, {
+            "$push": {
+                "recipients": follower.id
+            }
+        }, multi=True)
+
+    def remove_from_recipients(self, following, follower):
+        """
+        Removes follower id from the recipients of followed profile's entries.
+        """
+        self.collection.update({
+            "sender.username": following.username
+        }, {
+            "$pull": {
+                "recipients": follower.id
+            }
+        }, multi=True)
+
+
 class Entry(dict):
     """
-    A model that wraps mongodb document
+    A model that wraps mongodb document for newsfeed.
     """
+    objects = EntryManager()
+
     @property
     def related_object(self):
         news_type = self.get("news_type")
@@ -38,43 +101,63 @@ class Entry(dict):
 @receiver(fork_done)
 @receiver(document_done)
 def create_news_entry(instance, **kwargs):
-    newsfeed = get_collection("newsfeed")
-    newsfeed.insert({
-        "object_id": instance._id,
-        "news_type": instance.get_news_type(),
-        "date_created": instance.date_created,
-        "user": {
-            "username": instance.user.username,
-            "email": instance.user.email # it's required for gravatar
-        },
-    })
+    """
+    Creates news entries for the following types:
+
+        - Comments
+        - Forks
+        - Documents
+
+    That models have `get_news_type` method.
+    """
+    Entry.objects.create(
+        object_id=instance._id,
+        news_type=instance.get_news_type(),
+        sender=instance.user
+    )
 
 @receiver(star_done)
 def create_star_entry(instance, user, **kwargs):
-    newsfeed = get_collection("newsfeed")
-    newsfeed.insert({
-        "object_id": instance._id,
-        "news_type": NEWS_TYPE_STAR,
-        "date_created": datetime.now(),
-        "user": {
-            "username": user.username,
-            "email": user.email # it's required for gravatar
-        },
-    })
+    """
+    Creates news entry for document stargazers.
+
+    Actually, there is a no model for stargazers.
+    It's just an array that holds starred user ids on the document model.
+
+    For that reason, `star_done` signals provides `user` parameter.
+    """
+    Entry.objects.create(
+        object_id=instance._id,
+        news_type=NEWS_TYPE_STAR,
+        sender=user
+    )
 
 @receiver(follow_done)
 def create_following_entry(follower, following, **kwargs):
-    newsfeed = get_collection("newsfeed")
-    newsfeed.insert({
-        "object_id": following.id,
-        "news_type": NEWS_TYPE_FOLLOWING,
-        "date_created": datetime.now(),
-        "related_object": {
-            "username": following.username,
-            "email": following.email
-        },
-        "user": {
-            "username": follower.username,
-            "email": follower.email # it's required for gravatar
-        },
-    })
+    """
+    Creates news entry for following actions.
+    """
+    Entry.objects.create(
+        object_id=following.id,
+        news_type=NEWS_TYPE_FOLLOWING,
+        sender=follower,
+        related_object = dict(username=following.username,
+                              email=following.email)
+    )
+
+
+@receiver(follow_done)
+def add_to_recipients(follower, following, **kwargs):
+    """
+    Adds the entries of followed profile to follower's newsfeed.
+    """
+    Entry.objects.add_to_recipients(
+        following=following, follower=follower)
+
+@receiver(unfollow_done)
+def remove_from_recipients(follower, following, **kwargs):
+    """
+    Removes the entries of unfollowed profile.
+    """
+    Entry.objects.remove_from_recipients(following=following,
+                                        follower=follower)

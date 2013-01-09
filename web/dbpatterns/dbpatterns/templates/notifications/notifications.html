@@ -8,5 +8,7 @@
         </a>
         <time>{{ notification.date_created|naturaltime }}</time>
     </li>
+{% empty %}
+    <li class="empty">No new notification.</li>
 {% endfor %}
 </ul>

@@ -1,0 +1,17 @@
+<section class="content" id="timeline">
+    <h2>Public Newsfeed</h2>
+    {% if user.is_authenticated %}
+    <h5>Switch to <a href="{% url home %}">your newsfeed</a></h5>
+    {% endif %}
+    <div class="stripe">
+        <div class="newsfeed">
+            {% include "newsfeed/newsfeed.html" %}
+            {% if next_page_url %}
+                <div class="load-more">
+                    <a class="next anchor" href="{{ next_page_url }}">Load more</a>
+                </div>
+            {% endif %}
+            <div class="clearfix"></div>
+        </div>
+    </div>
+</section>

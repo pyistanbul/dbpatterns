@@ -11,7 +11,7 @@ class Command(BaseCommand):
     A management command for providing initial data for newsfeed.
 
         - User registrations
-        - Pattern creations
+        - Documents
         - Forks
         - Comments
 
@@ -21,7 +21,8 @@ class Command(BaseCommand):
         newsfeed = get_collection("newsfeed")
 
         newsfeed.ensure_index([
-            ("date_created", DESCENDING)
+            ("recipients", DESCENDING),
+            ("date_created", DESCENDING),
         ])
 
         newsfeed.remove()
@@ -31,11 +32,13 @@ class Command(BaseCommand):
                 "object_id": user.id,
                 "news_type": NEWS_TYPE_REGISTRATION,
                 "date_created": user.date_joined,
-                "user": {
+                "recipients": [],
+                "sender": {
                     "username": user.username,
                     "email": user.email # it's required for gravatar
                 },
             })
+
 
         for document in map(Document, get_collection("documents").find()):
             news_type = NEWS_TYPE_DOCUMENT if document.fork_of else NEWS_TYPE_FORK
@@ -43,7 +46,8 @@ class Command(BaseCommand):
                 "object_id": document.pk,
                 "news_type": news_type,
                 "date_created": document.date_created,
-                "user": {
+                "recipients": [],
+                "sender": {
                     "username": document.user.username,
                     "email": document.user.email # it's required for gravatar
                 },
@@ -54,10 +58,11 @@ class Command(BaseCommand):
                 "object_id": comment.pk,
                 "news_type": NEWS_TYPE_COMMENT,
                 "date_created": comment.date_created,
-                "user": {
+                "recipients": [],
+                "sender": {
                     "username": comment.user.username,
                     "email": comment.user.email # it's required for gravatar
                 },
             })
 
-        print list(get_collection("newsfeed").find())
+        print get_collection("newsfeed").count()

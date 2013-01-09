@@ -10,8 +10,10 @@ from documents.utils import reverse_tastypie_url
 
 class DocumentManager(object):
 
+    collection = get_collection("documents")
+
     def get(self, **kwargs):
-        return Document(get_collection("documents").find_one(kwargs))
+        return Document(self.collection.find_one(kwargs))
 
 class Document(dict):
     """

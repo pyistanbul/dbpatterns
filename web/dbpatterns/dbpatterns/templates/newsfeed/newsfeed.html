@@ -1,0 +1,46 @@
+{% load cache gravatar_tags humanize %}
+
+{% for entry in newsfeed %}
+    <section class="entry {{ entry.news_type }}">
+        <aside>
+            <a class="gravatar" href="{% url auth_profile entry.sender.username %}">
+                <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_email entry.sender.email %}">
+            </a>
+        </aside>
+        <article>
+            {% if entry.news_type == "registration" %}
+                <h3><a href="{% url auth_profile entry.sender.username %}">{{ entry.sender.username }}</a> joined to dbpatterns</h3>
+            {% elif entry.news_type == "document" %}
+                <h3>{{ entry.sender.username }} created new <a href="{{ entry.related_object.get_absolute_url }}">pattern</a></h3>
+                <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
+
+                {% with entry.related_object as document %}
+                    {% include "documents/preview.html" %}
+                {% endwith %}
+
+
+            {% elif entry.news_type == "fork" %}
+                <h3>{{ entry.sender.username }} forked a pattern</h3>
+                <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
+
+                {% with entry.related_object as document %}
+                    {% include "documents/preview.html" %}
+                {% endwith %}
+
+            {% elif entry.news_type == "comment" %}
+                <h3><a href="{% url auth_profile entry.sender.username %}">{{ entry.sender.username }}</a> commented on a <a href="{{ entry.related_object.document.get_absolute_url }}">pattern</a></h3>
+                <blockquote>{{ entry.related_object.body }}</blockquote>
+
+            {% elif entry.news_type == "star" %}
+                <h3><a href="{% url auth_profile entry.sender.username %}">{{ entry.sender.username }}</a> starred <a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a> pattern</h3>
+
+            {% elif entry.news_type == "following" %}
+                <h3><a href="{% url auth_profile entry.sender.username %}">{{ entry.sender.username }}</a> following <a href="{% url auth_profile entry.related_object.username %}">{{ entry.related_object.username }}</a></h3>
+            {% endif %}
+
+            <time><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.date_created|naturaltime }}</a></time>
+        </article>
+    </section>
+{% empty %}
+    <section class="empty">Seems to empty your newsfeed. You may follow somebody to see more news.</section>
+{% endfor %}

@@ -128,6 +128,9 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.tz',
     'django.core.context_processors.csrf',
     'django.contrib.messages.context_processors.messages',
+
+    'notifications.context_processors.notifications'
+
 )
 
 

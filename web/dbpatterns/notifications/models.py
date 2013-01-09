@@ -8,13 +8,24 @@ from comments.signals import comment_done
 from documents import get_collection
 from documents.models import Document
 from documents.signals import fork_done, star_done
-from notifications.constants import NOTIFICATION_TYPE_COMMENT, NOTIFICATION_TYPE_FORK, NOTIFICATION_TYPE_STAR, NOTIFICATION_TYPE_FOLLOWING, NOTIFICATION_TEMPLATES
 from profiles.management.signals import follow_done
+from notifications.constants import (NOTIFICATION_TYPE_COMMENT, NOTIFICATION_TYPE_FORK,
+                                     NOTIFICATION_TYPE_STAR, NOTIFICATION_TYPE_FOLLOWING,
+                                     NOTIFICATION_TEMPLATES)
 
 class NotificationManager(object):
 
-    def create(self, ):
-        pass
+    collection = get_collection("notifications")
+
+    def filter_by_user_id(self, user_id):
+        return self.collection.find({
+            "recipient": user_id,
+        })
+
+    def mark_as_read(self, user_id):
+        self.collection.update(
+            { "recipient": user_id, "is_read": False },
+            { "$set": { "is_read": True }}, multi=True)
 
 class Notification(dict):
     """
