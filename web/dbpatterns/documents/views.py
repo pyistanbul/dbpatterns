@@ -9,7 +9,7 @@ from django import http
 
 from tastypie.http import HttpNoContent
 from documents.signals import document_done, fork_done, star_done
-from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING, NEWSFEED_LIMIT
+from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING, NEWSFEED_LIMIT, NEWS_TYPE_REGISTRATION
 
 from profiles.mixins import LoginRequiredMixin
 from documents import get_collection
@@ -65,7 +65,8 @@ class HomeView(TemplateView):
         """
         parameters = {
             "news_type": {
-                "$in": [NEWS_TYPE_COMMENT,
+                "$in": [NEWS_TYPE_REGISTRATION,
+                        NEWS_TYPE_COMMENT,
                         NEWS_TYPE_DOCUMENT,
                         NEWS_TYPE_FORK,
                         NEWS_TYPE_STAR,
