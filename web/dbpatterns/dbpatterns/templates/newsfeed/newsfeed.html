@@ -10,17 +10,17 @@
         <article>
             {% if entry.news_type == "registration" %}
                 <h3><a href="{% url auth_profile entry.sender.username %}">{{ entry.sender.username }}</a> joined to dbpatterns</h3>
+
             {% elif entry.news_type == "document" %}
-                <h3>{{ entry.sender.username }} created new <a href="{{ entry.related_object.get_absolute_url }}">pattern</a></h3>
+                <h3><a href="{% url auth_profile entry.sender.username %}">{{ entry.sender.username }}</a> created new <a href="{{ entry.related_object.get_absolute_url }}">pattern</a></h3>
                 <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
 
                 {% with entry.related_object as document %}
                     {% include "documents/preview.html" %}
                 {% endwith %}
 
-
             {% elif entry.news_type == "fork" %}
-                <h3>{{ entry.sender.username }} forked a pattern</h3>
+                <h3><a href="{% url auth_profile entry.sender.username %}">{{ entry.sender.username }}</a> forked a pattern</h3>
                 <h4><a href="{{ entry.related_object.get_absolute_url }}">{{ entry.related_object.title }}</a></h4>
 
                 {% with entry.related_object as document %}
