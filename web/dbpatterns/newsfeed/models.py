@@ -4,10 +4,10 @@ from datetime import datetime
 from django.dispatch import receiver
 
 from comments.models import Comment
-from comments.signals import comment_done
+from comments.signals import comment_done, comment_delete
 from documents import get_collection
 from documents.models import Document
-from documents.signals import document_done, fork_done, star_done
+from documents.signals import document_done, fork_done, star_done, document_delete, fork_delete
 from profiles.management.signals import follow_done, unfollow_done
 from newsfeed.constants import (NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT,
                                 NEWS_TYPE_FORK, NEWS_TYPE_STAR,
@@ -77,6 +77,15 @@ class EntryManager(object):
                 "recipients": follower.id
             }
         }, multi=True)
+
+    def delete(self, object_type, object_id):
+        """
+        Removes news entry from provided object type and object id.
+        """
+        self.collection.remove({
+            "news_type": object_type,
+            "object_id": object_id
+        })
 
 
 class Entry(dict):
@@ -161,3 +170,12 @@ def remove_from_recipients(follower, following, **kwargs):
     """
     Entry.objects.remove_from_recipients(following=following,
                                         follower=follower)
+
+@receiver(comment_delete)
+@receiver(document_delete)
+@receiver(fork_delete)
+def remove_news_entry(instance, **kwargs):
+    Entry.objects.delete(
+        object_type=instance.get_news_type(),
+        object_id=instance._id
+    )

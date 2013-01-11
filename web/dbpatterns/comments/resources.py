@@ -12,7 +12,7 @@ from tastypie.exceptions import ImmediateHttpResponse
 from api.resources import MongoDBResource
 from comments.constants import COMMENT_TEMPLATE
 from comments.models import Comment
-from comments.signals import comment_done
+from comments.signals import comment_done, comment_delete
 from documents import get_collection
 
 class CommentResource(MongoDBResource):
@@ -55,11 +55,17 @@ class CommentResource(MongoDBResource):
 
 
     def obj_delete(self, request=None, **kwargs):
+        comment = self.obj_get(**kwargs)
         if request.user.is_anonymous() \
-            or request.user.pk != self.obj_get(**kwargs).get("user_id"):
+            or request.user.pk != comment.get("user_id"):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
 
         super(CommentResource, self).obj_delete(request, **kwargs)
+
+        comment_delete.send(sender=self,
+            comment_id=comment.id,
+            instance=comment
+        )
 
     def obj_create(self, bundle, request=None, **kwargs):
         bundle = super(CommentResource, self).obj_create(bundle,

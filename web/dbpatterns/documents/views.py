@@ -8,7 +8,7 @@ from django.views.generic import TemplateView, FormView, ListView, RedirectView,
 from django import http
 
 from tastypie.http import HttpNoContent
-from documents.signals import document_done, fork_done, star_done
+from documents.signals import document_done, fork_done, star_done, document_delete, fork_delete
 from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING, NEWSFEED_LIMIT, NEWS_TYPE_REGISTRATION
 
 from profiles.mixins import LoginRequiredMixin
@@ -173,8 +173,18 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
         if not self.is_authorized():
             return self.redirect()
 
+        document = self.get_document()
+
+        if document.fork_of is not None:
+            signal = fork_delete
+        else:
+            signal = document_delete
+
+        signal.send(sender=self, instance=self.get_document())
+
         resource = DocumentResource()
         resource.obj_delete(pk=self.kwargs.get("slug"))
+
         return HttpNoContent()
 
     def is_authorized(self):
