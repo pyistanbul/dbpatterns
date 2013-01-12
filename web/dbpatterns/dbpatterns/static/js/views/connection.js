@@ -28,8 +28,7 @@ dbpatterns.views.Connection = Backbone.View.extend({
     render: function () {
         this.connection = jsPlumb.connect({
             source: this.el,
-            target: this.options.target,
-            label: this.options.label(this.model)
+            target: this.options.target
         });
         return this;
     },
