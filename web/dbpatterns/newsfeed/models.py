@@ -1,6 +1,8 @@
 from bson import ObjectId
 from datetime import datetime
 
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from comments.models import Comment
@@ -11,7 +13,7 @@ from documents.signals import document_done, fork_done, star_done, document_dele
 from profiles.management.signals import follow_done, unfollow_done
 from newsfeed.constants import (NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT,
                                 NEWS_TYPE_FORK, NEWS_TYPE_STAR,
-                                NEWS_TYPE_FOLLOWING)
+                                NEWS_TYPE_FOLLOWING, NEWS_TYPE_REGISTRATION)
 
 RELATED_MODELS = {
     NEWS_TYPE_COMMENT: Comment,
@@ -179,3 +181,14 @@ def remove_news_entry(instance, **kwargs):
         object_type=instance.get_news_type(),
         object_id=instance._id
     )
+
+@receiver(post_save, sender=User)
+def create_registration_entry(instance, created, **kwargs):
+    if created:
+        Entry.objects.create(
+            object_id=instance.id,
+            news_type=NEWS_TYPE_REGISTRATION,
+            sender=instance,
+            related_object = dict(username=instance.username,
+                email=instance.email)
+        )
