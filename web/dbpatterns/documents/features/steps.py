@@ -1,7 +1,8 @@
+from django.test import Client
 from django.contrib.auth.models import User
+
 from lettuce import *
 
-from django.test import Client
 from documents.models import Document
 
 pages = {
@@ -32,19 +33,17 @@ def create_pattern(step, title):
 @step("go to the (.*)")
 def go_to_url(step, page):
     world.page_url = pages.get(page)
-    world.page = world.browser.get(world.page_url, follow=False)
+    world.page = world.browser.get(world.page_url)
     assert world.page.status_code == 200, \
                 "Got %s" % world.page.status_code
 
 @step('I type the title as "(.*)"')
 def type_the_title(step, title):
-    world.title = title
+    world.data = { "title": title }
 
 @step('I click to save button')
 def click_to_save_button(step):
-    world.page = world.browser.post(world.page_url, {
-        "title": world.title
-    })
+    world.page = world.browser.post(world.page_url, world.data)
 
 @step('the page should redirect to (.*)')
 def should_redirect_to_edit_page(step, url):
@@ -52,11 +51,10 @@ def should_redirect_to_edit_page(step, url):
 
 @step('the redirected page should contains "(.*)"')
 def should_redirected_page_contains(step, text):
-    url = world.page.get('Location')
-    world.page = world.browser.get(url)
+    world.page = world.browser.get(world.page.get('Location'))
     assert text in world.page.content
 
 @step('the page should contains "(.*)"')
-def should_redirected_page_contains(step, text):
+def should_page_contains(step, text):
     assert text in world.page.content
 
