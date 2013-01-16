@@ -112,6 +112,7 @@ INSTALLED_APPS = (
     'social_auth',
     'compressor',
     'debug_toolbar',
+    'lettuce.django',
 
     'documents',
     'profiles',
@@ -218,6 +219,10 @@ CACHES = {
         'LOCATION': '127.0.0.1:11211',
         }
 }
+
+# Testing
+
+LETTUCE_SERVER_PORT = 7000
 
 try:
     from settings_local import *
