@@ -27,7 +27,11 @@ class EntryManager(object):
     """
     A manager that allows you to manage newsfeed items.
     """
-    collection = get_collection("newsfeed")
+    def __init__(self):
+        self.load()
+
+    def load(self):
+        self.collection = get_collection("newsfeed")
 
     def create(self, object_id, news_type, sender, related_object=None):
         """

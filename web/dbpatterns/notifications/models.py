@@ -3,6 +3,7 @@ from bson import ObjectId
 
 from django.core.urlresolvers import reverse
 from django.dispatch import receiver
+from pymongo import DESCENDING
 
 from comments.signals import comment_done
 from documents import get_collection
@@ -17,7 +18,14 @@ class NotificationManager(object):
     """
     A class that allows create, edit, read notifications.
     """
-    collection = get_collection("notifications")
+    def __init__(self):
+        self.load()
+
+    def load(self):
+        self.collection = get_collection("notifications")
+        self.collection.ensure_index([
+            ("date_created", DESCENDING),
+        ])
 
     def filter_by_user_id(self, user_id):
         """

@@ -7,7 +7,6 @@ from django.http import HttpResponse
 from django.views.generic import ListView
 
 from notifications.models import Notification
-from documents import get_collection
 
 
 class NotificationListView(ListView):
@@ -17,11 +16,6 @@ class NotificationListView(ListView):
     context_object_name = "notifications"
 
     def get_queryset(self):
-
-        get_collection("notifications").ensure_index([
-            ("date_created", DESCENDING),
-        ])
-
         notifications = self.get_notifications()
         return imap(Notification, notifications)
 

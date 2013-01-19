@@ -26,6 +26,7 @@ class Document(dict):
     # dictionary-like object for mongodb documents.
     __getattr__ = dict.get
 
+
 class MongoDBResource(Resource):
     """
     A base resource that allows to make CRUD operations for mongodb.

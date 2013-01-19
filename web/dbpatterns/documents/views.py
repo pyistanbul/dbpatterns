@@ -8,19 +8,21 @@ from django.views.generic import TemplateView, FormView, ListView, RedirectView,
 from django import http
 
 from tastypie.http import HttpNoContent
-from documents.signals import document_done, fork_done, star_done, document_delete, fork_delete
-from newsfeed.constants import NEWS_TYPE_COMMENT, NEWS_TYPE_DOCUMENT, NEWS_TYPE_FORK, NEWS_TYPE_STAR, NEWS_TYPE_FOLLOWING, NEWSFEED_LIMIT, NEWS_TYPE_REGISTRATION
 
 from profiles.mixins import LoginRequiredMixin
-from documents import get_collection
-from documents.constants import FIELD_TYPES, EXPORTER_ORACLE, EXPORTER_SQLITE, EXPORTER_POSTGRES, EXPORTER_MYSQL, EXPORTERS
-from documents.exporters.sql import MysqlExporter, PostgresExporter, SQLiteExporter, OracleExporter
+from newsfeed.models import Entry
+from newsfeed.constants import *
+from documents.constants import *
 from documents.forms import DocumentForm, ForkDocumentForm, SearchForm
 from documents.mixins import DocumentMixin
 from documents.models import Document
 from documents.resources import DocumentResource
 from documents.utils import extract_keywords
-from newsfeed.models import Entry
+from documents.signals import (document_done, fork_done, star_done,
+                               document_delete, fork_delete)
+from documents.exporters.sql import (MysqlExporter, PostgresExporter,
+                                     SQLiteExporter, OracleExporter)
+
 
 DOCUMENT_EXPORTERS = {
     EXPORTER_MYSQL: MysqlExporter,
@@ -95,7 +97,6 @@ class HomeView(TemplateView):
                 "page": page_number + 1
             })
         }
-
 
 
 class DocumentDetailView(DocumentMixin, TemplateView):
@@ -206,7 +207,7 @@ class NewDocumentView(LoginRequiredMixin, FormView):
     template_name = "documents/new.html"
 
     def form_valid(self, form, **kwargs):
-        self.object_id = get_collection("documents").insert({
+        self.object_id = Document.objects.collection.insert({
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
             "date_created": datetime.now(),
@@ -227,7 +228,7 @@ class MyDocumentsView(LoginRequiredMixin, ListView):
     context_object_name = "documents"
 
     def get_queryset(self):
-        collection = get_collection("documents").find({"user_id": self.request.user.pk})
+        collection = Document.objects.collection.find({"user_id": self.request.user.pk})
         return map(Document, collection)
 
 
@@ -245,7 +246,7 @@ class SearchDocumentView(ListView):
 
         keyword = form.cleaned_data.get("keyword")
 
-        collection = get_collection("documents").find({
+        collection = Document.objects.collection.find({
             "_keywords": {
                 "$all": keyword.split()
             }
@@ -276,7 +277,7 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
         resource = DocumentResource()
         document = self.get_document()
 
-        self.object_id = get_collection("documents").insert({
+        self.object_id = Document.objects.collection.insert({
             "title": form.cleaned_data.get("title"),
             "user_id": self.request.user.pk,
             "entities": document.entities,

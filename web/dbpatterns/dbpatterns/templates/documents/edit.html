@@ -6,7 +6,7 @@
 {% block nav %}
     <ul>
         <li><a href="{% url my_documents %}">Back to list</a></li>
-        <li><a class="show" href="{% url show_document document.id %}">Show</a></li>
+        <li><a class="show" href="{% url show_document document.pk %}">Show</a></li>
     </ul>
 {% endblock %}
 

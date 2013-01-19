@@ -190,6 +190,7 @@ SOCIAL_AUTH_PIPELINE = (
 # MONGODB Settings
 
 MONGODB_DATABASE = "dbpatterns"
+MONGODB_TEST_DATABASE = "dbpatterns_test"
 
 # Django Compressor Settings
 
