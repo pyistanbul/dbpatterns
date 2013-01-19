@@ -104,3 +104,10 @@ def fork_the_created_pattern(step, title):
 def fork_the_created_pattern(step, username):
     world.page = world.browser.get(reverse("auth_profile", args=[username]))
     assert world.page.status_code == 200, "Got %s" % world.page.status_code
+
+@step('I star that pattern')
+def star_pattern(step):
+    step.behave_as("""
+    When go to the that pattern
+    And click to star button
+    """)
