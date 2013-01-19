@@ -1,3 +1,5 @@
+import json
+from django.conf import settings
 from lxml import html
 
 from django.core.urlresolvers import reverse
@@ -6,6 +8,7 @@ from django.test import Client
 from lettuce import *
 
 from documents.models import Document
+from documents.utils import reverse_tastypie_url
 
 pages = {
     "create pattern page": "/documents/new",
@@ -44,9 +47,11 @@ def go_to_created_pattern(step):
         args=[str(world.created_document_id)])
     world.page = world.browser.get(url)
 
-@step('type the title as "(.*)"')
-def type_the_title(step, title):
-    world.data = { "title": title }
+@step('type the "(.*)" as "(.*)"')
+def type_the_field(step, field, value):
+    world.data = {
+        field: value
+    }
 
 @step('click to save button')
 def click_to_save_button(step):
@@ -105,9 +110,39 @@ def fork_the_created_pattern(step, username):
     world.page = world.browser.get(reverse("auth_profile", args=[username]))
     assert world.page.status_code == 200, "Got %s" % world.page.status_code
 
+@step('submit the comment')
+def submit_comment(step):
+    comments_resource_uri = reverse("api_get_comments",
+        args=["documents", str(world.created_document_id)])
+    data = world.data.copy()
+    data["username"] = world.user.username
+    world.page = world.browser.post(comments_resource_uri, json.dumps(data),
+                    content_type="application/json")
+    assert world.page.status_code == 201, "Got %s" % world.page.status_code
+
+@step('the comments of that pattern')
+def comments_of_pattern(step):
+    comments_resource_uri = reverse("api_get_comments",
+        args=["documents", str(world.created_document_id)])
+    world.page = world.browser.get(comments_resource_uri)
+    assert world.page.status_code == 200, "Got %s" % world.page.status_code
+
+@step("the comment count of that pattern should be (\d+)")
+def comment_count_of_pattern(step, comment_count):
+    document = Document.objects.get(_id=world.created_document_id)
+    assert document.comment_count == int(comment_count)
+
 @step('I star that pattern')
 def star_pattern(step):
     step.behave_as("""
     When go to the that pattern
     And click to star button
+    """)
+
+@step('I leave a comment on that pattern')
+def star_pattern(step):
+    step.behave_as("""
+    When go to the that pattern
+    And I type the "body" as "Test Comment"
+    When I submit the comment
     """)

@@ -18,7 +18,13 @@ def extract_keywords(title):
                     + stemmed_keywords))
 
 
-def reverse_tastypie_url(resource_name, pk):
+def reverse_tastypie_url(resource_name, pk=None):
+    """
+    Returns tastypie url
+    """
+    if pk is None:
+        return reverse("api_dispatch_list", args=[resource_name])
+
     return reverse("api_dispatch_detail", kwargs={
         "resource_name": resource_name,
         "pk": pk

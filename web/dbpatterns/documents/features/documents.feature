@@ -4,7 +4,7 @@ Feature: Managing documents (patterns)
 
   Scenario: Create patterns
     When go to the create pattern page
-    And I type the title as "Friendships"
+    And I type the "title" as "Friendships"
     When I click to save button
     Then the redirected page should contains "Friendships"
 
