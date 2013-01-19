@@ -1,8 +1,7 @@
 import ast
 from _ast import Call, Attribute, Name
 
-from documents.constants import ENTITY_POSITION_TOP_INCREASE, ENTITY_POSITION_LEFT_INCREASE, \
-    TYPES_INTEGER, TYPES_STRING, TYPES_BOOLEAN, TYPES_DATETIME, TYPES_DATE, TYPES_TIME
+from documents.constants import *
 from documents.parsers import BaseParser
 from documents.parsers.exceptions import ParseError
 

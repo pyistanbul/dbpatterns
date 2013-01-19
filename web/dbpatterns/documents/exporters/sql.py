@@ -1,5 +1,4 @@
-from documents.constants import (TYPES_BOOLEAN, TYPES_INTEGER, TYPES_TEXT, TYPES_TIME, \
-    TYPES_DATETIME, TYPES_DATE, TYPES_STRING)
+from documents.constants import *
 from documents.exporters import BaseExporter
 
 class SQLExporter(BaseExporter):
