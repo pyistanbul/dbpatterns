@@ -1,7 +1,6 @@
-from django.core.urlresolvers import reverse
-from lettuce.django import django_url
 from lxml import html
 
+from django.core.urlresolvers import reverse
 from django.test import Client
 
 from lettuce import *
@@ -39,6 +38,11 @@ def go_to_created_pattern(step):
     assert world.page.status_code == 200,\
                 "Got %s" % world.page.status_code
 
+@step("look the stargazers of that pattern")
+def go_to_created_pattern(step):
+    url = reverse("show_document_stars",
+        args=[str(world.created_document_id)])
+    world.page = world.browser.get(url)
 
 @step('type the title as "(.*)"')
 def type_the_title(step, title):
@@ -55,6 +59,11 @@ def click_to_show_button(step):
     assert len(show_link) > 0
     world.page = world.browser.get(show_link[0].get("href"))
 
+@step('click to star button')
+def click_to_star_button(step):
+    star_url = reverse("star_document", args=[str(world.created_document_id)])
+    world.page = world.browser.post(star_url)
+
 @step('click to fork button')
 def click_to_fork_button(step):
     fork_url = reverse("fork_document", args=[str(world.created_document_id)])
@@ -63,11 +72,11 @@ def click_to_fork_button(step):
 @step('the redirected page should contains "(.*)"')
 def should_redirected_page_contains(step, text):
     world.page = world.browser.get(world.page.get('Location'))
-    assert text in world.page.content
+    assert text in world.page.content, world.page.content
 
 @step('the page should contains "(.*)"')
 def page_should_contains(step, text):
-    assert text in world.page.content
+    assert text in world.page.content, world.page.content
 
 @step('the page should not contains "(.*)"')
 def page_should_not_contains(step, text):
@@ -86,8 +95,12 @@ def click_the_first_delete_button(step):
     assert len(delete_links) > 0
     assert world.browser.delete(delete_links[0].get("href")).status_code == 204
 
-
 @step('fork the that pattern as "(.*)"')
 def fork_the_created_pattern(step, title):
     fork_url = reverse("fork_document", args=[str(world.created_document_id)])
     world.page = world.browser.post(fork_url, {"title": title})
+
+@step('go to the profile of "(.*)"')
+def fork_the_created_pattern(step, username):
+    world.page = world.browser.get(reverse("auth_profile", args=[username]))
+    assert world.page.status_code == 200, "Got %s" % world.page.status_code

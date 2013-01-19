@@ -31,3 +31,7 @@ def login(step, username):
         User.objects.create_user(username=username, password="123456")
     world.user = User.objects.get(username=username)
     assert world.browser.login(username=username, password="123456")
+
+@step('I am logged out')
+def logout(step):
+    world.browser.logout()
