@@ -1,0 +1,1 @@
+python web/dbpatterns/manage.py harvest tests/scenarios
