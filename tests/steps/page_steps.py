@@ -1,6 +1,5 @@
 from lettuce import *
 
-
 pages = {
     "create pattern page": "/documents/new",
     "my patterns": "/documents/",

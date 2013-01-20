@@ -7,7 +7,6 @@ from django.core.urlresolvers import reverse
 
 from documents.models import Document
 
-
 @step('create a pattern that named "(.*)"')
 @step('there is a pattern that named "(.*)"')
 def create_pattern(step, title):

@@ -9,7 +9,7 @@ from notifications.models import Notification
 
 # load all steps
 from .auth_steps import *
-from .documents_steps import *
+from .document_steps import *
 from .form_steps import *
 from .page_steps import *
 

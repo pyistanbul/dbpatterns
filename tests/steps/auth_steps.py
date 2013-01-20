@@ -3,7 +3,6 @@ from lettuce import *
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-
 @step('I am logged in as user "(.*)"')
 def login(step, username):
     if not User.objects.filter(username=username).exists():

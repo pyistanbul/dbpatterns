@@ -1,7 +1,6 @@
 from lxml import html
 from lettuce import step, world
 
-
 @step('type the "(.*)" as "(.*)"')
 def type_the_field(step, field, value):
     world.data = {
