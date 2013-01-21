@@ -1,1 +1,1 @@
-python web/dbpatterns/manage.py harvest tests/scenarios
+python web/dbpatterns/manage.py harvest "tests/scenarios/$1"
