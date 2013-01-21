@@ -224,6 +224,7 @@ CACHES = {
 # Testing
 
 LETTUCE_SERVER_PORT = 7000
+SOUTH_TESTS_MIGRATE = False
 
 try:
     from settings_local import *
