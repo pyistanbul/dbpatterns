@@ -4,7 +4,7 @@
     <section class="entry {{ entry.news_type }}">
         <aside>
             <a class="gravatar" href="{% url auth_profile entry.sender.username %}">
-                <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_email entry.sender.email %}">
+                <img alt="gravatar of {{ document.user }}" src="{% gravatar_for_email entry.sender.email 80 %}">
             </a>
         </aside>
         <article>

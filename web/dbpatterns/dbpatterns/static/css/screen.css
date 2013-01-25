@@ -924,7 +924,7 @@ hr.or:after {
 
 
 #timeline {
-    margin: 40px 0 0;
+    margin: 30px 0 0 -7px;
 }
 
     #timeline:before {
@@ -935,7 +935,7 @@ hr.or:after {
         display: inline-block;
         border-radius: 50%;
         position: absolute;
-        margin-left: 135px;
+        margin-left: 120px;
         margin-top: -3px;
         box-shadow: 0 0 0 7px #fff,
                     0 0 0 8px #2894df;
@@ -943,7 +943,7 @@ hr.or:after {
 
     #timeline h2 {
         position: absolute;
-        margin-left: 165px;
+        margin-left: 155px;
         margin-top: -20px;
         color: #636363;
         font-size: 23px;
@@ -953,7 +953,7 @@ hr.or:after {
         position: absolute;
         font-size: 19px;
         font-weight: normal;
-        margin-left: 180px;
+        margin-left: 170px;
         margin-top: 15px;
     }
 
@@ -977,7 +977,7 @@ hr.or:after {
 
     #timeline .stripe {
         border-left: 1px dotted #2894df;
-        margin-left: 140px;
+        margin-left: 124px;
         padding-top: 20px;
     }
 
@@ -986,11 +986,11 @@ hr.or:after {
         }
 
             #timeline article {
-                margin-top: 14px;
-                margin-left: 50px;
+                margin-top: 12px;
+                margin-left: 42px;
                 float: left;
                 background-color: white;
-                width: 720px;
+                width: 480px;
                 box-shadow: 0 0 8px #ababab;
                 border-left: 8px solid #2894df;
                 margin-bottom: 40px;
@@ -1001,12 +1001,14 @@ hr.or:after {
                     padding: 6px 15px 0;
                     font-weight: normal;
                     letter-spacing: -1px;
-                    color: #7f7f7f;
+                    color: #7b7b7b;
                     font-size: 24px;
                 }
 
                     #timeline article h3 a {
-                        color: #696969;
+                        color: #4f9ad8;
+                        border-bottom: 1px dotted #cdcdcd;
+                        text-decoration: none;
                     }
 
                 #timeline article h4 {
@@ -1087,7 +1089,8 @@ hr.or:after {
 
             #timeline aside {
                 float: left;
-                margin-left: -137px;
+                margin-top: 2px;
+                margin-left: -117px;
                 border: 8px solid #f4f4f4;
                 border-radius: 50%;
 
@@ -1098,8 +1101,8 @@ hr.or:after {
             }
 
                 #timeline aside img {
-                    width: 80px;
-                    height: 80px;
+                    width: 70px;
+                    height: 70px;
                     border-radius: 50%;
                 }
 
@@ -1111,8 +1114,8 @@ hr.or:after {
                 text-indent: -9999px;
                 display: inline-block;
                 position: absolute;
-                margin-top: 22px;
-                margin-left: 114px;
+                margin-top: 18px;
+                margin-left: 94px;
                 background: url(/static/images/timeline-icons.png) top left #2894df;
             }
 
@@ -1124,8 +1127,8 @@ hr.or:after {
                 width: 87px;
                 height: 1px;
                 border-top: 1px dotted #7dc8d8;
-                margin-left: 85px;
-                margin-top: -43px;
+                margin-left: 60px;
+                margin-top: -36px;
             }
 
             /* Timeline Icons */
@@ -1348,6 +1351,115 @@ header h1 a#user-notifications-button {
     z-index: 10;
     width: 160px;
 }
+
+
+/* Sidebar */
+
+aside#sidebar {
+    width: 270px;
+    position: absolute;
+    margin-left: 690px;
+}
+
+    aside#sidebar h2 {
+        font-weight: normal;
+        color: #5d5d5d;
+    }
+
+    aside#sidebar #search-form {
+
+    }
+
+        aside#sidebar #search-form #id_keyword {
+            padding: 7px;
+        }
+        aside#sidebar #search-form .button {
+            font-size: 20px;
+        }
+
+    aside#sidebar #search-form label {
+        display: none;
+    }
+
+    aside#sidebar #document-tabs {
+        position: relative;
+    }
+
+        aside#sidebar #document-tabs section ul li {
+            list-style-type: none;
+            border-bottom: 1px dotted #e4e4e4;
+            margin-left: -10px;
+            padding: 5px 7px;
+            height: 20px;
+            overflow: hidden;
+        }
+
+        aside#sidebar #document-tabs section ul li a {
+            color: #5d5d5d;
+            text-decoration: none;
+        }
+        aside#sidebar #document-tabs section ul li a.author {
+            color: #ababab;
+        }
+
+
+/* Search Results */
+
+.search-result {
+    padding-left: 190px;
+}
+
+.search #search-form {
+    margin: 0;
+}
+
+    .search #search-form .button {
+        margin-left: 0;
+    }
+
+
+/* Tabs */
+
+article.tabs nav ul {
+    overflow: hidden;
+    background-color: #ecf6f8;
+}
+    article.tabs nav ul li {
+        display: block;
+        float: left;
+        padding: 5px 10px 0;
+        margin: 5px 0 0 5px;
+    }
+
+    article.tabs nav ul .active {
+        background-color: white;
+    }
+
+    article.tabs nav ul li a {
+        text-decoration: none;
+        color: #7e8586;
+        font-size: 20px;
+    }
+
+    article.tabs nav ul .active a {
+        color: #4f9ad8;
+    }
+
+article.tabs section {
+    display: none;
+    background-color: white;
+    margin-bottom: -1px;
+    padding-bottom: 10px;
+}
+
+    article.tabs nav + section {
+        display: block;
+    }
+
+    article.tabs section ul {
+        margin: 0;
+        padding: 10px 20px;
+    }
 
 
 

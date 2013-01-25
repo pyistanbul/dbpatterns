@@ -11,6 +11,46 @@
     </section>
 
     <div class="dashboard">
+        <aside id="sidebar">
+            <h2>Search</h2>
+            {% include "documents/search_form.html" %}
+            <article id="document-tabs" class="tabs">
+                <nav>
+                    <ul>
+                        <li class="active"><a href="#featured-patterns">Featured</a></li>
+                        <li><a href="#starred-patterns">Starred</a></li>
+                    </ul>
+                </nav>
+                <section id="featured-patterns">
+                    <ul>
+                        {% for document in featured_documents %}
+                            <li>
+                            <a class="author" href="{% url auth_profile document.user.username %}">{{ document.user.username }}/</a>
+                            <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                            </li>
+                        {% endfor %}
+
+                    </ul>
+                </section>
+                <section id="starred-patterns">
+                    <ul>
+                        {% if user.is_anonymous %}
+                            <li><a href="{% url auth_login %}">Login to see starred documents.</a></li>
+                        {% else %}
+                        {% for document in starred_documents %}
+                            <li>
+                                <a class="author" href="{% url auth_profile document.user.username %}">{{ document.user.username }}/</a>
+                                <a href="{{ document.get_absolute_url }}">{{ document.title }}</a>
+                            </li>
+                        {% empty %}
+                            <li>You have no starred document.</li>
+                        {% endfor %}
+                        {% endif %}
+                    </ul>
+                </section>
+            </article>
+        </aside>
+
         {% if is_public %}
             {% include "newsfeed/public_newsfeed.html" %}
         {% else %}

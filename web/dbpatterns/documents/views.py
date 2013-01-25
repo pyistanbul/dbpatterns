@@ -58,8 +58,19 @@ class HomeView(TemplateView):
         return {
             "is_public": is_public,
             "newsfeed": imap(Entry, newsfeed),
-            "next_page_url": next_page_url
+            "next_page_url": next_page_url,
+            "featured_documents": self.get_featured_documents(),
+            "starred_documents": self.get_starred_documents(),
+            "search_form": SearchForm()
         }
+
+    def get_featured_documents(self):
+        return Document.objects.featured()
+
+    def get_starred_documents(self):
+        if self.request.user.is_anonymous():
+            return []
+        return Document.objects.starred(user_id=self.request.user.id)
 
     def get_newsfeed(self, public=True, offset=0, limit=NEWSFEED_LIMIT):
         """

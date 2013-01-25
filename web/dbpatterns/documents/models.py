@@ -19,6 +19,18 @@ class DocumentManager(object):
     def get(self, **kwargs):
         return Document(self.collection.find_one(kwargs))
 
+    def featured(self):
+        return map(Document, self.collection.find({
+            "is_featured": True
+        }))
+
+    def starred(self, user_id):
+        return map(Document, self.collection.find({
+            "stars": {
+                "$in": [user_id]
+            }
+        }))
+
 
 class Document(dict):
     """

@@ -10,6 +10,7 @@
             return false;
         });
 
+        // notifications
         $("#user-notifications-button").click(function () {
             var notifications = $("#user-notifications"),
                 notifications_section = notifications.find("section"),
@@ -21,6 +22,19 @@
             $.ajax({"type": "PUT", "url": notifications_url});
             return false;
         });
+
+        // tab implementation
+        $(".tabs nav a").click(function () {
+            var tab_link = $(this),
+                link_container = tab_link.parent(),
+                focused_tab = $(tab_link.attr("href"));
+            focused_tab.siblings("section").hide();
+            focused_tab.show();
+            link_container.siblings().removeClass("active");
+            link_container.addClass("active");
+            return false;
+        });
+
     });
 
 })(window.jQuery);
