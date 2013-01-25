@@ -1356,6 +1356,7 @@ header h1 a#user-notifications-button {
 /* Sidebar */
 
 aside#sidebar {
+    margin-top: 30px;
     width: 270px;
     position: absolute;
     margin-left: 690px;
@@ -1364,10 +1365,11 @@ aside#sidebar {
     aside#sidebar h2 {
         font-weight: normal;
         color: #5d5d5d;
+        padding: 0;
     }
 
     aside#sidebar #search-form {
-
+        margin-top: -10px;
     }
 
         aside#sidebar #search-form #id_keyword {
