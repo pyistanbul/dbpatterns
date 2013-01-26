@@ -960,6 +960,7 @@ hr.or:after {
 
         #timeline h5 a {
             color: #2894df;
+            text-decoration: underline;
         }
 
         #timeline h5 + .stripe {
@@ -993,7 +994,7 @@ hr.or:after {
                 float: left;
                 background-color: white;
                 width: 480px;
-                box-shadow: 0 0 8px #ababab;
+                box-shadow: 0 0 5px #c7c7c7;
                 border-left: 8px solid #2894df;
                 margin-bottom: 40px;
             }
@@ -1357,8 +1358,8 @@ header h1 a#user-notifications-button {
 /* Sidebar */
 
 aside#sidebar {
-    margin-top: 30px;
-    width: 270px;
+    margin-top: 47px;
+    width: 268px;
     position: absolute;
     margin-left: 690px;
 }
@@ -1367,16 +1368,20 @@ aside#sidebar {
         font-weight: normal;
         color: #5d5d5d;
         padding: 0;
+        margin-left: 3px;
+        margin-bottom: 0;
     }
 
     aside#sidebar #search-form {
         margin-top: -10px;
+        margin-left: 5px;
     }
 
         aside#sidebar #search-form #id_keyword {
             padding: 7px;
         }
         aside#sidebar #search-form .button {
+            margin-top: -5px;
             font-size: 20px;
         }
 
@@ -1386,6 +1391,7 @@ aside#sidebar {
 
     aside#sidebar #document-tabs {
         position: relative;
+        padding-top: 10px;
     }
 
         aside#sidebar #document-tabs section ul li {
