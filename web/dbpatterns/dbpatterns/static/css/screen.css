@@ -160,6 +160,9 @@ article#document {
         z-index: 3;
     }
 
+.content {
+    padding-bottom: 40px;
+}
 
 .content form {
     padding: 30px;
