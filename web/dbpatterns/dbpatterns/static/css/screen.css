@@ -1018,13 +1018,14 @@ hr.or:after {
                     padding: 6px 15px 0;
                     font-weight: normal;
                     letter-spacing: -1px;
-                    color: #7b7b7b;
+                    color: #b0b0b0;
                     font-size: 24px;
                 }
 
                     #timeline article h3 a {
-                        color: #2894df;
+                        color: #838383;
                         text-decoration: none;
+                        border-bottom: 1px dotted #d7d7d7;
                     }
 
                 #timeline article h4 {
