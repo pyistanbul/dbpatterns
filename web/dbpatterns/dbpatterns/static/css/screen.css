@@ -95,11 +95,12 @@ body > footer {
     width: 960px;
     padding: 10px;
     color: #fff;
-    margin: 0 auto;
+    margin-right: -480px;
     font-size: 16px;
-    /*position: fixed;*/
+    position: fixed;
     z-index: 2;
-
+    right: 50%;
+    bottom: 0;
 }
 
     body > footer a {
@@ -967,7 +968,8 @@ hr.or:after {
 
     #timeline .newsfeed {
         margin-top: 20px;
-
+        width: 550px;
+        min-height: 500px;
     }
 
     #timeline .empty {
@@ -1007,7 +1009,6 @@ hr.or:after {
 
                     #timeline article h3 a {
                         color: #4f9ad8;
-                        border-bottom: 1px dotted #a7e0f7;
                         text-decoration: none;
                     }
 
@@ -1424,17 +1425,19 @@ aside#sidebar {
 
 article.tabs nav ul {
     overflow: hidden;
-    background-color: #ecf6f8;
+    /*background-color: rgba(236, 246, 248, 0.15);*/
 }
     article.tabs nav ul li {
         display: block;
         float: left;
         padding: 5px 10px 0;
-        margin: 5px 0 0 5px;
+        margin: 5px 0 0 15px;
+        z-index: 3;
     }
 
     article.tabs nav ul .active {
         background-color: white;
+        box-shadow: 0 0 5px #c9c9c9;
     }
 
     article.tabs nav ul li a {
@@ -1448,6 +1451,7 @@ article.tabs nav ul {
     }
 
 article.tabs section {
+    box-shadow: 0 0 3px #c9c9c9;
     display: none;
     background-color: white;
     margin-bottom: -1px;
