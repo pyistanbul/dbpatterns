@@ -63,7 +63,7 @@ body {
 
     header nav li.my-profile {
         padding: 0;
-        margin-left: 1px;
+        margin-right: -19px;
     }
 
         header nav li.my-profile a {
