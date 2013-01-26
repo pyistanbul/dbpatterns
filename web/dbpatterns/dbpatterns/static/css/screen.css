@@ -61,6 +61,17 @@ body {
         background-color: #2485c9;
     }
 
+    header nav li.my-profile {
+        padding: 0;
+        margin-left: 1px;
+    }
+
+        header nav li.my-profile a {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+        }
+
     section.landing {
         font-size: 20px;
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+{% load gravatar_tags %}<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>dbpatterns - create, share, explore database patterns</title>
@@ -29,7 +29,11 @@
             </ul>
             {% else %}
             <ul>
-                <li><a href="{% url auth_logout %}">Logout ({{ user.username }})</a></li>
+                <li class="my-profile">
+                    <a href="{% url auth_profile user.username %}" class="gravatar">
+                    <img src="{% gravatar_for_user user 40 %}"></a>
+                </li>
+                <li><a href="{% url auth_logout %}">Logout</a></li>
                 <li><a href="{% url my_documents %}">My Patterns</a></li>
                 <li><a href="{% url new_document %}">New Pattern</a></li>
             </ul>
