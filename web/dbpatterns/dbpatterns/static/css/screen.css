@@ -1009,7 +1009,7 @@ hr.or:after {
                 background-color: white;
                 width: 480px;
                 box-shadow: 0 0 5px #c7c7c7;
-                border-left: 8px solid #2894df;
+                border-left: 5px solid #2894df;
                 margin-bottom: 40px;
             }
 
@@ -1093,7 +1093,7 @@ hr.or:after {
                     text-indent: -9999px;
                     display: inline-block;
                     position: absolute;
-                    margin-left: -20px;
+                    margin-left: -15px;
                     margin-top: 20px;
                     width: 0;
                     height: 0;
