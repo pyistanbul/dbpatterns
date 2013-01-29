@@ -35,7 +35,7 @@
                 <section id="starred-patterns">
                     <ul>
                         {% if user.is_anonymous %}
-                            <li><a href="{% url auth_login %}">Login to see that list</a></li>
+                            <li><a href="{% url auth_login %}">Login to see rated patterns</a></li>
                         {% else %}
                         {% for document in starred_documents %}
                             <li>

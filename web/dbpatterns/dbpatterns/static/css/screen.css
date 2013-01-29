@@ -1452,8 +1452,12 @@ article.tabs nav ul {
         display: block;
         float: left;
         padding: 5px 10px 0;
-        margin: 5px 0 0 15px;
+        margin: 5px 0 0 5px;
         z-index: 3;
+    }
+
+    article.tabs nav ul:first-child {
+        margin-left: 15px;
     }
 
     article.tabs nav ul .active {
