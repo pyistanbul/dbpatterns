@@ -4,6 +4,8 @@ from lettuce import *
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
+from profiles.models import FollowedProfile
+
 @step('I am logged in as user "(.*)"')
 def login(step, username):
     if not User.objects.filter(username=username).exists():
@@ -50,3 +52,9 @@ def click_to_unfollow_button(step):
     unfollow_link = dom.cssselect(".unfollow")
     assert len(unfollow_link) > 0
     world.page = world.browser.delete(unfollow_link[0].get("href"))
+
+@step('"(.*)" following "(.*)"')
+def follow(step, from_username, to_username):
+    follower = User.objects.get(username=from_username)
+    following = User.objects.get(username=to_username)
+    FollowedProfile.objects.create(follower=follower, following=following)

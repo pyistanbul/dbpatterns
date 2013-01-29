@@ -8,7 +8,6 @@ from .document_steps import *
 from .form_steps import *
 from .page_steps import *
 
-
 @before.all
 def set_browser():
     """

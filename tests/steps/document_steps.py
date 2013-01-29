@@ -6,6 +6,7 @@ from lettuce import *
 from django.core.urlresolvers import reverse
 
 from documents.models import Document
+from documents.signals import document_done
 
 @step('create a pattern that named "(.*)"')
 @step('there is a pattern that named "(.*)"')
@@ -14,6 +15,8 @@ def create_pattern(step, title):
         "title": title,
         "user_id": world.user.id
     })
+    created_document = Document.objects.get(_id=world.created_document_id)
+    document_done.send(instance=created_document, sender=step)
 
 @step("go to the that pattern")
 def go_to_pattern(step):

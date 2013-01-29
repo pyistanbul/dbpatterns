@@ -3,6 +3,7 @@ from lettuce import *
 pages = {
     "create pattern page": "/documents/new",
     "my patterns": "/documents/",
+    "newsfeed": "/",
 }
 
 @step("go to the (.*)")
@@ -23,4 +24,4 @@ def page_should_contains(step, text):
 
 @step('the page should not contains "(.*)"')
 def page_should_not_contains(step, text):
-    assert not text in world.page.content
+    assert not text in world.page.content, world.page.content
