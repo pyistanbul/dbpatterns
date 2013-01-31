@@ -1,3 +1,5 @@
+from bson import ObjectId
+
 from django.conf.urls import url
 from django.core.urlresolvers import reverse
 
@@ -30,21 +32,39 @@ class DocumentResource(MongoDBResource):
     def get_collection(self):
         return get_collection("documents")
 
+    def obj_get(self, request=None, **kwargs):
+        """
+        Returns mongodb document from provided id.
+        """
+        document = Document.objects.get(_id=ObjectId(kwargs.get("pk")))
+
+        if not document.is_visible(user_id=request.user.id):
+            raise ImmediateHttpResponse(response=http.HttpUnauthorized())
+
+        return document
+
     def obj_create(self, bundle, request=None, **kwargs):
+        """
+        Populates the id of user to create document.
+        """
         return super(DocumentResource, self).obj_create(bundle,
             user_id=request.user.pk)
 
     def obj_update(self, bundle, request=None, **kwargs):
+        """
+        Checks the permissions of user, and updates the document
+        """
+        document = self.obj_get(pk=kwargs.get("pk"))
 
-        if request is not None and \
-           self.obj_get(pk=kwargs.get("pk")).user_id != request.user.pk:
+        if not document.is_editable(user_id=request.user.id):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
 
         return super(DocumentResource, self).obj_update(bundle, request, **kwargs)
 
-    # nested resources
-
     def dehydrate(self, bundle):
+        """
+        Inserts the comments uri to the document bundle
+        """
         bundle.data["comments_uri"] = reverse("api_get_comments", kwargs={
             "resource_name": "documents",
             "pk": bundle.data.get("id")
@@ -52,6 +72,9 @@ class DocumentResource(MongoDBResource):
         return bundle
 
     def override_urls(self):
+        """
+        Adds the urls of nested resources
+        """
         return [
             url(r"^(?P<resource_name>%s)/(?P<pk>\w[\w/-]*)/comments%s$" %
                 (self._meta.resource_name, trailing_slash()),

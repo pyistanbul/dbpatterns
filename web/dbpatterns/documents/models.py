@@ -90,9 +90,28 @@ class Document(dict):
         }).count()
 
     def get_stargazers(self):
+        """
+        Returns the stargazers of document
+        """
         return User.objects.filter(id__in=self.get_stars())
 
     def get_news_type(self):
+        """
+        Returns the new type of document.
+        """
         if self.fork_of is not None:
             return NEWS_TYPE_FORK
+
         return NEWS_TYPE_DOCUMENT
+
+    def is_visible(self, user_id=None):
+        """
+        Indicates whether the document is visible to user.
+        """
+        return self.is_public or user_id == self.user_id
+
+    def is_editable(self, user_id=None):
+        """
+        Indicates the user can edit this document
+        """
+        return user_id == self.user_id

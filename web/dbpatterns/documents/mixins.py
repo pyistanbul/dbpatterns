@@ -1,5 +1,6 @@
 from bson.errors import InvalidId
 from django.http import Http404
+from tastypie.exceptions import ImmediateHttpResponse
 
 from documents.resources import DocumentResource
 
@@ -12,5 +13,5 @@ class DocumentMixin(object):
         resource = DocumentResource()
         try:
             return resource.obj_get(request=self.request, pk=self.kwargs.get("slug"))
-        except (TypeError, InvalidId):
+        except (TypeError, InvalidId, ImmediateHttpResponse):
             raise Http404("Document is not found.")

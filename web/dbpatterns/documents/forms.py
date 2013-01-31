@@ -1,6 +1,7 @@
 from django import forms
-from documents.fields import SearchInput
+from django.forms import RadioSelect
 
+from documents.fields import SearchInput
 from documents.parsers.django_orm import DjangoORMParser
 from documents.parsers.dummy import DummyParser
 from documents.parsers.exceptions import ParseError
@@ -18,6 +19,7 @@ DOCUMENT_PARSERS = {
     DOCUMENT_PARSER_DJANGO_ORM: DjangoORMParser
 }
 
+
 EXAMPLE_DJANGO_MODEL = """
 class Foo(models.Model):
     bar = models.CharField(max_length=255)
@@ -29,6 +31,8 @@ class Bar(models.Model):
 
 class DocumentForm(forms.Form):
     title = forms.CharField(label="Document title")
+    is_public = forms.BooleanField(widget=forms.RadioSelect(
+        choices=[(True, 'Public'), (False, 'Private')]), required=False)
     create_from = forms.CharField(label="Create from", widget=forms.Select(
         choices=DOCUMENT_PARSER_CHOICES), required=False)
     entities = forms.CharField(label="Template", widget=forms.Textarea(),
