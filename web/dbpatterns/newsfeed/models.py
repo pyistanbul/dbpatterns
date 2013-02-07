@@ -125,11 +125,12 @@ def create_news_entry(instance, **kwargs):
 
     That models have `get_news_type` method.
     """
-    Entry.objects.create(
-        object_id=instance._id,
-        news_type=instance.get_news_type(),
-        sender=instance.user
-    )
+    if instance.is_public:
+        Entry.objects.create(
+            object_id=instance._id,
+            news_type=instance.get_news_type(),
+            sender=instance.user
+        )
 
 @receiver(star_done)
 def create_star_entry(instance, user, **kwargs):

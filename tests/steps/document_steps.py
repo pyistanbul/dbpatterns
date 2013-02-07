@@ -18,12 +18,17 @@ def create_pattern(step, title):
     created_document = Document.objects.get(_id=world.created_document_id)
     document_done.send(instance=created_document, sender=step)
 
+@step("go to the created pattern")
+def go_to_created_pattern(step):
+    document_id = Document.objects.collection.find_one().get("_id")
+    world.page = world.browser.get(reverse("show_document", args=[document_id]))
+
 @step("go to the that pattern")
 def go_to_pattern(step):
     document = Document.objects.get(_id=world.created_document_id)
     world.page = world.browser.get(document.get_absolute_url())
-    assert world.page.status_code == 200,\
-    "Got %s" % world.page.status_code
+    assert world.page.status_code == 200, \
+                    "Got %s" % world.page.status_code
 
 @step("look the stargazers of that pattern")
 def go_to_created_pattern(step):
@@ -81,6 +86,10 @@ def comments_of_pattern(step):
 def comment_count_of_pattern(step, comment_count):
     document = Document.objects.get(_id=world.created_document_id)
     assert document.comment_count == int(comment_count)
+
+@step('choose the "(.*)" option as "(.*)"')
+def choose_radio_button(step, name, value):
+    world.data[name] = value
 
 @step('I star that pattern')
 def star_pattern(step):

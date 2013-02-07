@@ -223,6 +223,7 @@ class NewDocumentView(LoginRequiredMixin, FormView):
             "user_id": self.request.user.pk,
             "date_created": datetime.now(),
             "entities": form.cleaned_data.get("entities"),
+            "is_public": form.cleaned_data.get("is_public"),
             "_keywords": extract_keywords(form.cleaned_data.get("title"))
         })
         document = Document.objects.get(_id=ObjectId(self.object_id))
@@ -294,6 +295,7 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
             "entities": document.entities,
             "fork_of": document.pk,
             "date_created": datetime.now(),
+            "is_public": document.is_public,
             "_keywords": extract_keywords(form.cleaned_data.get("title"))
         })
 

@@ -60,3 +60,7 @@ class Comment(dict):
 
     def get_news_type(self):
         return NEWS_TYPE_COMMENT
+
+    @property
+    def is_public(self):
+        return self.document.is_public

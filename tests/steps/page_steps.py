@@ -20,8 +20,12 @@ def should_redirected_page_contains(step, text):
 
 @step('the page should contains "(.*)"')
 def page_should_contains(step, text):
-    assert text in world.page.content, world.page.content
+    assert text in world.page.content
 
 @step('the page should not contains "(.*)"')
 def page_should_not_contains(step, text):
-    assert not text in world.page.content, world.page.content
+    assert not text in world.page.content
+
+@step('the page should return with (\d+) status code')
+def should_return_with(step, status_code):
+    assert world.page.status_code == int(status_code), status_code

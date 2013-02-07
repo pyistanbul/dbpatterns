@@ -54,7 +54,7 @@ class DocumentResource(MongoDBResource):
         """
         Checks the permissions of user, and updates the document
         """
-        document = self.obj_get(pk=kwargs.get("pk"))
+        document = self.obj_get(request=request, pk=kwargs.get("pk"))
 
         if not document.is_editable(user_id=request.user.id):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
