@@ -10,13 +10,15 @@
                 <nav class="tools">
                     <ul>
                         <li><a href="#" class="new-entity">New entity</a></li>
-                        <li><a href="#make-public" data-toggle="true">Make Public</a></li>
                         <li><a href="#export-list" data-toggle="true">Export</a></li>
                         <li><a href="#" class="save-document">Save</a></li>
                     </ul>
                 </nav>
             {% endblock %}
             {% block app-header %}
+            {% if edit %}
+            <h2 class="edit-document"><a class="icon gear" href="#edit">settings</a></h2>
+            {% endif %}
             <h1 class="{% if edit %}edit-title{% endif %} document-title">{{ document.title }}</h1>
             {% endblock %}
             <nav class="leave">
@@ -49,6 +51,29 @@
     <!-- templates -->
 
     {% block app %}
+        <script type="text/html" id="document-edit-template">
+            <form>
+                <p>
+                    <label for="name">Title</label>
+                    <input type="text" name="title" id="title">
+                </p>
+                <p>
+                    <label>The visibility of document</label>
+                    <label for="is_public">
+                        <input type="radio" name="is_public" value="true" id="is_public"> Public
+                    </label>
+                    <label for="is_private">
+                        <input type="radio" name="is_public" value="false" id="is_private"> Private
+                    </label>
+                </p>
+
+                <footer>
+                    <input type="submit" class="anchor save" value="Save" >
+                    <input type="button" class="anchor close" value="Close" >
+                </footer>
+            </form>
+        </script>
+
         <script type="text/html" id="comment-form-template">
             {% if user.is_anonymous %}
             <div id="anonymous-user">

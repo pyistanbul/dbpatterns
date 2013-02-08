@@ -9,6 +9,7 @@ dbpatterns.views.Document = Backbone.View.extend({
 
     events: {
         "click .edit-title": "rename",
+        "click .edit-document": "show_settings_form",
         "click .save-document": "save_document",
         "click .export": "export_document",
         "click .show": "show_document",
@@ -20,6 +21,8 @@ dbpatterns.views.Document = Backbone.View.extend({
         "option+s": "save_document",
         "esc": "hide_comments"
     },
+
+    settings_form_template: $("#document-edit-template").html(),
 
     initialize: function () {
         _.extend(this, new Backbone.Shortcuts);
@@ -105,5 +108,36 @@ dbpatterns.views.Document = Backbone.View.extend({
             window.location = $(event.target).attr("href");
         }, 500));
         return false;
+    },
+
+    show_settings_form: function () {
+        var dialog = (new dbpatterns.views.DocumentEditDialog({
+            "form": _.template(this.settings_form_template, this),
+            "model": this.model,
+            "title": "Document Settings"
+        })).success(function () {
+                return true;
+        }).render();
+    }
+});
+
+dbpatterns.views.DocumentEditDialog = dbpatterns.views.FormDialog.extend({
+    tagName: "div",
+    className: "settings",
+    load_data: function () {
+
+        this.form.find("#title").val(this.model.get("title"));
+
+        if (this.model.get("is_public")) {
+            this.form.find("#is_public").attr("checked", "checked");
+        } else {
+            this.form.find("#is_private").attr("checked", "checked");
+        }
+    },
+    save_data: function () {
+        this.model.set({
+            "title": this.form.find("#title").val(),
+            "is_public": this.form.find("#is_public").is(":checked")
+        })
     }
 });

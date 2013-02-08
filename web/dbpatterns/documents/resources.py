@@ -21,6 +21,7 @@ class DocumentResource(MongoDBResource):
     title = fields.CharField(attribute="title", null=True)
     entities = fields.ListField(attribute="entities", null=True)
     user_id = fields.IntegerField(attribute="user_id", readonly=True, null=True)
+    is_public = fields.BooleanField(attribute="is_public", null=True)
 
     class Meta:
         resource_name = "documents"

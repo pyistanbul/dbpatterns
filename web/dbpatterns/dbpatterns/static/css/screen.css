@@ -160,6 +160,85 @@ article#document {
         z-index: 3;
     }
 
+    article#document .edit-document {
+        position: absolute;
+        left: 10px;
+        top: 10px;
+    }
+
+        article#document .edit-document a {
+            text-indent: -9999px;
+        }
+
+    article#document .edit-title {
+        margin-left: 55px;
+    }
+
+.settings {
+    position: absolute;
+    z-index: 2;
+    width: 500px;
+    padding: 10px;
+    background-color: #fff;
+    box-shadow: 0 0 20px #bbbbbb;
+    left: 50%;
+    top: 30%;
+    margin-top: -100px;
+    margin-left: -250px;
+}
+
+.settings p {
+    margin: 10px 9px 10px;
+    padding-bottom: 10px;
+    overflow: hidden;
+}
+
+.settings label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.settings #title {
+    padding: 10px;
+    width: 94%;
+    border: 1px solid #c4c4c4;
+    font-size: 20px;
+    margin-left: 2px;
+}
+
+.settings h3 {
+    padding: 7px 10px;
+    margin: 0;
+    border-bottom: 1px solid #eaeaea;
+}
+
+.settings label[for="is_public"],
+.settings label[for="is_private"]
+{
+    float: left;
+    width: 100px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+.settings #is_public input,
+.settings #is_private input {
+    margin-right: 20px;
+    display: inline-block;
+}
+
+.settings footer {
+    margin-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.settings .anchor {
+    display: inline;
+    font-size: 18px;
+    margin-right: 10px;
+}
+
 .content {
     padding-bottom: 40px;
 }
@@ -278,6 +357,11 @@ article#document {
 
     .icon.star {
         background-position: 0 -8px;
+        padding-left: 35px;
+    }
+
+    .icon.gear {
+        background-position: 0 -80px;
         padding-left: 35px;
     }
 
