@@ -1677,11 +1677,16 @@ article.post {
     article.post section {
         font-size: 20px;
         width: 550px;
-        background-color: white;
+        background-color: #fff;
         padding: 0 10px;
         margin: 0;
 
     }
+
+        article.post section img {
+            max-width: 530px;
+            background-color: #dcdcdc;
+        }
 
         article.post section p {
             padding: 20px 20px 10px 10px;
