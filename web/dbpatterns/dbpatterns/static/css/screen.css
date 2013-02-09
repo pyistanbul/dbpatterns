@@ -1533,8 +1533,25 @@ aside#sidebar {
             color: #5d5d5d;
             text-decoration: none;
         }
+
         aside#sidebar #document-tabs section ul li a.author {
             color: #ababab;
+        }
+
+        aside#sidebar .donation {
+            position: relative;
+            margin-left: 0;
+            margin-top: 33px;
+            width: 227px;
+            box-shadow: 0 0 3px #c9c9c9;
+            border: none;
+            padding-bottom: 18px;
+        }
+
+        aside#sidebar .donation .donate {
+            margin-top: 0;
+            color: white;
+            float: left;
         }
 
 
