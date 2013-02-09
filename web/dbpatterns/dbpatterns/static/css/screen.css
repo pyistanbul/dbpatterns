@@ -1654,7 +1654,7 @@ article.post {
         font-size: 25px;
         color: #fff;
         letter-spacing: -1px;
-        background-color: #86e497;
+        background-color: #2894df;
         padding: 4px 10px;
         float: left;
     }
@@ -1732,7 +1732,7 @@ aside.donation {
     }
 
     aside.donation .donate {
-        background-color: #86e497;
+        background-color: #ff9e08;
         border: none;
         padding: 5px 10px;
         float: right;
