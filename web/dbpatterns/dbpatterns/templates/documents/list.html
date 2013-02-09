@@ -6,6 +6,7 @@
     <ul>
         {% for document in documents %}
         <li>
+            {% if not document.is_public %}<i>PRIVATE</i>{% endif %}
             <a href="{{ document.get_edit_url }}">{{ document.title }}</a>
             <div class="info">
             <a href="{{ document.get_edit_url }}" class="delete" data-method="delete">Delete</a>

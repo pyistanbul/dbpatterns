@@ -32,7 +32,8 @@ class Bar(models.Model):
 class DocumentForm(forms.Form):
     title = forms.CharField(label="Document title")
     is_public = forms.BooleanField(widget=forms.RadioSelect(
-        choices=[(True, 'Public'), (False, 'Private')]), required=False)
+        choices=[(True, 'Public'), (False, 'Private')]),
+        required=False, initial=True, label="The visibility of document")
     create_from = forms.CharField(label="Create from", widget=forms.Select(
         choices=DOCUMENT_PARSER_CHOICES), required=False)
     entities = forms.CharField(label="Template", widget=forms.Textarea(),

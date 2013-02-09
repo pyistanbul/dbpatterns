@@ -1,9 +1,9 @@
-from bson import ObjectId
+from pymongo import DESCENDING
 
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
-from newsfeed.constants import NEWS_TYPE_FORK, NEWS_TYPE_DOCUMENT
 
+from newsfeed.constants import NEWS_TYPE_FORK, NEWS_TYPE_DOCUMENT
 from profiles.models import AnonymousProfile
 from documents import get_collection
 from documents.utils import reverse_tastypie_url
@@ -15,6 +15,9 @@ class DocumentManager(object):
 
     def load(self):
         self.collection = get_collection("documents")
+        self.collection.ensure_index([
+            ("date_created", DESCENDING),
+        ])
 
     def get(self, **kwargs):
         return Document(self.collection.find_one(kwargs))

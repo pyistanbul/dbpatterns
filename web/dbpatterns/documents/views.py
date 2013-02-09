@@ -1,5 +1,7 @@
 from datetime import datetime
 from itertools import imap
+
+from pymongo import DESCENDING
 from bson import ObjectId
 
 from django.core.urlresolvers import reverse
@@ -240,7 +242,9 @@ class MyDocumentsView(LoginRequiredMixin, ListView):
     context_object_name = "documents"
 
     def get_queryset(self):
-        collection = Document.objects.collection.find({"user_id": self.request.user.pk})
+        collection = Document.objects\
+                        .collection.find({"user_id": self.request.user.pk})\
+                        .sort("date_created", DESCENDING)
         return map(Document, collection)
 
 

@@ -6,7 +6,9 @@
         <form action="{% url new_document %}" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Create">
+            <p class="buttons">
+                <input type="submit" class="anchor" value="Create">
+            </p>
         </form>
     </section>
 {% endblock %}

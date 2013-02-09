@@ -103,10 +103,10 @@ body {
 body > footer {
     clear: both;
     background-color: #2894DF;
-    width: 960px;
+    width: 970px;
     padding: 10px;
     color: #fff;
-    margin-right: -480px;
+    margin-right: -500px;
     font-size: 16px;
     position: fixed;
     z-index: 2;
@@ -302,6 +302,33 @@ article#document {
         padding: 4px 10px 0 10px;
         border-left: 8px solid #e9e8f1;
         margin-bottom: 30px;
+        margin-left: 20px;
+
+    }
+
+    .documents ul li i {
+        font-style: normal;
+        font-size: 15px;
+
+        position: absolute;
+        display: block;
+        color: #acacac;
+        margin-top: 20px;
+        margin-left: -60px;
+
+        -webkit-transform: rotate(-90deg);
+        -moz-transform: rotate(-90deg);
+        -ms-transform: rotate(-90deg);
+        -o-transform: rotate(-90deg);
+        transform: rotate(-90deg);
+
+        -webkit-transform-origin: 50% 50%;
+        -moz-transform-origin: 50% 50%;
+        -ms-transform-origin: 50% 50%;
+        -o-transform-origin: 50% 50%;
+        transform-origin: 50% 50%;
+
+        filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 
     }
 
@@ -1574,6 +1601,30 @@ article.tabs section {
     article.tabs section ul {
         margin: 0;
         padding: 10px 20px;
+    }
+
+
+/* New document form */
+
+.new-document ul {
+    padding: 0 20px;
+}
+
+    .new-document p.buttons {
+        border-top: 1px solid #c6c6c6;
+        background-color: rgba(247, 247, 247, 0.8);
+        padding-bottom: 20px;
+        padding-left: 20px;
+        padding-top: 10px;
+    }
+
+    .new-document ul li {
+        list-style-type: none;
+    }
+
+    .new-document input[type="submit"] {
+        margin-top: 10px;
+        margin-left: 10px;
     }
 
 
