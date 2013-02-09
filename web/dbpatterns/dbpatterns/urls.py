@@ -22,6 +22,9 @@ urlpatterns = patterns('',
     # api
     url(r'^api/', include('api.urls')),
 
+    # blog
+    url(r'^blog/', include("blog.urls")),
+
     # legacy urls
     url(r'^', include('documents.legacy_urls')),
 

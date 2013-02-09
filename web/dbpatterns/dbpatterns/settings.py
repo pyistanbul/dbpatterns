@@ -118,6 +118,7 @@ INSTALLED_APPS = (
     'profiles',
     'newsfeed',
     'notifications',
+    'blog',
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
@@ -222,9 +223,17 @@ CACHES = {
 }
 
 # Testing
-
 LETTUCE_SERVER_PORT = 7000
 SOUTH_TESTS_MIGRATE = False
+
+# Markitup Settings
+MARKITUP_SET = 'markitup/sets/markdown'
+MARKITUP_FILTER = ('markdown.markdown', {'safe_mode': False})
+
+# Blog Settings
+BLOG_FEED_TITLE = "Dbpatterns Blog"
+BLOG_FEED_DESCRIPTION = "News about dbpatterns"
+BLOG_URL = "http://dbpatterns.com/blog/"
 
 try:
     from settings_local import *

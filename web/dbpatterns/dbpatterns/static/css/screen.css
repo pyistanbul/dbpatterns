@@ -1628,6 +1628,122 @@ article.tabs section {
     }
 
 
+/* News */
+
+ul.news {
+    background-color: rgba(95, 245, 227, 0.22);
+    padding: 10px 10px;
+    font-size: 17px;
+}
+    .news li {
+        list-style-type: none;
+    }
+
+/* Blog */
+
+article.post {
+    margin-top: 20px;
+    padding-top: 10px;
+}
+
+    article.post aside {
+        overflow: hidden;
+    }
+
+    article.post time {
+        font-size: 25px;
+        color: #fff;
+        letter-spacing: -1px;
+        background-color: #86e497;
+        padding: 4px 10px;
+        float: left;
+    }
+
+    article.post h3 {
+        margin: -5px 0 0;
+        font-size: 35px;
+        letter-spacing: -1px;
+        background-color: #f6f6f6;
+        padding: 3px 20px;
+        display: inline-block;
+
+    }
+
+        article.post h3 a {
+            color: #5b5b5b;
+            text-decoration: none;
+        }
+
+    article.post section {
+        font-size: 20px;
+        width: 550px;
+        background-color: white;
+        padding: 0 10px;
+        margin: 0;
+
+    }
+
+        article.post section p {
+            padding: 20px 20px 10px 10px;
+            margin: 0;
+            color: #717171;
+            line-height: 28px;
+            word-spacing: -0.05em;
+            font-size: 16px;
+        }
+
+    article.comments {
+        margin-top: 20px;
+        background-color: white;
+        padding: 15px 10px;
+
+    }
+
+/* Donation */
+
+aside.donation {
+    position: absolute;
+    width: 250px;
+    padding: 20px 20px 14px;
+    background-color: white;
+    margin-left: 620px;
+    margin-top: 170px;
+    border: 3px solid #f6f6f6;
+    line-height: 23px;
+}
+
+    aside.donation h3 {
+        display: inline-block;
+        margin: -10px 0 0 0;
+        padding: 3px 2px;
+        color: #5b5b5b;
+        font-weight: bold;
+    }
+
+    aside.donation p {
+        margin: 0;
+        padding: 4px;
+        color: gray;
+    }
+
+    aside.donation form {
+        margin: 0;
+        padding: 3px;
+    }
+
+    aside.donation .donate {
+        background-color: #86e497;
+        border: none;
+        padding: 5px 10px;
+        float: right;
+        margin-top: -10px;
+    }
+
+    aside.donation .donate:hover {
+        cursor: pointer;
+        box-shadow: 0 0 10px #d3d3d3;
+        background-color: #717171;
+    }
 
 /* jsPlumb */
 

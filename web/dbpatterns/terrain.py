@@ -6,7 +6,6 @@ from django.core.management import call_command
 from django.test.simple import DjangoTestSuiteRunner
 
 from lettuce import *
-from south.management.commands import patch_for_test_db_setup
 
 from documents.models import Document
 from newsfeed.models import Entry
@@ -19,7 +18,13 @@ def switch_to_test_database():
     Switching to the test database
     """
     logging.info("Setting up a test database ...\n")
-    patch_for_test_db_setup()
+
+    try:
+        from south.management.commands import patch_for_test_db_setup
+        patch_for_test_db_setup()
+    except ImportError:
+        pass
+
     world.test_runner = DjangoTestSuiteRunner(interactive=False)
     world.test_runner.setup_test_environment()
     world.test_db = world.test_runner.setup_databases()

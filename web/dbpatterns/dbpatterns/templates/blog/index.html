@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <section class="content">
+    {% include "blog/donation.html" %}
+    {% for post in posts %}
+        {% include "blog/post.html" %}
+    {%  endfor %}
+    {% include "blog/pagination.html" %}
+    </section>
+{% endblock %}

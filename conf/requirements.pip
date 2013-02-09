@@ -10,3 +10,5 @@ nltk==2.0.3
 numpy==1.6.2
 south==0.7.6
 lettuce==0.2.12
+django-markitup==1.0.0
+markdown==2.2.0

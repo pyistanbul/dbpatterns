@@ -1,7 +1,7 @@
 {% load gravatar_tags %}<!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>dbpatterns - create, share, explore database patterns</title>
+    <title>{% block title %}dbpatterns - create, share, explore database patterns{% endblock %}</title>
     {% load compress %}
     {% compress css %}
     <link rel="stylesheet" href="{{ STATIC_URL }}css/h5bp.css" />
