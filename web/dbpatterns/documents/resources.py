@@ -39,7 +39,7 @@ class DocumentResource(MongoDBResource):
         """
         document = Document.objects.get(_id=ObjectId(kwargs.get("pk")))
 
-        if not document.is_visible(user_id=request.user.id):
+        if request is not None and not document.is_visible(user_id=request.user.id):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
 
         return document
