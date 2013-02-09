@@ -162,11 +162,14 @@ class StarDocumentView(LoginRequiredMixin, RedirectView, DocumentMixin):
             star_done.send(sender=self, instance=document,
                                         user=request.user)
 
-        resource = DocumentResource()
-        resource.obj_update(bundle=resource.build_bundle(data={
-            "stars": stars,
-            "star_count": len(stars)
-        }), pk=document.pk)
+        Document.objects.collection.update({
+            "_id": document.pk
+        }, {
+            "$set": {
+                "stars": stars,
+                "star_count": len(stars)
+            }
+        })
 
         return super(StarDocumentView, self).post(request, *args, **kwargs)
 
