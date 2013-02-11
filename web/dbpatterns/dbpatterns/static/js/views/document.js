@@ -131,7 +131,10 @@ dbpatterns.views.DocumentEditDialog = dbpatterns.views.FormDialog.extend({
     },
 
     show_assignees: function () {
-        var assignees_view = new dbpatterns.views.AssigneesView();
+        var assignees = new dbpatterns.collections.Assignees(this.model.get("assignees"));
+        var assignees_view = new dbpatterns.views.AssigneesView({
+            model: assignees
+        });
         assignees_view.render();
     },
 

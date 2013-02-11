@@ -1,6 +1,9 @@
 {% extends "documents/base.html" %}
-
 {% load compress %}
+
+{% block extra-head %}
+    <link rel="stylesheet" href="{{ STATIC_URL }}css/autocomplete.css" />
+{% endblock %}
 
 {% block content %}
 
@@ -52,22 +55,24 @@
 
     {% block app %}
 
+        <script type="text/html" id="assignee-item-template">
+            <div class="info">
+                <img src="<%= avatar %>">
+                <span><%= username %></span>
+            </div>
+            <div class="actions">
+                <select>
+                    <option value="view">Can View</option>
+                    <option value="edit">Can Edit</option>
+                </select>
+                <a href="#" class="remove">Remove</a>
+            </div>
+        </script>
+
         <script type="text/html" id="assignees-template">
             <div class="assignees">
                 <ul class="users">
-                    <li>
-                        <div class="info">
-                            <img src="http://www.gravatar.com/avatar/7f08d8c2a996003767fbe0cb09d89589/?default=&s=40">
-                            <span>selam</span>
-                        </div>
-                        <div class="actions">
-                            <select>
-                                <option value="view">Can View</option>
-                                <option value="edit">Can Edit</option>
-                            </select>
-                            <a href="#" class="remove">Remove</a>
-                        </div>
-                    </li>
+
                 </ul>
                 <p class="add-people">
                     <label for="user">Add people</label>
@@ -234,6 +239,7 @@
     <script src="{{ STATIC_URL }}js/models/entity.js"></script>
     <script src="{{ STATIC_URL }}js/models/attribute.js"></script>
     <script src="{{ STATIC_URL }}js/models/comment.js"></script>
+    <script src="{{ STATIC_URL }}js/models/assignee.js"></script>
 
     <!-- views -->
     <script src="{{ STATIC_URL }}js/views/ui.js"></script>
