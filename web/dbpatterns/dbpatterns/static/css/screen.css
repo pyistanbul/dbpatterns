@@ -176,15 +176,15 @@ article#document {
 
 .settings {
     position: absolute;
-    z-index: 2;
     width: 500px;
     padding: 10px;
     background-color: #fff;
     box-shadow: 0 0 20px #bbbbbb;
     left: 50%;
     top: 30%;
-    margin-top: -100px;
+    margin-top: -130px;
     margin-left: -250px;
+    z-index: 3;
 }
 
 .settings p {
@@ -1643,6 +1643,65 @@ article.tabs section {
         margin-top: 10px;
         margin-left: 10px;
     }
+
+/* Assignees */
+
+.assignees {
+
+}
+    .assignees ul.users {
+        width: 475px;
+        height: 138px;
+        border: 1px solid #d4d4d4;
+        background-color: white;
+        padding: 0;
+        margin: 0;
+        overflow-y: auto;
+    }
+
+    .assignees .users li {
+        margin: 3px;
+        padding: 0;
+        border-bottom: 1px solid #d7d7d7;
+        height: 43px;
+        list-style-type: none;
+    }
+
+    .assignees .users li:last-child {
+        border: none;
+    }
+
+        .assignees .users .info {
+            float: left;
+        }
+
+        .assignees .users .actions {
+            float: right;
+            width: 180px;
+            margin-top: 5px;
+        }
+
+            .assignees .users .actions a.remove {
+                font-size: 16px;
+                text-decoration: none;
+                color: #4899e4;
+                margin-left: 5px;
+            }
+
+    .assignees .add {
+        color: #3b86e4;
+        text-decoration: none;
+        margin-left: 3px;
+    }
+
+    .assignees .add-people {
+        margin-left: 0;
+    }
+
+        .assignees .add-people #user {
+            margin-left: 2px;
+            padding: 4px;
+        }
 
 
 /* News */

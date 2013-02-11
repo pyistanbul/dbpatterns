@@ -70,7 +70,6 @@ dbpatterns.views.Dialog = Backbone.View.extend({
     }
 });
 
-
 dbpatterns.views.FormDialog = dbpatterns.views.Dialog.extend({
     initialize: function () {
         dbpatterns.views.Dialog.prototype.initialize.apply(this);
@@ -79,7 +78,6 @@ dbpatterns.views.FormDialog = dbpatterns.views.Dialog.extend({
         this.options.submit_callback = function () {
             return true;
         }
-
     },
     events: {
         "click .close": "destroy"
@@ -89,6 +87,7 @@ dbpatterns.views.FormDialog = dbpatterns.views.Dialog.extend({
         this.$el.append(this.form);
         this.load_data(this.model.toJSON());
         this.$el.find("input").eq(0).focus();
+        this.trigger("render");
         return this;
     },
     load_data: function (data) {

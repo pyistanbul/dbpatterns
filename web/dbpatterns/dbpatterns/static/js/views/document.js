@@ -124,6 +124,17 @@ dbpatterns.views.Document = Backbone.View.extend({
 dbpatterns.views.DocumentEditDialog = dbpatterns.views.FormDialog.extend({
     tagName: "div",
     className: "settings",
+
+    initialize: function () {
+        dbpatterns.views.FormDialog.prototype.initialize.apply(this);
+        this.on("render", this.show_assignees)
+    },
+
+    show_assignees: function () {
+        var assignees_view = new dbpatterns.views.AssigneesView();
+        assignees_view.render();
+    },
+
     load_data: function () {
 
         this.form.find("#title").val(this.model.get("title"));
@@ -134,6 +145,7 @@ dbpatterns.views.DocumentEditDialog = dbpatterns.views.FormDialog.extend({
             this.form.find("#is_private").attr("checked", "checked");
         }
     },
+
     save_data: function () {
         this.model.set({
             "title": this.form.find("#title").val(),
