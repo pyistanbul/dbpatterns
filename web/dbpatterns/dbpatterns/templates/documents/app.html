@@ -51,6 +51,31 @@
     <!-- templates -->
 
     {% block app %}
+
+        <script type="text/html" id="assignees-template">
+            <div class="assignees">
+                <ul class="users">
+                    <li>
+                        <div class="info">
+                            <img src="http://www.gravatar.com/avatar/7f08d8c2a996003767fbe0cb09d89589/?default=&s=40">
+                            <span>selam</span>
+                        </div>
+                        <div class="actions">
+                            <select>
+                                <option value="view">Can View</option>
+                                <option value="edit">Can Edit</option>
+                            </select>
+                            <a href="#" class="remove">Remove</a>
+                        </div>
+                    </li>
+                </ul>
+                <p class="add-people">
+                    <label for="user">Add people</label>
+                    <input type="text" id="user" placeholder="Enter a name or email...">
+                </p>
+            </div>
+        </script>
+
         <script type="text/html" id="document-edit-template">
             <form>
                 <p>
@@ -65,6 +90,11 @@
                     <label for="is_private">
                         <input type="radio" name="is_public" value="false" id="is_private"> Private
                     </label>
+                </p>
+
+                <p>
+                    <label>People who has access</label>
+                    <input type="text" name="assignees" id="assignees">
                 </p>
 
                 <footer>
@@ -213,6 +243,7 @@
     <script src="{{ STATIC_URL }}js/views/connection.js"></script>
     <script src="{{ STATIC_URL }}js/views/comment.js"></script>
     <script src="{{ STATIC_URL }}js/views/notifier.js"></script>
+    <script src="{{ STATIC_URL }}js/views/user.js"></script>
     {% endcompress %}
 
     <!-- bootstrap -->
