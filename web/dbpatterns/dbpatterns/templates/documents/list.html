@@ -1,28 +1,55 @@
 {% extends "base.html" %}
 
 {% block content %}
-    <section class="documents content">
-    <h2>My Documents</h2>
-    <ul>
-        {% for document in documents %}
-        <li>
-            {% if not document.is_public %}<i>PRIVATE</i>{% endif %}
-            <a href="{{ document.get_edit_url }}">{{ document.title }}</a>
-            <div class="info">
-            <a href="{{ document.get_edit_url }}" class="delete" data-method="delete">Delete</a>
-            <span class="icon fork">{{ document.get_fork_count }} fork</span>
-            <span class="icon star">{{ document.star_count }} star</span>
-            </div>
-        </li>
-        {% empty %}
-        <li>
-            You haven't got a created document.
-            <br>
-            <a href="{% url new_document %}">Click here for new document.</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <article class="tabs documents content">
+        <nav>
+            <ul>
+                <li class="active"><a href="#documents">My Documents</a></li>
+                <li><a href="#shared">Shared With Me</a></li>
+            </ul>
+        </nav>
+    <section id="documents">
+        <ul>
+            {% for document in documents %}
+            <li>
+                {% if not document.is_public %}<i>PRIVATE</i>{% endif %}
+                <a href="{{ document.get_edit_url }}">{{ document.title }}</a>
+                <div class="info">
+                <a href="{{ document.get_edit_url }}" class="delete" data-method="delete">Delete</a>
+                <span class="icon fork">{{ document.get_fork_count }} fork</span>
+                <span class="icon star">{{ document.star_count }} star</span>
+                </div>
+            </li>
+            {% empty %}
+            <li class="empty">
+                You have not created document yet.
+                <br>
+                <a href="{% url new_document %}">Click here for new document.</a>
+            </li>
+            {% endfor %}
+        </ul>
     </section>
+    <section id="shared">
+        <ul>
+            {% for document in shared %}
+                <li>
+                    {% if not document.is_public %}<i>PRIVATE</i>{% endif %}
+                    <a href="{{ document.get_edit_url }}">{{ document.title }}</a>
+                    <div class="info">
+                        <a href="{{ document.get_edit_url }}" class="delete" data-method="delete">Delete</a>
+                        <span class="icon fork">{{ document.get_fork_count }} fork</span>
+                        <span class="icon star">{{ document.star_count }} star</span>
+                    </div>
+                </li>
+            {% empty %}
+                <li class="empty">
+                    You have not shared document.
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    </article>
 {% endblock %}
 
 {% block scripts %}

@@ -3,6 +3,7 @@ from pymongo import DESCENDING
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
+from documents.constants import CAN_EDIT
 from newsfeed.constants import NEWS_TYPE_FORK, NEWS_TYPE_DOCUMENT
 from profiles.models import AnonymousProfile
 from documents import get_collection
@@ -22,6 +23,18 @@ class DocumentManager(object):
     def get(self, **kwargs):
         return Document(self.collection.find_one(kwargs))
 
+    def assigned(self, user_id):
+        return self.collection.find({
+            "assignees.id": {
+                "$in": [user_id]
+            }
+        }).sort("date_created", DESCENDING)
+
+    def for_user(self, user_id):
+        return self.collection.find({
+            "user_id": user_id
+        }).sort("date_created", DESCENDING)
+
     def featured(self):
         return map(Document, self.collection.find({
             "is_featured": True
@@ -33,7 +46,6 @@ class DocumentManager(object):
                 "$in": [user_id]
             }
         }))
-
 
 class Document(dict):
     """
@@ -100,7 +112,7 @@ class Document(dict):
 
     def get_news_type(self):
         """
-        Returns the new type of document.
+        Returns the new type of document
         """
         if self.fork_of is not None:
             return NEWS_TYPE_FORK
@@ -109,12 +121,22 @@ class Document(dict):
 
     def is_visible(self, user_id=None):
         """
-        Indicates whether the document is visible to user.
+        Indicates whether the document is visible to user
         """
-        return self.is_public or user_id == self.user_id
+        return self.is_public \
+                or user_id == self.user_id \
+                or user_id in [user.get("id") for user in self.assignees]
 
     def is_editable(self, user_id=None):
         """
         Indicates the user can edit this document
         """
-        return user_id == self.user_id
+        if user_id == self.user_id:
+            return True
+
+        for permission in self.assignees:
+            if permission.get("id") == user_id and \
+               permission.get("permission") == CAN_EDIT:
+                return True
+
+        return False

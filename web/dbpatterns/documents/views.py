@@ -205,7 +205,7 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
         return HttpNoContent()
 
     def is_authorized(self):
-        return self.get_document().get_user() == self.request.user
+        return self.get_document().is_editable(user_id=self.request.user.id)
 
     def redirect(self):
         return http.HttpResponseRedirect(reverse("show_document", kwargs=self.kwargs))
@@ -239,15 +239,22 @@ class NewDocumentView(LoginRequiredMixin, FormView):
         return reverse("edit_document", args=[self.object_id])
 
 
-class MyDocumentsView(LoginRequiredMixin, ListView):
+class MyDocumentsView(LoginRequiredMixin, TemplateView):
 
     template_name = "documents/list.html"
-    context_object_name = "documents"
 
-    def get_queryset(self):
-        collection = Document.objects\
-                        .collection.find({"user_id": self.request.user.pk})\
-                        .sort("date_created", DESCENDING)
+    def get_context_data(self, **kwargs):
+        return {
+            "documents": self.get_documents(),
+            "shared": self.get_shared_documents()
+        }
+
+    def get_documents(self):
+        collection = Document.objects.for_user(self.request.user.id)
+        return map(Document, collection)
+
+    def get_shared_documents(self):
+        collection = Document.objects.assigned(self.request.user.id)
         return map(Document, collection)
 
 

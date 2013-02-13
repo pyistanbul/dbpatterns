@@ -32,3 +32,6 @@ EXPORTERS = (
     (EXPORTER_ORACLE, "Oracle"),
     (EXPORTER_SQLITE, "SQLite"),
 )
+
+CAN_EDIT = "can_edit"
+CAN_VIEW = "can_view"

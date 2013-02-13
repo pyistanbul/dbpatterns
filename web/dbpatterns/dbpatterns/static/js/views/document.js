@@ -76,7 +76,6 @@ dbpatterns.views.Document = Backbone.View.extend({
             document: this.model
         })).render();
 
-
         return false;
 
     },
@@ -131,9 +130,10 @@ dbpatterns.views.DocumentEditDialog = dbpatterns.views.FormDialog.extend({
     },
 
     show_assignees: function () {
-        var assignees = new dbpatterns.collections.Assignees(this.model.get("assignees"));
+
+        this.assignees = new dbpatterns.collections.Assignees(this.model.get("assignees"));
         var assignees_view = new dbpatterns.views.AssigneesView({
-            model: assignees
+            model: this.assignees
         });
         assignees_view.render();
     },
@@ -152,7 +152,8 @@ dbpatterns.views.DocumentEditDialog = dbpatterns.views.FormDialog.extend({
     save_data: function () {
         this.model.set({
             "title": this.form.find("#title").val(),
-            "is_public": this.form.find("#is_public").is(":checked")
-        })
+            "is_public": this.form.find("#is_public").is(":checked"),
+            "assignees": this.assignees.toJSON()
+        });
     }
 });

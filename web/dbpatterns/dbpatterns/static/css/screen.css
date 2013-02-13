@@ -296,6 +296,14 @@ article#document {
     padding: 0;
 }
 
+.documents ul li.empty {
+    border: none;
+}
+
+.documents ul li.empty a {
+    font-size: 18px;
+}
+
 .documents ul li {
         list-style-type: none;
         font-size: 18px;
@@ -1659,6 +1667,16 @@ article.tabs section {
         overflow-y: auto;
     }
 
+    .assignees ul.users:empty:after {
+        position: absolute;
+        display: block;
+        content: "The assignee list is empty";
+        color: #a7a7a7;
+        text-align: center;
+        margin-top: 54px;
+        width: 500px;
+    }
+
     .assignees .users li {
         margin: 3px;
         padding: 0;
@@ -1824,6 +1842,44 @@ aside.donation {
         cursor: pointer;
         box-shadow: 0 0 10px #d3d3d3;
         background-color: #717171;
+    }
+
+/* Document Tabs */
+.documents.tabs nav {
+    border-bottom: 5px solid #efefef;
+    padding: 0;
+    height: 47px;
+    margin-top: 20px;
+    margin-left: 5px;
+}
+
+.documents.tabs nav ul:first-child {
+    margin: 0;
+}
+
+.documents.tabs nav li {
+    border: none;
+    padding: 11px 20px;
+    margin: 0;
+
+}
+    .documents.tabs nav li.active {
+        box-shadow: none;
+        background-color: white;
+        border: 5px solid #efefef;
+        border-bottom: none;
+        padding: 6px 15px;
+    }
+
+    .documents.tabs nav li a {
+        font-size: 22px;
+    }
+
+    .documents.tabs > section {
+        box-shadow: none;
+        background-color: transparent;
+        margin-top: 15px;
+        margin-left: -18px;
     }
 
 /* jsPlumb */

@@ -16,7 +16,7 @@ class UserResource(JSONResponseMixin, ListView):
             Q(email__icontains=keyword) |
             Q(first_name=keyword) | Q(last_name=keyword)
         )
-        return [dict(id=user.username,
+        return [dict(id=user.id,
                      label=user.username,
                      avatar=gravatar_for_user(user, size=40)) for user in users]
 
