@@ -110,13 +110,14 @@ dbpatterns.views.Document = Backbone.View.extend({
     },
 
     show_settings_form: function () {
-        var dialog = (new dbpatterns.views.DocumentEditDialog({
+        (new dbpatterns.views.DocumentEditDialog({
             "form": _.template(this.settings_form_template, this),
             "model": this.model,
             "title": "Document Settings"
         })).success(function () {
-                return true;
-        }).render();
+            this.save_document();
+            return true;
+        }.bind(this)).render();
     }
 });
 
