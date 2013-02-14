@@ -124,6 +124,7 @@ dbpatterns.views.Document = Backbone.View.extend({
 dbpatterns.views.DocumentEditDialog = dbpatterns.views.FormDialog.extend({
     tagName: "div",
     className: "settings",
+    draggable: false,
 
     initialize: function () {
         dbpatterns.views.FormDialog.prototype.initialize.apply(this);

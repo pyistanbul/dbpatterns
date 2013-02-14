@@ -49,6 +49,7 @@ dbpatterns.views.Dialog = Backbone.View.extend({
     container: "body",
     className: "dialog",
     template: $("#dialog-template").html(),
+    draggable: true,
     events: {
         "click .close": "destroy"
     },
@@ -63,7 +64,9 @@ dbpatterns.views.Dialog = Backbone.View.extend({
         this.$el.html(_.template(this.template, {
             title: this.options.title || "Dialog"
         })).appendTo(this.container);
-        $(this.$el).draggable();
+        if (this.draggable) {
+            $(this.$el).draggable();
+        }
     },
     destroy: function () {
         this.$el.remove();
