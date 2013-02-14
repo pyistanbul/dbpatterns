@@ -11,14 +11,16 @@ class UserResource(JSONResponseMixin, ListView):
 
     def get_queryset(self):
         keyword = self.request.GET.get("term")
+        excludes = self.request.GET.get("excludes", "").split(",")
+
+        if self.request.user.is_authenticated():
+            excludes.append(self.request.user.id)
+
         users = User.objects.filter(
             Q(username__icontains=keyword) |
             Q(email__icontains=keyword) |
             Q(first_name=keyword) | Q(last_name=keyword)
-        )
-
-        if self.request.user.is_authenticated():
-            users = users.exclude(id=self.request.user.id)
+        ).exclude(id__in=filter(bool, excludes))
 
         return [dict(id=user.id,
                      label=user.username,

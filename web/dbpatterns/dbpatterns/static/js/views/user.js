@@ -50,7 +50,15 @@ dbpatterns.views.AssigneesView = Backbone.View.extend({
         this.render_assignees();
 
         user_input.autocomplete({
-            source: "/api/users/",
+            source: function(request, response) {
+                var excludes = this.model.pluck("id").join(",");
+                $.get("/api/users/", {
+                    term: request.term,
+                    excludes: excludes
+                }, function(data) {
+                    response(data);
+                });
+            }.bind(this),
             select: function (event, ui) {
                 var assignee = new dbpatterns.models.Assignee({
                     "id": ui.item.id,
