@@ -16,6 +16,10 @@ class UserResource(JSONResponseMixin, ListView):
             Q(email__icontains=keyword) |
             Q(first_name=keyword) | Q(last_name=keyword)
         )
+
+        if self.request.user.is_authenticated():
+            users = users.exclude(id=self.request.user.id)
+
         return [dict(id=user.id,
                      label=user.username,
                      avatar=gravatar_for_user(user, size=40)) for user in users]
