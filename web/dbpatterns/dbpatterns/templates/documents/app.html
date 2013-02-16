@@ -262,6 +262,8 @@
             // create a new document instance with resource uri.
             var document = new dbpatterns.models.Document({
                 "resource_uri": "{{ document.get_resource_uri }}"
+            }, {
+                "socket_uri": "http://localhost:8000"
             });
 
             // load document view.
@@ -272,6 +274,13 @@
 
             // retrieve document by the provided resource uri.
             document.fetch();
+
+            // connect to the live server
+            document.socket.emit("connect", {
+                "document_id": "{{ document.id }}",
+                "username": "{{ user.username }}"
+            });
+
 
         });
     </script>
