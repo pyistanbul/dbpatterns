@@ -55,6 +55,10 @@
 
     {% block app %}
 
+        <script type="text/html" id="message-template">
+        <strong><%= username %>:</strong> <%= body %>
+        </script>
+
         <script type="text/html" id="assignee-item-template">
             <div class="info">
                 <img src="<%= avatar %>">
@@ -240,6 +244,7 @@
     <script src="{{ STATIC_URL }}js/models/attribute.js"></script>
     <script src="{{ STATIC_URL }}js/models/comment.js"></script>
     <script src="{{ STATIC_URL }}js/models/assignee.js"></script>
+    <script src="{{ STATIC_URL }}js/models/chat.js"></script>
 
     <!-- views -->
     <script src="{{ STATIC_URL }}js/views/ui.js"></script>
@@ -250,6 +255,7 @@
     <script src="{{ STATIC_URL }}js/views/comment.js"></script>
     <script src="{{ STATIC_URL }}js/views/notifier.js"></script>
     <script src="{{ STATIC_URL }}js/views/user.js"></script>
+    <script src="{{ STATIC_URL }}js/views/chat.js"></script>
     {% endcompress %}
 
     <!-- bootstrap -->

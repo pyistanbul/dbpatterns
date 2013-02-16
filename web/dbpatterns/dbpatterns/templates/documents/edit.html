@@ -14,20 +14,30 @@
 {{ block.super }}
 <div id="help">
     <div id="help-content">
-        <h3>shortcuts</h3>
+        <h3>Shortcuts</h3>
         <ul>
             <li>OPTION+N: Create new entity</li>
             <li>OPTION+R: Rename document</li>
             <li>OPTION+S: Save document</li>
         </ul>
-        <h3>auto-fill conditions</h3>
+        <h3>Auto-fill conditions</h3>
         <ul>
-            <li>a column that named "id": integer type.</li>
-            <li>a column that starts with "_is": boolean type.</li>
-            <li>a column that starts with or ends with "date": datetime type.</li>
-            <li>a column that consist with table name, underscore and column name: foreign key.</li>
+            <li>Columns that named "id": integer type.</li>
+            <li>Columns that starts with "_is": boolean type.</li>
+            <li>Columns that starts with or ends with "date": datetime type.</li>
+            <li>Columns that consist with table name, underscore and column name: foreign key.</li>
         </ul>
     </div>
     <a href="#help-content" id="help-button" data-toggle="true" class="button">Help</a>
 </div>
+<div id="chat">
+    <aside></aside>
+    <section>
+        <ul></ul>
+    </section>
+    <footer></footer>
+</div>
+<a href="#chat" id="chat-button" data-toggle="true" class="button">
+    Online: <span id="online-count">2</span>
+</a>
 {% endblock %}

@@ -3,7 +3,9 @@
     $(function () {
         // auto toggle manipulation
         $("a[data-toggle]").click(function () {
-            var target = $($(this).attr("href"));
+            var button = $(this),
+                target = $(button.attr("href"));
+            button.toggleClass("active");
             target.toggle().find("a").click(function (event) {
                 target.hide();
             });

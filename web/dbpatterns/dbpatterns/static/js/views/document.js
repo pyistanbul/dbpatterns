@@ -29,7 +29,8 @@ dbpatterns.views.Document = Backbone.View.extend({
         this.delegateShortcuts();
 
         // bindings
-        this.model.bind("change:title", this.render_title, this);
+        this.model.on("change:title", this.render_title, this);
+        this.model.socket.on("enter", this.enter_room.bind(this));
 
         // sub views
         this.entities_view = new dbpatterns.views.Entities({
@@ -118,6 +119,14 @@ dbpatterns.views.Document = Backbone.View.extend({
             this.save_document();
             return true;
         }.bind(this)).render();
+    },
+
+    enter_room: function (data) {
+        new dbpatterns.views.Room({
+            model: new dbpatterns.models.Room(data, {
+                socket: this.model.socket
+            })
+        }).render();
     }
 });
 

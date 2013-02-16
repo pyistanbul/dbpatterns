@@ -812,7 +812,8 @@ article#document {
             border: none;
         }
 
-    #help #help-button {
+    #help #help-button
+    {
         background-color: #ff9e08;
         width: auto;
         padding: 2px 30px;
@@ -1881,6 +1882,97 @@ aside.donation {
         margin-top: 15px;
         margin-left: -18px;
     }
+
+
+/* Chat */
+#chat-button {
+    display: none;
+    z-index: 4;
+    background-color: #efefef;
+    color: #7d7d7d;
+    width: 100px;
+    position: absolute;
+    right: 20px;
+    bottom: 20px;
+    text-align: center;
+}
+
+#chat-button.active {
+    background-color: #2daaff;
+    color: white;
+}
+
+#chat {
+    display: none;
+    position: fixed;
+    width: 500px;
+    height: 300px;
+    background-color: #fff;
+    box-shadow: 0 0 20px #bababa;
+    border-bottom: 5px solid #2daaff;
+    bottom: 58px;
+    right: 20px;
+    z-index: 3;
+}
+
+    #chat aside {
+        width: 130px;
+        border-right: 1px dotted #e5e5e5;
+        height: 100%;
+        float: left;
+    }
+
+    #chat aside ul {
+        margin: 0;
+        padding: 0;
+    }
+
+    #chat aside ul li {
+        list-style-type: none;
+        margin: 0;
+        padding: 4px 9px;
+        border-bottom: 1px dotted #e5e5e5;
+    }
+
+    #chat section {
+        width: 368px;
+        float: left;
+        height: 260px;
+        overflow: auto;
+    }
+
+        #chat section ul {
+            margin: 5px;
+            padding: 0;
+        }
+
+        #chat section ul li {
+            list-style-type: none;
+            padding: 5px;
+            margin-bottom: 2px;
+            background-color: #fbfbfb;
+            font-size: 15px;
+        }
+
+        #chat section ul li strong {
+            font-weight: normal;
+            color: #afafaf;
+        }
+
+        #chat form {
+            margin: 0;
+            padding: 0;
+        }
+
+        #chat form input {
+            margin: 7px 5px;
+            padding: 5px;
+            border: 1px solid #dedede;
+            outline: none;
+            font-size: 16px;
+            color: gray;
+            width: 345px;
+        }
 
 /* jsPlumb */
 

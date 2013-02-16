@@ -27,13 +27,11 @@ dbpatterns.models.Document = Backbone.Model.extend({
     },
 
     push: function () {
-        console.log("push")
         // pushes the changes to the channel of user
         this.socket.emit("push", this.toJSON());
     },
 
     pull: function (data) {
-        console.log("pull")
         // pulls the changes from the channel
         this.set(data);
         this.entities.reset(data.entities);
