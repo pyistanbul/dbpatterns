@@ -129,8 +129,13 @@ dbpatterns.views.Entities = Backbone.View.extend({
     },
 
     render_entities: function (entities) {
+        this.reset_entities();
         _.forEach(entities.models, this.add_entity, this);
         this.options.app_view.trigger("load");
+    },
+
+    reset_entities: function () {
+        this.$el.find(".entity").remove();
     },
 
     add_entity: function (entity) {
