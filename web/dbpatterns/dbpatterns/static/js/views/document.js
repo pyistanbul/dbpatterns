@@ -122,11 +122,13 @@ dbpatterns.views.Document = Backbone.View.extend({
     },
 
     enter_room: function (data) {
-        new dbpatterns.views.Room({
-            model: new dbpatterns.models.Room(data, {
-                socket: this.model.socket
-            })
-        }).render();
+        if (this.options.edit) {
+            new dbpatterns.views.Room({
+                model: new dbpatterns.models.Room(data, {
+                    socket: this.model.socket
+                })
+            }).render();
+        }
     }
 });
 
