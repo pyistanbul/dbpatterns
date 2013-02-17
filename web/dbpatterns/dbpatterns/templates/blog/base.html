@@ -1,1 +1,8 @@
 {% extends "base.html" %}
+
+{% block body-id %}blog{% endblock %}
+
+{% block logo %}
+    <a id="blog-link" href="{% url blog %}">development blog</a>
+    {{ block.super }}
+{% endblock %}

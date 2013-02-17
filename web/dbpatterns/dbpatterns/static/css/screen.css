@@ -1736,8 +1736,23 @@ ul.news {
 
 /* Blog */
 
+body#blog {
+    /*background: #fff none;*/
+}
+
+#blog-link {
+    display: inline-block;
+    position: absolute;
+    font-size: 22px;
+    margin-left: 74px;
+    margin-top: 60px;
+    letter-spacing: 0;
+    font-family: monospace;
+    color: #a7a7a7;
+}
+
 article.post {
-    margin-top: 20px;
+    margin-top: 40px;
     padding-top: 10px;
 }
 
@@ -1779,8 +1794,10 @@ article.post {
     }
 
         article.post section img {
-            max-width: 530px;
-            background-color: #dcdcdc;
+            max-width: 515px;
+            background-color: #f9f9f9;
+            padding: 10px;
+            margin: 0 0 15px;
         }
 
         article.post section p {

@@ -10,12 +10,14 @@
     {% endcompress %}
     {% block extra-head %}{% endblock %}
 </head>
-<body id="{% block body-id%}dbpatterns{% endblock %}">
+<body id="{% block body-id %}dbpatterns{% endblock %}">
 
 {% block header %}
     <header id="banner">
         <h1>
+            {% block logo %}
             <a href="{% url home %}">db<span>patterns</span></a>
+            {% endblock %}
             {% if user.is_authenticated %}
             <a href="{% url notifications %}" id="user-notifications-button">{% if notification_count %}<span>{{ notification_count }}</span>{% endif %}</a>
             {% endif %}
