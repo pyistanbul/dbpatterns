@@ -56,7 +56,7 @@
     {% block app %}
 
         <script type="text/html" id="message-template">
-        <strong><%= username %>:</strong> <%= body %>
+        <strong><%= _.escape(username) %>:</strong> <%= _.escape(body) %>
         </script>
 
         <script type="text/html" id="assignee-item-template">
