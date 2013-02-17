@@ -235,6 +235,9 @@ BLOG_FEED_TITLE = "Dbpatterns Blog"
 BLOG_FEED_DESCRIPTION = "News about dbpatterns"
 BLOG_URL = "http://dbpatterns.com/blog/"
 
+# Socket.io Settings
+SOCKETIO_HOST = "http://localhost:8000"
+
 try:
     from settings_local import *
 except ImportError:

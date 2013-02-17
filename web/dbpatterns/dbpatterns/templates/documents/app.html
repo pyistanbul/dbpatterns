@@ -269,7 +269,7 @@
             var document = new dbpatterns.models.Document({
                 "resource_uri": "{{ document.get_resource_uri }}"
             }, {
-                "socket_uri": "http://localhost:8000",
+                "socket_uri": "{{ SOCKETIO_HOST }}",
                 "use_websocket": {{ edit|yesno:"true,false" }}
             });
 

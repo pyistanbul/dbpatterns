@@ -1,12 +1,12 @@
 from datetime import datetime
 from itertools import imap
 
-from pymongo import DESCENDING
 from bson import ObjectId
 
 from django.core.urlresolvers import reverse
 from django.utils.http import urlencode
 from django.views.generic import TemplateView, FormView, ListView, RedirectView, View
+from django.conf import settings
 from django import http
 
 from tastypie.http import HttpNoContent
@@ -214,6 +214,7 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
         context = super(DocumentEditView, self).get_context_data(**kwargs)
         context["edit"] = True
         context["FIELD_TYPES"] = FIELD_TYPES
+        context["SOCKETIO_HOST"] = settings.SOCKETIO_HOST
         return context
 
 
