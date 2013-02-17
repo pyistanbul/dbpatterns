@@ -1,3 +1,4 @@
+import operator
 from bson import ObjectId
 
 from django.conf.urls import url
@@ -13,6 +14,7 @@ from api.resources import MongoDBResource
 from comments.resources import CommentResource
 from documents import get_collection
 from documents.models import Document
+from documents.signals import assignment_done
 
 
 class DocumentResource(MongoDBResource):
@@ -61,7 +63,22 @@ class DocumentResource(MongoDBResource):
         if not document.is_editable(user_id=request.user.id):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
 
-        return super(DocumentResource, self).obj_update(bundle, request, **kwargs)
+
+        bundle = super(DocumentResource, self).obj_update(bundle, request, **kwargs)
+
+        updated_document = self.obj_get(request=request, pk=kwargs.get("pk"))
+
+        if document.assignees != updated_document.assignees:
+
+            original = map(operator.itemgetter("id"), document.assignees)
+            updated = map(operator.itemgetter("id"), updated_document.assignees)
+
+            for user_id in set(updated).difference(original):
+                assignment_done.send(sender=self,
+                    user_id=user_id,
+                    instance=updated_document)
+
+        return bundle
 
     def dehydrate(self, bundle):
         """

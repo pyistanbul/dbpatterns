@@ -8,11 +8,11 @@ from pymongo import DESCENDING
 from comments.signals import comment_done
 from documents import get_collection
 from documents.models import Document
-from documents.signals import fork_done, star_done
+from documents.signals import fork_done, star_done, assignment_done
 from profiles.management.signals import follow_done
 from notifications.constants import (NOTIFICATION_TYPE_COMMENT, NOTIFICATION_TYPE_FORK,
                                      NOTIFICATION_TYPE_STAR, NOTIFICATION_TYPE_FOLLOWING,
-                                     NOTIFICATION_TEMPLATES)
+                                     NOTIFICATION_TEMPLATES, NOTIFICATION_TYPE_ASSIGNMENT)
 
 class NotificationManager(object):
     """
@@ -82,6 +82,10 @@ class Notification(dict):
                 lambda: reverse("show_document",
                     args=[self.get("object_id")]),
 
+            NOTIFICATION_TYPE_ASSIGNMENT:
+                lambda: reverse("edit_document",
+                    args=[self.get("object_id")]),
+
             NOTIFICATION_TYPE_FOLLOWING:
                 lambda: reverse("auth_profile",
                     args=[self.get("sender").get("username")]),
@@ -144,4 +148,16 @@ def create_following_notification(following, follower, **kwargs):
         notification_type=NOTIFICATION_TYPE_FOLLOWING,
         sender=follower,
         recipient_id=following.id
+    )
+
+@receiver(assignment_done)
+def create_assignment_notification(instance, user_id, **kwargs):
+    """
+    Sends notification to the assigned users on the document
+    """
+    Notification.objects.create(
+        object_id=instance.id,
+        notification_type=NOTIFICATION_TYPE_ASSIGNMENT,
+        sender=instance.user,
+        recipient_id=user_id
     )
