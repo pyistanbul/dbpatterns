@@ -4,11 +4,14 @@ dbpatterns.models.Document = Backbone.Model.extend({
 
     initialize: function (model, options) {
         this.entities = new dbpatterns.collections.Entity;
-        this.on("change:assignees change:title change:is_public", this.push, this);
         this.use_websocket = options.use_websocket;
         if (this.use_websocket) {
             this.socket = io.connect(options.socket_uri);
             this.socket.on("pull", this.pull.bind(this));
+            this.on("change:assignees change:title change:is_public", this.push, this);
+        } else {
+            this.socket = {};
+            _.extend(this.socket, Backbone.Events);
         }
     },
 
