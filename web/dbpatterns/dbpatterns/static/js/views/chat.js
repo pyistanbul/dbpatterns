@@ -5,6 +5,7 @@ dbpatterns.views.Room = Backbone.View.extend({
 
     initialize: function () {
         this.model.socket.on("message", this.pull_message.bind(this));
+        this.model.socket.on("message", this.scroll.bind(this));
         this.model.socket.on("join", this.join.bind(this));
         this.model.socket.on("leave", this.leave.bind(this));
     },
@@ -23,13 +24,15 @@ dbpatterns.views.Room = Backbone.View.extend({
             model: this.model.messages
         })).render().el);
 
+        this.button.click(this.mark_as_read.bind(this));
+
         this.render_client_count();
 
         return this;
     },
 
     is_active: function () {
-        return this.$el.hasClass("active");
+        return this.button.hasClass("active");
     },
 
     render_client_count: function () {
@@ -43,6 +46,9 @@ dbpatterns.views.Room = Backbone.View.extend({
     pull_message: function (data) {
         data.is_read = this.is_active();
         this.model.messages.add(new dbpatterns.models.Message(data));
+        if (!data.is_read) {
+            this.inc_unread_count();
+        }
     },
 
     join: function (username) {
@@ -58,6 +64,25 @@ dbpatterns.views.Room = Backbone.View.extend({
         this.model.clients.remove(client);
         dbpatterns.notifications.trigger("flash", username + " left from to the chat room");
         this.render_client_count();
+    },
+
+    scroll: function () {
+        // keep the scroll to bottom
+        this.$el.find("section").stop().animate({
+            scrollTop: this.$el.find("section")[0].scrollHeight
+        }, 800);
+    },
+
+    mark_as_read: function () {
+        this.button.find("i").remove();
+    },
+
+    inc_unread_count: function () {
+        if (!this.button.find("i").length) {
+            this.button.prepend("<i>");
+        }
+        var bubble = this.button.find("i");
+        bubble.html(parseInt(bubble.html() || 0) + 1);
     }
 
 });

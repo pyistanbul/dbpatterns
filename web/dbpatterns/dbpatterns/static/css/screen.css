@@ -1886,7 +1886,7 @@ aside.donation {
 
 /* Chat */
 #chat-button {
-    display: none;
+    /*display: none;*/
     z-index: 4;
     background-color: #efefef;
     color: #7d7d7d;
@@ -1895,6 +1895,21 @@ aside.donation {
     right: 20px;
     bottom: 20px;
     text-align: center;
+}
+
+#chat-button i {
+    font-style: normal;
+    font-size: 15px;
+    line-height: 20px;
+    text-align: center;
+    display: block;
+    margin-top: -7px;
+    margin-left: -30px;
+    background-color: #e7003a;
+    color: #fff;
+    border-radius: 3px;
+    padding: 0 8px;
+    position: absolute;
 }
 
 #chat-button.active {
@@ -1937,7 +1952,7 @@ aside.donation {
     #chat section {
         width: 368px;
         float: left;
-        height: 260px;
+        height: 258px;
         overflow: auto;
     }
 
@@ -1960,6 +1975,7 @@ aside.donation {
         }
 
         #chat form {
+            float: left;
             margin: 0;
             padding: 0;
         }
