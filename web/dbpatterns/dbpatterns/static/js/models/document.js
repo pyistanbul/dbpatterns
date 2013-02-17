@@ -8,7 +8,7 @@ dbpatterns.models.Document = Backbone.Model.extend({
         if (this.use_websocket) {
             this.socket = io.connect(options.socket_uri);
             this.socket.on("pull", this.pull.bind(this));
-            this.on("change:assignees change:title change:is_public", this.push, this);
+            this.on("load", this.bind_socket, this);
         } else {
             this.socket = {};
             _.extend(this.socket, Backbone.Events);
@@ -24,9 +24,6 @@ dbpatterns.models.Document = Backbone.Model.extend({
 
     persist: function () {
         this.set({"entities": this.entities.toJSON()});
-        if (this.use_websocket) {
-            this.push();
-        }
     },
 
     channel: function () {
@@ -43,6 +40,10 @@ dbpatterns.models.Document = Backbone.Model.extend({
         // pulls the changes from the channel
         this.set(data);
         this.entities.reset(data.entities);
+    },
+
+    bind_socket: function () {
+        this.on("change", this.push, this);
     }
 
 });

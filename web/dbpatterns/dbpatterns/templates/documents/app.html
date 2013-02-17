@@ -280,7 +280,11 @@
             });
 
             // retrieve document by the provided resource uri.
-            document.fetch();
+            document.fetch({
+                success: function () {
+                    document.trigger("load");
+                }
+            });
 
             {% if edit %}
             // connect to the live server
