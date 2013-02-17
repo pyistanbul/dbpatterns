@@ -33,13 +33,14 @@ class EntryManager(object):
     def load(self):
         self.collection = get_collection("newsfeed")
 
-    def create(self, object_id, news_type, sender, related_object=None):
+    def create(self, object_id, news_type, sender, recipients=None, related_object=None):
         """
         Creates newsfeed item from provided parameters
         """
 
-        followers = sender.followers.values_list(
-                        "follower_id", flat=True)
+        followers = sender.followers.values_list("follower_id", flat=True)
+        recipients = recipients if recipients is not None \
+                                else list(followers) + [sender.pk]
 
         entry_bundle = {
             "object_id": object_id,
@@ -49,7 +50,7 @@ class EntryManager(object):
                 "username": sender.username,
                 "email": sender.email # it's required for gravatar
             },
-            "recipients": list(followers) + [sender.pk]
+            "recipients": recipients
         }
 
         # sometimes we have to create custom related object bundle.
@@ -195,5 +196,6 @@ def create_registration_entry(instance, created, **kwargs):
             news_type=NEWS_TYPE_REGISTRATION,
             sender=instance,
             related_object = dict(username=instance.username,
-                email=instance.email)
+                email=instance.email),
+            recipients=[]
         )
