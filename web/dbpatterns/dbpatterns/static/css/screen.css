@@ -1872,8 +1872,13 @@ aside.donation {
         padding: 6px 15px;
     }
 
+    .documents.tabs nav li.active a {
+        color: #626262;
+    }
+
     .documents.tabs nav li a {
         font-size: 22px;
+        color: gray;
     }
 
     .documents.tabs > section {
@@ -1886,7 +1891,7 @@ aside.donation {
 
 /* Chat */
 #chat-button {
-    /*display: none;*/
+    display: none;
     z-index: 4;
     background-color: #efefef;
     color: #7d7d7d;
@@ -1913,7 +1918,7 @@ aside.donation {
 }
 
 #chat-button.active {
-    background-color: #2daaff;
+    background-color: #2894df;
     color: white;
 }
 
@@ -1924,7 +1929,7 @@ aside.donation {
     height: 300px;
     background-color: #fff;
     box-shadow: 0 0 20px #bababa;
-    border-bottom: 5px solid #2daaff;
+    border-bottom: 5px solid #2894df;
     bottom: 58px;
     right: 20px;
     z-index: 3;
@@ -1939,7 +1944,7 @@ aside.donation {
 
     #chat aside ul {
         margin: 0;
-        padding: 0;
+        padding: 2px 0;
     }
 
     #chat aside ul li {
