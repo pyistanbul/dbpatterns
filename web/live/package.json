@@ -2,6 +2,7 @@
     "name": "dbpatterns-live",
     "version": "0.0.1",
     "dependencies": {
-        "socket.io": "0.9.13"
+        "socket.io": "0.9.13",
+        "underscore": "1.4.4"
     }
 }
