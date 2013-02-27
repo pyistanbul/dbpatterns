@@ -7,7 +7,9 @@
     <section id="latest-posts">
         <ul>
             {% for post in latest_posts %}
-                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+                <li>
+                    <time datetime="{{ post.date_created }}">{{ post.date_created|date }}</time>
+                    <a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
             {% endfor %}
         </ul>
     </section>

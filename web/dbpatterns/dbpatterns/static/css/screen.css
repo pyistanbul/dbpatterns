@@ -1534,11 +1534,16 @@ aside#sidebar {
             border-bottom: 1px dotted #e4e4e4;
             margin-left: -10px;
             padding: 5px 7px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 100%;
+            overflow: hidden;
         }
 
         aside#sidebar #document-tabs section ul li a {
-            color: #8d8d8d;
+            color: #717171;
             text-decoration: none;
+
         }
 
         aside#sidebar #document-tabs section ul li a.author {
@@ -1824,12 +1829,17 @@ article.post {
 
     #latest-posts ul li {
         list-style-type: none;
-        padding: 3px;
+        padding: 3px 10px;
         border-bottom: 1px dotted #e4e4e4;
     }
 
     #latest-posts ul li:last-child {
         border: none;
+    }
+
+    #latest-posts ul li time {
+        display: block;
+        color: #bdbdbd;
     }
 
     #latest-posts ul li a {
