@@ -1,0 +1,14 @@
+<article id="blog-tabs" class="tabs">
+    <nav>
+        <ul>
+            <li class="active"><a href="#latest-posts">Latest posts</a></li>
+        </ul>
+    </nav>
+    <section id="latest-posts">
+        <ul>
+            {% for post in latest_posts %}
+                <li><a href="{{ post.get_absolute_url }}">{{ post.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </section>
+</article>

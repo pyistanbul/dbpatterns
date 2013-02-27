@@ -11,6 +11,7 @@ from django import http
 
 from tastypie.http import HttpNoContent
 
+from blog.models import Post
 from profiles.mixins import LoginRequiredMixin
 from newsfeed.models import Entry
 from newsfeed.constants import *
@@ -24,6 +25,7 @@ from documents.signals import (document_done, fork_done, star_done,
                                document_delete, fork_delete)
 from documents.exporters.sql import (MysqlExporter, PostgresExporter,
                                      SQLiteExporter, OracleExporter)
+
 
 
 DOCUMENT_EXPORTERS = {
@@ -63,6 +65,7 @@ class HomeView(TemplateView):
             "next_page_url": next_page_url,
             "featured_documents": self.get_featured_documents(),
             "starred_documents": self.get_starred_documents(),
+            "latest_posts": self.get_latest_posts(),
             "search_form": SearchForm()
         }
 
@@ -110,6 +113,9 @@ class HomeView(TemplateView):
                 "page": page_number + 1
             })
         }
+
+    def get_latest_posts(self):
+        return Post.objects.all()[:10]
 
 
 class DocumentDetailView(DocumentMixin, TemplateView):

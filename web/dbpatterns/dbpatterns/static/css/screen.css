@@ -1534,12 +1534,10 @@ aside#sidebar {
             border-bottom: 1px dotted #e4e4e4;
             margin-left: -10px;
             padding: 5px 7px;
-            height: 20px;
-            overflow: hidden;
         }
 
         aside#sidebar #document-tabs section ul li a {
-            color: #5d5d5d;
+            color: #8d8d8d;
             text-decoration: none;
         }
 
@@ -1814,6 +1812,29 @@ article.post {
         background-color: white;
         padding: 15px 10px;
 
+    }
+
+#blog-tabs {
+    margin-top: 20px;
+}
+
+#latest-posts ul {
+    padding: 13px 9px 0;
+}
+
+    #latest-posts ul li {
+        list-style-type: none;
+        padding: 3px;
+        border-bottom: 1px dotted #e4e4e4;
+    }
+
+    #latest-posts ul li:last-child {
+        border: none;
+    }
+
+    #latest-posts ul li a {
+        color: gray;
+        text-decoration: none;
     }
 
 /* Donation */
