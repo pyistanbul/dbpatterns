@@ -2,7 +2,6 @@ from tastypie import http
 from tastypie.authorization import Authorization
 from tastypie.exceptions import ImmediateHttpResponse
 
-__author__ = 'fatiherikli'
 
 class DocumentsAuthorization(Authorization):
 
