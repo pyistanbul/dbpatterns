@@ -1,12 +1,24 @@
 from django.conf import settings
+from django.utils.functional import SimpleLazyObject
 
 from pymongo import Connection
 
+_connection = None
+def get_connection():
+    global _connection
+    if not _connection:
+        _connection = Connection(
+            host=getattr(settings, 'MONGODB_HOST', None),
+            port=getattr(settings, 'MONGODB_PORT', None)
+        )
+        db = _connection[settings.MONGODB_DATABASE]
+        username = getattr(settings, 'MONGODB_USERNAME', None)
+        password = getattr(settings, 'MONGODB_PASSWORD', None)
+        if username and password:
+            db.authenticate(username, password)
+    return db
+connection = SimpleLazyObject(get_connection)
 
-connection = Connection(
-    host=getattr(settings, "MONGODB_HOST", None),
-    port=getattr(settings, "MONGODB_PORT", None)
-)
 
 def get_collection(collection_name):
-    return connection[settings.MONGODB_DATABASE][collection_name]
+    return getattr(connection, collection_name)
