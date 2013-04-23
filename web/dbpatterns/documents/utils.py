@@ -1,7 +1,11 @@
 import re
+import logging
+
 from nltk import WordNetLemmatizer, LancasterStemmer
+
 from django.core.urlresolvers import reverse
 
+logger = logging.getLogger(__name__)
 wordnet_lemmatizer = WordNetLemmatizer()
 lancaster_stemmer = LancasterStemmer()
 
@@ -9,7 +13,12 @@ lancaster_stemmer = LancasterStemmer()
 def extract_keywords(title):
     original_keywords = [keyword.lower() for keyword in re.split('\W+', title)]
 
-    lemmatized_keywords =  map(wordnet_lemmatizer.lemmatize, original_keywords)
+    try:
+        lemmatized_keywords = map(wordnet_lemmatizer.lemmatize,
+                                  original_keywords)
+    except LookupError:
+        logging.error('Please install corpora/wordnet dictionary')
+        return []
 
     stemmed_keywords = map(lancaster_stemmer.stem, original_keywords)
 
