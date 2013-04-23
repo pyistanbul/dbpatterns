@@ -47,6 +47,7 @@ class DocumentManager(object):
             }
         }))
 
+
 class Document(dict):
     """
     A model that wraps MongoDB document.
@@ -93,6 +94,10 @@ class Document(dict):
 
     def get_stars(self):
         return self.stars or []
+
+    @property
+    def assignees(self):
+        return self["assignees"] or []
 
     @property
     def star_count(self):

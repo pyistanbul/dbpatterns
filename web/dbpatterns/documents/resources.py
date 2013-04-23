@@ -63,8 +63,8 @@ class DocumentResource(MongoDBResource):
         if not document.is_editable(user_id=request.user.id):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
 
-
-        bundle = super(DocumentResource, self).obj_update(bundle, request, **kwargs)
+        bundle = super(DocumentResource, self).obj_update(bundle, request,
+                                                          **kwargs)
 
         updated_document = self.obj_get(request=request, pk=kwargs.get("pk"))
 
@@ -74,7 +74,8 @@ class DocumentResource(MongoDBResource):
             updated = map(operator.itemgetter("id"), updated_document.assignees)
 
             for user_id in set(updated).difference(original):
-                assignment_done.send(sender=self,
+                assignment_done.send(
+                    sender=self,
                     user_id=user_id,
                     instance=updated_document)
 
