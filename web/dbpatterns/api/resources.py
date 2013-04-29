@@ -16,12 +16,6 @@ from tastypie.bundle import Bundle
 from tastypie.resources import Resource
 
 
-db = Connection(
-   host=getattr(settings, "MONGODB_HOST", None),
-   port=getattr(settings, "MONGODB_PORT", None)
-)[settings.MONGODB_DATABASE]
-
-
 class Document(dict):
     # dictionary-like object for mongodb documents.
     __getattr__ = dict.get
@@ -31,6 +25,7 @@ class MongoDBResource(Resource):
     """
     A base resource that allows to make CRUD operations for mongodb.
     """
+
     def get_object_class(self):
         return self._meta.object_class
 
@@ -38,10 +33,7 @@ class MongoDBResource(Resource):
         """
         Encapsulates collection name.
         """
-        try:
-            return db[self._meta.collection]
-        except AttributeError:
-            raise ImproperlyConfigured("Define a collection in your resource.")
+        raise NotImplementedError("You should implement get_collection method.")
 
     def obj_get_list(self, request=None, **kwargs):
         """
@@ -70,10 +62,10 @@ class MongoDBResource(Resource):
         Updates mongodb document.
         """
         self.get_collection().update({
-            "_id": ObjectId(kwargs.get("pk"))
-        }, {
-            "$set": bundle.data
-        })
+                                         "_id": ObjectId(kwargs.get("pk"))
+                                     }, {
+                                         "$set": bundle.data
+                                     })
         return bundle
 
     def obj_delete_list(self, request=None, **kwargs):
@@ -86,7 +78,7 @@ class MongoDBResource(Resource):
         """
         Removes single document from collection
         """
-        parameters = { "_id": ObjectId(kwargs.get("pk")) }
+        parameters = {"_id": ObjectId(kwargs.get("pk"))}
         self.get_collection().remove(parameters)
 
     def get_resource_uri(self, item):
