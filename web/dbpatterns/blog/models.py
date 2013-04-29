@@ -4,13 +4,15 @@ from django.utils.translation import ugettext_lazy as _
 
 from markitup.fields import MarkupField
 
+
 class PublishedManager(models.Manager):
     """
     Returns published blog posts.
     """
     def get_query_set(self):
-        return super(PublishedManager, self).get_query_set()\
-                                    .filter(is_published=True)
+        queryset = super(PublishedManager, self).get_query_set()
+        return queryset.filter(is_published=True)
+
 
 class Post(models.Model):
     """
