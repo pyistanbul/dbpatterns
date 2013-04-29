@@ -1,6 +1,7 @@
 from documents.constants import *
 from documents.exporters import BaseExporter
 
+
 class SQLExporter(BaseExporter):
     """
     A base class of all sql exporters.
@@ -30,7 +31,6 @@ class SQLExporter(BaseExporter):
 
             yield 'CREATE TABLE %s (' % self.quote(entity.get("name"))
             if entity.get("attributes"):
-
                 yield self.WHITE_SPACE + ('%(comma_literal)s\n%(tab)s' % {
                     "comma_literal": self.COMMA_LITERAL,
                     "tab": self.WHITE_SPACE
@@ -54,8 +54,9 @@ class SQLExporter(BaseExporter):
         yield self.quote(attribute.get("name"))
 
         size = attribute.get("size") or self.DEFAULT_VARCHAR_SIZE if \
-                                attribute.get("type") == TYPES_STRING else None
-        column_type = self.TYPE_MAPPING.get(attribute.get("type"), self.DEFAULT_TYPE)
+            attribute.get("type") == TYPES_STRING else None
+        column_type = self.TYPE_MAPPING.get(attribute.get("type"),
+                                            self.DEFAULT_TYPE)
 
         yield "%s(%s)" % (column_type, size) if size else column_type
 
@@ -76,18 +77,22 @@ class SQLExporter(BaseExporter):
         yield "FOREIGN KEY(%s)" % self.quote(attribute.get("name", ""))
         yield "REFERENCES"
         yield "%s (%s)" % (self.quote(attribute.get("foreign_key_entity", "")),
-                          self.quote(attribute.get("foreign_key_attribute", "")))
+                           self.quote(
+                               attribute.get("foreign_key_attribute", "")))
 
 
 class SQLiteExporter(SQLExporter):
     pass
 
+
 class MysqlExporter(SQLExporter):
     INLINE_FOREIGN_KEYS = False
     QUOTATION_LITERAL = "`"
 
+
 class PostgresExporter(SQLExporter):
     INLINE_FOREIGN_KEYS = False
+
 
 class OracleExporter(SQLExporter):
     def foreign_key_for_attribute(self, attribute):
