@@ -61,9 +61,8 @@ class Comment(dict):
     @property
     def document(self):
         """Returns the document of comment"""
-        return Document(get_collection("documents").find_one({
-            "_id": ObjectId(self.document_id)
-        }))
+        query = {"_id": ObjectId(self.document_id)}
+        return Document(get_collection("documents").find_one(query))
 
     @property
     def pk(self):
