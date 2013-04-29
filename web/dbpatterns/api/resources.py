@@ -1,10 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-    Tastypie MongoDB Resource
-    https://github.com/fatiherikli/tastypie-mongodb-resource
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 from bson import ObjectId
 from pymongo import Connection
 
