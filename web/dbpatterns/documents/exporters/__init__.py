@@ -1,9 +1,11 @@
 from documents.exporters.exceptions import ExporterError
 
+
 class BaseExporter(object):
     """
     The base class of all exporters.
     """
+
     def __init__(self, document):
         self.document = document
 
@@ -12,3 +14,7 @@ class BaseExporter(object):
 
     def as_text(self):
         return "\n".join(list(self.export()))
+
+
+class ExporterError(Exception):
+    pass
