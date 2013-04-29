@@ -27,20 +27,22 @@ class EntryManager(object):
     """
     A manager that allows you to manage newsfeed items.
     """
+
     def __init__(self):
         self.load()
 
     def load(self):
         self.collection = get_collection("newsfeed")
 
-    def create(self, object_id, news_type, sender, recipients=None, related_object=None):
+    def create(self, object_id, news_type, sender, recipients=None,
+               related_object=None):
         """
         Creates newsfeed item from provided parameters
         """
 
         followers = sender.followers.values_list("follower_id", flat=True)
-        recipients = recipients if recipients is not None \
-                                else list(followers) + [sender.pk]
+        recipients = (recipients if recipients is not None
+                      else list(followers) + [sender.pk])
 
         entry_bundle = {
             "object_id": object_id,
@@ -48,7 +50,7 @@ class EntryManager(object):
             "date_created": datetime.now(),
             "sender": {
                 "username": sender.username,
-                "email": sender.email # it's required for gravatar
+                "email": sender.email  # it's required for gravatar
             },
             "recipients": recipients
         }
@@ -65,25 +67,17 @@ class EntryManager(object):
         """
         Adds the id of follower to the recipients of followed profile's entries.
         """
-        self.collection.update({
-            "sender.username": following.username
-        }, {
-            "$push": {
-                "recipients": follower.id
-            }
-        }, multi=True)
+        self.collection.update(
+            {"sender.username": following.username},
+            {"$push": {"recipients": follower.id}}, multi=True)
 
     def remove_from_recipients(self, following, follower):
         """
         Removes follower id from the recipients of followed profile's entries.
         """
-        self.collection.update({
-            "sender.username": following.username
-        }, {
-            "$pull": {
-                "recipients": follower.id
-            }
-        }, multi=True)
+        self.collection.update(
+            {"sender.username": following.username},
+            {"$pull": {"recipients": follower.id}}, multi=True)
 
     def delete(self, object_type, object_id):
         """
@@ -91,8 +85,7 @@ class EntryManager(object):
         """
         self.collection.remove({
             "news_type": object_type,
-            "object_id": object_id
-        })
+            "object_id": object_id})
 
 
 class Entry(dict):
@@ -133,6 +126,7 @@ def create_news_entry(instance, **kwargs):
             sender=instance.user
         )
 
+
 @receiver(star_done)
 def create_star_entry(instance, user, **kwargs):
     """
@@ -149,6 +143,7 @@ def create_star_entry(instance, user, **kwargs):
         sender=user
     )
 
+
 @receiver(follow_done)
 def create_following_entry(follower, following, **kwargs):
     """
@@ -158,8 +153,8 @@ def create_following_entry(follower, following, **kwargs):
         object_id=following.id,
         news_type=NEWS_TYPE_FOLLOWING,
         sender=follower,
-        related_object = dict(username=following.username,
-                              email=following.email)
+        related_object=dict(username=following.username,
+                            email=following.email)
     )
 
 
@@ -171,13 +166,15 @@ def add_to_recipients(follower, following, **kwargs):
     Entry.objects.add_to_recipients(
         following=following, follower=follower)
 
+
 @receiver(unfollow_done)
 def remove_from_recipients(follower, following, **kwargs):
     """
     Removes the entries of unfollowed profile.
     """
     Entry.objects.remove_from_recipients(following=following,
-                                        follower=follower)
+                                         follower=follower)
+
 
 @receiver(comment_delete)
 @receiver(document_delete)
@@ -188,6 +185,7 @@ def remove_news_entry(instance, **kwargs):
         object_id=instance._id
     )
 
+
 @receiver(post_save, sender=User)
 def create_registration_entry(instance, created, **kwargs):
     if created:
@@ -195,7 +193,7 @@ def create_registration_entry(instance, created, **kwargs):
             object_id=instance.id,
             news_type=NEWS_TYPE_REGISTRATION,
             sender=instance,
-            related_object = dict(username=instance.username,
-                email=instance.email),
+            related_object=dict(username=instance.username,
+                                email=instance.email),
             recipients=[]
         )
