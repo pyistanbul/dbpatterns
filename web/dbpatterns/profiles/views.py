@@ -27,6 +27,7 @@ class RegistrationView(CreateView):
     def get_success_url(self):
         return reverse("home")
 
+
 class LoginView(FormView):
     form_class = AuthenticationForm
     template_name = "auth/login.html"
@@ -53,7 +54,6 @@ class LogoutView(RedirectView):
         return reverse("home")
 
 
-
 class ProfileDetailView(DetailView):
     slug_field = 'username'
     slug_url_kwarg = 'username'
@@ -65,16 +65,15 @@ class ProfileDetailView(DetailView):
         Adds extra context to template
         """
         resource = DocumentResource()
-        user  = self.get_object()
+        user = self.get_object()
 
         if self.request.user.is_anonymous():
             is_followed = False
             can_follow = False
         else:
             is_followed = self.request.user.following.filter(
-                                following_id=user.pk).exists()
+                following_id=user.pk).exists()
             can_follow = self.request.user != user
-
 
         documents = resource.get_collection().find({
             "user_id": user.pk
@@ -88,14 +87,14 @@ class ProfileDetailView(DetailView):
 
     def delete(self, request, **kwargs):
         """
-        Removes `FollowedProfile` object for authenticated user.
+        - Removes `FollowedProfile` object for authenticated user.
+        - Fires unfollow_done signal
         """
         user = self.get_object()
         user.followers.filter(follower=request.user).delete()
 
         unfollow_done.send(sender=self,
-            follower=request.user, following=user)
-
+                           follower=request.user, following=user)
 
         return HttpResponse(json.dumps({
             "success": True
@@ -103,7 +102,8 @@ class ProfileDetailView(DetailView):
 
     def post(self, request, **kwargs):
         """
-        Creates `FollowedProfile` object for authenticated user.
+        - Creates `FollowedProfile` object for authenticated user.
+        - Fires follow_done signal
         """
         user = self.get_object()
 
@@ -115,7 +115,7 @@ class ProfileDetailView(DetailView):
         user.followers.create(follower=request.user)
 
         follow_done.send(sender=self,
-                        follower=request.user, following=user)
+                         follower=request.user, following=user)
 
         return HttpResponse(json.dumps({
             "success": True

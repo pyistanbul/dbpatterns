@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.views.generic import ListView
+
 from gravatar.templatetags.gravatar import gravatar_for_user
 
 from profiles.mixins import JSONResponseMixin

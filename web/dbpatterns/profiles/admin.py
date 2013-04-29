@@ -14,7 +14,8 @@ class FollowedProfileInline(admin.TabularInline):
 
 class ProfileAdmin(UserAdmin):
 
-    list_display = ('gravatar', 'username', 'email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('gravatar', 'username', 'email', 'first_name',
+                    'last_name', 'is_staff')
     ordering = ("-id", )
 
     inlines = [FollowedProfileInline]

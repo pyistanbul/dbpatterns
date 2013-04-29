@@ -1,6 +1,7 @@
 from django.conf.urls import patterns, url
 from django.views.generic import TemplateView
-from profiles.views import RegistrationView, LoginView, LogoutView, ProfileDetailView
+from profiles.views import (RegistrationView, LoginView, LogoutView,
+                            ProfileDetailView)
 
 
 urlpatterns = patterns('',
