@@ -1,7 +1,7 @@
 from documents.parsers.exceptions import ParseError
 
-class BaseParser(object):
 
+class BaseParser(object):
     parsed = None
 
     def __init__(self, text):
@@ -16,3 +16,7 @@ class BaseParser(object):
 
     def parse(self, text):
         raise NotImplementedError
+
+
+class ParseError(StandardError):
+    pass
