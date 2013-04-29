@@ -10,14 +10,19 @@ from documents import get_collection
 from documents.models import Document
 from documents.signals import fork_done, star_done, assignment_done
 from profiles.management.signals import follow_done
-from notifications.constants import (NOTIFICATION_TYPE_COMMENT, NOTIFICATION_TYPE_FORK,
-                                     NOTIFICATION_TYPE_STAR, NOTIFICATION_TYPE_FOLLOWING,
-                                     NOTIFICATION_TEMPLATES, NOTIFICATION_TYPE_ASSIGNMENT)
+from notifications.constants import (NOTIFICATION_TYPE_COMMENT,
+                                     NOTIFICATION_TYPE_FORK,
+                                     NOTIFICATION_TYPE_STAR,
+                                     NOTIFICATION_TYPE_FOLLOWING,
+                                     NOTIFICATION_TEMPLATES,
+                                     NOTIFICATION_TYPE_ASSIGNMENT)
+
 
 class NotificationManager(object):
     """
     A class that allows create, edit, read notifications.
     """
+
     def __init__(self):
         self.load()
 
@@ -40,16 +45,16 @@ class NotificationManager(object):
         Marks as read the notifications of user.
         """
         self.collection.update(
-            { "recipient": user_id, "is_read": False },
-            { "$set": { "is_read": True }}, multi=True)
+            {"recipient": user_id, "is_read": False},
+            {"$set": {"is_read": True}}, multi=True)
 
     def create(self, object_id, notification_type, sender, recipient_id):
         """
         Creates notification from provided parameters.
         """
-
-        if not sender.id == recipient_id: # if the sender affect the own document,
-                                          # ignore it.
+        # if the sender affect the own document,
+        # ignore it.
+        if not sender.id == recipient_id:
             self.collection.insert({
                 "is_read": False,
                 "object_id": object_id,
@@ -57,10 +62,11 @@ class NotificationManager(object):
                 "date_created": datetime.today(),
                 "sender": {
                     "username": sender.username,
-                    "email": sender.email # it's required for gravatar
+                    "email": sender.email  # it's required for gravatar
                 },
                 "recipient": recipient_id
             })
+
 
 class Notification(dict):
     """
@@ -71,28 +77,23 @@ class Notification(dict):
     def get_absolute_url(self):
         url_resolvers = {
             NOTIFICATION_TYPE_COMMENT:
-                lambda: reverse("show_document",
-                    args=[self.get("object_id")]),
+                lambda: reverse("show_document", args=[self.get("object_id")]),
 
             NOTIFICATION_TYPE_FORK:
-                lambda: reverse("show_document",
-                    args=[self.get("object_id")]),
+                lambda: reverse("show_document", args=[self.get("object_id")]),
 
             NOTIFICATION_TYPE_STAR:
-                lambda: reverse("show_document",
-                    args=[self.get("object_id")]),
+                lambda: reverse("show_document", args=[self.get("object_id")]),
 
             NOTIFICATION_TYPE_ASSIGNMENT:
-                lambda: reverse("edit_document",
-                    args=[self.get("object_id")]),
+                lambda: reverse("edit_document", args=[self.get("object_id")]),
 
             NOTIFICATION_TYPE_FOLLOWING:
                 lambda: reverse("auth_profile",
-                    args=[self.get("sender").get("username")]),
+                                args=[self.get("sender").get("username")]),
 
         }
         return url_resolvers[self.get("type")]()
-
 
     def as_text(self):
         return NOTIFICATION_TEMPLATES[self.get("type")] % self.get("sender")
@@ -110,13 +111,14 @@ def create_comment_notification(instance, **kwargs):
         recipient_id=instance.document.user_id
     )
 
+
 @receiver(fork_done)
 def create_fork_notification(instance, **kwargs):
     """
     Sends notification to the user of forked document.
     """
     forked_document = Document.objects.get(
-            _id=ObjectId(instance.fork_of))
+        _id=ObjectId(instance.fork_of))
 
     Notification.objects.create(
         object_id=instance._id,
@@ -138,6 +140,7 @@ def create_star_notification(instance, user, **kwargs):
         recipient_id=instance.user_id
     )
 
+
 @receiver(follow_done)
 def create_following_notification(following, follower, **kwargs):
     """
@@ -149,6 +152,7 @@ def create_following_notification(following, follower, **kwargs):
         sender=follower,
         recipient_id=following.id
     )
+
 
 @receiver(assignment_done)
 def create_assignment_notification(instance, user_id, **kwargs):

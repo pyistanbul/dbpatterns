@@ -22,18 +22,14 @@ class NotificationListView(ListView):
     def get_notifications(self):
 
         notifications = Notification.objects.filter_by_user_id(
-                            self.request.user.id)
+            self.request.user.id)
 
         if self.request.is_ajax():
-
             return notifications.limit(5).sort([
                 ("is_read", DESCENDING),
-                ("date_created", DESCENDING)
-            ])
+                ("date_created", DESCENDING)])
 
-        return notifications.sort([
-            ("date_created", DESCENDING)
-        ])
+        return notifications.sort([("date_created", DESCENDING)])
 
     def get_template_names(self):
         if self.request.is_ajax():
