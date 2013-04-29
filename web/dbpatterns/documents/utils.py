@@ -36,6 +36,4 @@ def reverse_tastypie_url(resource_name, pk=None):
 
     return reverse("api_dispatch_detail", kwargs={
         "resource_name": resource_name,
-        "pk": pk
-    })
-
+        "pk": pk})

@@ -9,11 +9,10 @@ from documents.exporters.sql import (MysqlExporter, OracleExporter,
 
 
 TEST_DOCUMENT_PATH = os.path.join(os.path.dirname(__file__),
-    "fixtures/test_document.json")
+                                  "fixtures/test_document.json")
 
 
 class ExporterTestCase(TestCase):
-
     def setUp(self):
         self.document = Document(json.load(open(TEST_DOCUMENT_PATH)))
 
@@ -22,7 +21,7 @@ class ExporterTestCase(TestCase):
         Tests MySQL exporter.
         """
         exporter = MysqlExporter(self.document)
-        self.assertEqual(exporter.as_text(),"""
+        self.assertEqual(exporter.as_text(), """
 CREATE TABLE `permissions` (
 	`id` int PRIMARY KEY,
 	`name` varchar(255)

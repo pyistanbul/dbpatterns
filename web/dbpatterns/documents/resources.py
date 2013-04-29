@@ -18,7 +18,6 @@ from documents.signals import assignment_done
 
 
 class DocumentResource(MongoDBResource):
-
     id = fields.CharField(attribute="_id")
     title = fields.CharField(attribute="title", null=True)
     entities = fields.ListField(attribute="entities", null=True)
@@ -51,28 +50,26 @@ class DocumentResource(MongoDBResource):
         """
         Populates the id of user to create document.
         """
-        return super(DocumentResource, self).obj_create(bundle,
-            user_id=request.user.pk)
+        return super(DocumentResource, self).obj_create(
+            bundle, user_id=request.user.pk)
 
     def obj_update(self, bundle, request=None, **kwargs):
         """
-        Checks the permissions of user, and updates the document
+        - Checks the permissions of user, and updates the document
+        - Fires assignmend_done signals for assigned users
         """
         document = self.obj_get(request=request, pk=kwargs.get("pk"))
 
         if not document.is_editable(user_id=request.user.id):
             raise ImmediateHttpResponse(response=http.HttpUnauthorized())
 
-        bundle = super(DocumentResource, self).obj_update(bundle, request,
-                                                          **kwargs)
+        bundle = super(DocumentResource, self).obj_update(
+            bundle, request, **kwargs)
 
         updated_document = self.obj_get(request=request, pk=kwargs.get("pk"))
-
         if document.assignees != updated_document.assignees:
-
             original = map(operator.itemgetter("id"), document.assignees)
             updated = map(operator.itemgetter("id"), updated_document.assignees)
-
             for user_id in set(updated).difference(original):
                 assignment_done.send(
                     sender=self,
@@ -102,7 +99,7 @@ class DocumentResource(MongoDBResource):
         ]
 
     def dispatch_comments(self, request, **kwargs):
-        obj = Document(self.cached_obj_get(request=request,
-            **self.remove_api_resource_names(kwargs)))
+        document = Document(self.cached_obj_get(
+            request=request, **self.remove_api_resource_names(kwargs)))
         child_resource = CommentResource()
-        return child_resource.dispatch_list(request, document_id=obj.pk)
+        return child_resource.dispatch_list(request, document_id=document.pk)

@@ -27,24 +27,22 @@ from documents.exporters.sql import (MysqlExporter, PostgresExporter,
                                      SQLiteExporter, OracleExporter)
 
 
-
 DOCUMENT_EXPORTERS = {
     EXPORTER_MYSQL: MysqlExporter,
     EXPORTER_POSTGRES: PostgresExporter,
     EXPORTER_SQLITE: SQLiteExporter,
-    EXPORTER_ORACLE: OracleExporter
+    EXPORTER_ORACLE: OracleExporter,
 }
+
 
 class HomeView(TemplateView):
     template_name = "index.html"
 
     def get_context_data(self, **kwargs):
-
         if self.request.user.is_anonymous():
             is_public = True
         else:
             is_public = self.request.GET.get("public") == "true"
-
         try:
             page_number = int(self.request.GET.get("page"))
         except (ValueError, TypeError):
@@ -88,19 +86,18 @@ class HomeView(TemplateView):
                         NEWS_TYPE_DOCUMENT,
                         NEWS_TYPE_FORK,
                         NEWS_TYPE_STAR,
-                        NEWS_TYPE_FOLLOWING],
-                }
-        }
+                        NEWS_TYPE_FOLLOWING]
+            }}
 
         if not public:
             parameters["recipients"] = {
                 "$in": [self.request.user.pk]
             }
 
-        newsfeed = Entry.objects.collection\
-                        .find(parameters).sort([("date_created", -1)])
+        newsfeed = Entry.objects.collection.find(
+            parameters).sort([("date_created", -1)])
 
-        return newsfeed[offset:offset+limit]
+        return newsfeed[offset:offset + limit]
 
     def get_next_page_url(self, request, page_number):
         """
@@ -111,8 +108,7 @@ class HomeView(TemplateView):
             "parameters": urlencode({
                 "public": request.GET.get("public") or "false",
                 "page": page_number + 1
-            })
-        }
+            })}
 
     def get_latest_posts(self):
         return Post.objects.all()[:10]
@@ -122,23 +118,18 @@ class DocumentDetailView(DocumentMixin, TemplateView):
     template_name = "documents/show.html"
 
     def get_context_data(self, **kwargs):
-        return {
-            "document": self.get_document(),
-            "exporters": EXPORTERS
-        }
+        return {"document": self.get_document(),
+                "exporters": EXPORTERS}
 
 
 class ExportDocumentView(DocumentMixin, View):
 
     def get(self, *args, **kwargs):
         klass = DOCUMENT_EXPORTERS.get(kwargs.get("exporter"))
-
         if klass is None:
             return http.HttpResponseBadRequest()
-
         document = self.get_document()
         exporter = klass(document)
-
         return http.HttpResponse(exporter.as_text(), content_type="text/plain")
 
 
@@ -150,6 +141,7 @@ class DocumentForksView(DocumentDetailView):
         context["forks"] = context.get("document").forks()
         return context
 
+
 class DocumentStarsView(DocumentDetailView):
     template_name = "documents/stars.html"
 
@@ -158,24 +150,16 @@ class StarDocumentView(LoginRequiredMixin, RedirectView, DocumentMixin):
 
     def post(self, request, *args, **kwargs):
         document = self.get_document()
-
         stars = document.get_stars()
-
         if request.user.pk in stars:
             stars.remove(request.user.pk)
         else:
             stars.append(request.user.pk)
             star_done.send(sender=self, instance=document,
-                                        user=request.user)
-
-        Document.objects.collection.update({
-            "_id": document.pk
-        }, {
-            "$set": {
-                "stars": stars,
-                "star_count": len(stars)
-            }
-        })
+                           user=request.user)
+        Document.objects.collection.update(
+            {"_id": document.pk},
+            {"$set": {"stars": stars, "star_count": len(stars)}})
 
         return super(StarDocumentView, self).post(request, *args, **kwargs)
 
@@ -214,7 +198,8 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
         return self.get_document().is_editable(user_id=self.request.user.id)
 
     def redirect(self):
-        return http.HttpResponseRedirect(reverse("show_document", kwargs=self.kwargs))
+        return http.HttpResponseRedirect(
+            reverse("show_document", kwargs=self.kwargs))
 
     def get_context_data(self, **kwargs):
         context = super(DocumentEditView, self).get_context_data(**kwargs)
@@ -222,7 +207,6 @@ class DocumentEditView(LoginRequiredMixin, DocumentDetailView):
         context["FIELD_TYPES"] = FIELD_TYPES
         context["SOCKETIO_HOST"] = settings.SOCKETIO_HOST
         return context
-
 
 
 class NewDocumentView(LoginRequiredMixin, FormView):
@@ -247,7 +231,6 @@ class NewDocumentView(LoginRequiredMixin, FormView):
 
 
 class MyDocumentsView(LoginRequiredMixin, TemplateView):
-
     template_name = "documents/list.html"
 
     def get_context_data(self, **kwargs):
@@ -266,36 +249,31 @@ class MyDocumentsView(LoginRequiredMixin, TemplateView):
 
 
 class SearchDocumentView(ListView):
-
     template_name = "documents/search.html"
     context_object_name = "documents"
 
     def get_queryset(self):
-
         form = self.get_form()
 
         if not form.is_valid():
             return []
 
         keyword = form.cleaned_data.get("keyword")
-
         collection = Document.objects.collection.find({
-            "_keywords": {
-                "$all": keyword.split()
-            }
-        })
+            "_keywords": {"$all": keyword.split()}})
 
         return map(Document, collection)
 
     def get_context_data(self, **kwargs):
         return super(SearchDocumentView, self).get_context_data(
-            search_form = self.form,
+            search_form=self.form,
             keyword=self.request.GET.get("keyword"),
             **kwargs)
 
     def get_form(self):
         self.form = SearchForm(self.request.GET)
         return self.form
+
 
 class ForkDocumentView(DocumentMixin, NewDocumentView):
     form_class = ForkDocumentForm
@@ -325,8 +303,9 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
             "fork_count": (document.fork_count or 0) + 1
         }), pk=document.pk)
 
+        document = Document.objects.get(_id=ObjectId(self.object_id))
         fork_done.send(sender=self,
-            instance=Document.objects.get(_id=ObjectId(self.object_id)))
+                       instance=document)
 
         return super(NewDocumentView, self).form_valid(form)
 

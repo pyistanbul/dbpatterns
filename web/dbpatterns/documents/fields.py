@@ -1,5 +1,6 @@
 from django import forms
 
+
 class SearchInput(forms.TextInput):
     input_type = "search"
 
