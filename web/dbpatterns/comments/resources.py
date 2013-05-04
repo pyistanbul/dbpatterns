@@ -38,6 +38,7 @@ class CommentResource(MongoDBResource):
         detail_allowed_methods = ["get", "delete"]
         authorization = Authorization()
         object_class = Comment
+        always_return_data = True
 
     def dehydrate(self, bundle):
         """
@@ -103,6 +104,8 @@ class CommentResource(MongoDBResource):
             comment_id=comment_id,
             instance=comment
         )
+
+        bundle.obj = comment
 
         return bundle
 
