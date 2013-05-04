@@ -285,7 +285,6 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
         }
 
     def form_valid(self, form, **kwargs):
-        resource = DocumentResource()
         document = self.get_document()
 
         self.object_id = Document.objects.collection.insert({
@@ -298,14 +297,12 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
             "_keywords": extract_keywords(form.cleaned_data.get("title"))
         })
 
-        # TODO: use atomic operations for incrementing!
-        resource.obj_update(bundle=resource.build_bundle(data={
-            "fork_count": (document.fork_count or 0) + 1
-        }), request=self.request, pk=document.pk)
+        Document.objects.collection.update(
+            {'_id': ObjectId(document.pk)},
+            {"$inc": {'fork_count': 1}})
 
         document = Document.objects.get(_id=ObjectId(self.object_id))
-        fork_done.send(sender=self,
-                       instance=document)
+        fork_done.send(sender=self, instance=document)
 
         return super(NewDocumentView, self).form_valid(form)
 
