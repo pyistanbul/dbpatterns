@@ -301,7 +301,7 @@ class ForkDocumentView(DocumentMixin, NewDocumentView):
         # TODO: use atomic operations for incrementing!
         resource.obj_update(bundle=resource.build_bundle(data={
             "fork_count": (document.fork_count or 0) + 1
-        }), pk=document.pk)
+        }), request=self.request, pk=document.pk)
 
         document = Document.objects.get(_id=ObjectId(self.object_id))
         fork_done.send(sender=self,
