@@ -1,6 +1,3 @@
-from documents.exporters.exceptions import ExporterError
-
-
 class BaseExporter(object):
     """
     The base class of all exporters.

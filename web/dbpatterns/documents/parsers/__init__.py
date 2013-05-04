@@ -1,6 +1,3 @@
-from documents.parsers.exceptions import ParseError
-
-
 class BaseParser(object):
     parsed = None
 

@@ -2,8 +2,7 @@ import ast
 from _ast import Call, Attribute, Name
 
 from documents.constants import *
-from documents.parsers import BaseParser
-from documents.parsers.exceptions import ParseError
+from documents.parsers import BaseParser, ParseError
 
 MODEL_BASE_CLASS = "Model"
 

@@ -2,9 +2,9 @@ from django import forms
 from django.forms import RadioSelect
 
 from documents.fields import SearchInput
+from documents.parsers import ParseError
 from documents.parsers.django_orm import DjangoORMParser
 from documents.parsers.dummy import DummyParser
-from documents.parsers.exceptions import ParseError
 
 DOCUMENT_PARSER_BLANK = ""
 DOCUMENT_PARSER_DJANGO_ORM = "django-orm"

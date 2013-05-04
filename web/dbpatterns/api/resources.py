@@ -54,11 +54,9 @@ class MongoDBResource(Resource):
         """
         Updates mongodb document.
         """
-        self.get_collection().update({
-                                         "_id": ObjectId(kwargs.get("pk"))
-                                     }, {
-                                         "$set": bundle.data
-                                     })
+        self.get_collection().update(
+            {"_id": ObjectId(kwargs.get("pk"))},
+            {"$set": bundle.data})
         return bundle
 
     def obj_delete_list(self, request=None, **kwargs):

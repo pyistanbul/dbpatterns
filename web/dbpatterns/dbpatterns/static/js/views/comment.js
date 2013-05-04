@@ -105,7 +105,6 @@ dbpatterns.views.Comments = Backbone.View.extend({
 
         this.model.on("add", function () {
             this.$el.find(".no-comment").hide();
-            this.update_comment_count()
         }, this);
         
         this.show();
