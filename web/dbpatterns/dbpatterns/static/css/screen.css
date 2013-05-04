@@ -989,7 +989,8 @@ hr.or:after {
         #comments ul li .gravatar {
             float: left;
             width: 10%;
-            margin-top: 6px;
+            margin-top: 5px;
+            margin-right: 5px;
         }
 
     #comments form {
