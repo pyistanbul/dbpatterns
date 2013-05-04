@@ -993,13 +993,13 @@ hr.or:after {
         }
 
     #comments form {
-        margin: 15px;
+        margin: 10px 8px;
     }
 
         #comments form #id_body {
             padding: 10px;
             border: 1px solid #d5eaf9;
-            width: 225px;
+            width: 240px;
             height: 44px;
             float: left;
         }
