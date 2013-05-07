@@ -76,8 +76,11 @@ class ProfileDetailView(DetailView):
             can_follow = self.request.user != user
 
         documents = resource.get_collection().find({
-            "user_id": user.pk
-        })
+            'user_id': user.pk,
+            '$or': [
+                {'is_public': True},
+                {'user_id': self.request.user.id}
+            ]})
 
         return super(ProfileDetailView, self).get_context_data(
             documents=imap(Document, documents),
