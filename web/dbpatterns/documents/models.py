@@ -106,10 +106,7 @@ class Document(dict):
     @property
     def assignees(self):
         """Returns assigned users or empty list"""
-        try:
-            return self['assignees']
-        except KeyError:
-            return []
+        return self.get('assignees') or []
 
     @property
     def star_count(self):

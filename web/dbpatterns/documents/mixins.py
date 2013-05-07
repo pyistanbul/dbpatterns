@@ -12,6 +12,7 @@ class DocumentMixin(object):
     def get_document(self):
         resource = DocumentResource()
         try:
-            return resource.obj_get(request=self.request, pk=self.kwargs.get("slug"))
-        except (TypeError, InvalidId, ImmediateHttpResponse):
+            return resource.obj_get(request=self.request,
+                                    pk=self.kwargs.get("slug"))
+        except (InvalidId, ImmediateHttpResponse):
             raise Http404("Document is not found.")
