@@ -147,7 +147,8 @@ dbpatterns.views.Entities = Backbone.View.extend({
         entity_view.focus();
     },
 
-    new_entity: function () {
+    new_entity: function (event) {
+	event.preventDefault();
         var entity_name = window.prompt("Entity name");
 
         if (!entity_name) {

@@ -158,8 +158,9 @@ dbpatterns.views.Attributes = Backbone.View.extend({
         return this.$el.find("section");
     },
 
-    new_attribute: function () {
-        var button = this.$el.find(".new-attribute");
+    new_attribute: function (event) {
+        event.preventDefault();
+	var button = this.$el.find(".new-attribute");
         var view = new dbpatterns.views.EditInPlaceForm();
         button.before(view.render().el);
         view.success(function (name) {
