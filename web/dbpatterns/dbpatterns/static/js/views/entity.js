@@ -91,10 +91,12 @@ dbpatterns.views.Entity = Backbone.View.extend({
 
     rename: function () {
         var name = window.prompt("Entity name", this.model.get("name"));
-        this.model.set({
+        if (name) {
+          this.model.set({
             "name": name
-        });
-        this.model.save();
+          });
+          this.model.save();
+        }
     },
 
     focus: function () {
