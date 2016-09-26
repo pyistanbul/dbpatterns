@@ -13,6 +13,7 @@ class SQLExporter(BaseExporter):
         TYPES_TIME: "time",
         TYPES_DATETIME: "datetime",
         TYPES_DATE: "date",
+        TYPES_DOUBLE: "double precision"
     }
     DEFAULT_TYPE = "varchar"
     COMMA_LITERAL = ","
