@@ -1,6 +1,13 @@
 dbpatterns.models.Attribute = Backbone.Model.extend({
 
     FOREIGN_KEY_SEPARATOR: "_",
+    DEFAULT_TYPES: [
+        {'field': 'is_', 'value': 'boolean', 'function': 'startsWith'},
+        {'field': 'date', 'value': 'datetime', 'function': 'startsWith'},
+        {'field': 'date', 'value': 'datetime', 'function': 'endsWith'},
+        {'field': 'id', 'value': 'integer', 'function': 'endsWith'},
+        {'field': '_at', 'value': 'datetime', 'function': 'endsWith'}
+    ],
 
     defaults: {
         "order": 0
@@ -40,10 +47,14 @@ dbpatterns.models.Attribute = Backbone.Model.extend({
     },
     get_default_type: function (name) {
         var value = _(name.toLowerCase());
-        if (value.startsWith("is_")) return "boolean";
-        if (value.startsWith("date") || value.endsWith("date")) return "datetime";
-        if (value.endsWith("id")) return "integer";
-        return "string"
+        var detected_type = 'string';
+        _.forEach(this.DEFAULT_TYPES, function(field) {
+            if (value[field.function](field.field)) {
+                detected_type = field.value;
+                return;
+            }
+        });
+        return detected_type;
     }
 });
 
