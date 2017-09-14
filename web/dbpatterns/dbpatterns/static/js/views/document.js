@@ -111,6 +111,9 @@ dbpatterns.views.Document = Backbone.View.extend({
     },
 
     show_settings_form: function () {
+        if ($('div.settings').length > 0) {
+            return false;
+        }
         (new dbpatterns.views.DocumentEditDialog({
             "form": _.template(this.settings_form_template, this),
             "model": this.model,
