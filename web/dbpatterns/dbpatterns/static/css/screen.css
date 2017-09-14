@@ -589,15 +589,12 @@ article#document {
 
     .entity .attributes .attribute a.remove-attribute {
         float: right;
-        text-indent: -9999px;
-        display: inline-block;
-
-        margin: 11px 5px 0 0;
-        background-color: #cacaca;
+        margin: 3px 3px 0 0;
         float: right;
         width: 7px;
         height: 7px;
-        border-radius: 50%;
+        text-decoration: none;
+        color: #6b6a6a;
     }
 
     .entity .attributes .attribute:hover {
@@ -605,7 +602,7 @@ article#document {
     }
 
     .entity .attributes .attribute:hover .remove-attribute {
-        background-color: #ba0000;
+        color: #ba0000;
     }
 
     .entity .attributes .attribute a span {
