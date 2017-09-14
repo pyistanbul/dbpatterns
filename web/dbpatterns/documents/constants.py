@@ -9,6 +9,7 @@ TYPES_DATE = "date"
 TYPES_TIME = "time"
 TYPES_CURRENCY = "currency"
 TYPES_TEXT = "text"
+TYPES_DOUBLE = "double"
 
 FIELD_TYPES = (
     (TYPES_INTEGER, "integer"),
@@ -19,6 +20,7 @@ FIELD_TYPES = (
     (TYPES_DATE, "date"),
     (TYPES_TIME, "time"),
     (TYPES_CURRENCY, "currency"),
+    (TYPES_DOUBLE, "double")
 )
 
 EXPORTER_MYSQL = "mysql"

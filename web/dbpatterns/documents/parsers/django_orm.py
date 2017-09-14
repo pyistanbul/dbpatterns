@@ -21,7 +21,8 @@ FIELD_TYPE_MAP = {
     "FileField": TYPES_STRING,
     "ForeignKey": FOREIGN_KEY_FIELD,
     "ManyToManyField": MANY_TO_MANY_FIELD,
-    "OneToOneField": FOREIGN_KEY_FIELD
+    "OneToOneField": FOREIGN_KEY_FIELD,
+    "FloatField": TYPES_DOUBLE
 }
 
 DEFAULT_FIELD_TYPE = "string"
