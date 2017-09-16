@@ -4,7 +4,7 @@ import sys
 
 from django.conf import settings
 from django.core.management import call_command
-from django.test.simple import DjangoTestSuiteRunner
+from django.test.runner import DiscoverRunner
 
 from lettuce import *
 
@@ -27,7 +27,7 @@ def switch_to_test_database():
     except ImportError:
         pass
 
-    world.test_runner = DjangoTestSuiteRunner(interactive=False)
+    world.test_runner = DiscoverRunner(interactive=False)
     world.test_runner.setup_test_environment()
     world.test_db = world.test_runner.setup_databases()
     call_command('syncdb', **{
