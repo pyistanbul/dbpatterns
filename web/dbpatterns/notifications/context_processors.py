@@ -1,5 +1,6 @@
 from documents import get_collection
 
+
 def notifications(request):
     """
     Returns unread notification count

@@ -1,9 +1,6 @@
 from bson import ObjectId
-from pymongo import Connection
 
-from django.core.exceptions import ImproperlyConfigured
 from django.core.urlresolvers import reverse
-from django.conf import settings
 
 from tastypie.bundle import Bundle
 from tastypie.resources import Resource

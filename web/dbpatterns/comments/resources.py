@@ -57,7 +57,7 @@ class CommentResource(MongoDBResource):
         """
         Returns comment of the document
         """
-        if not "document_id" in kwargs:
+        if "document_id" not in kwargs:
             return super(CommentResource, self).obj_get_list(request, **kwargs)
 
         comments = self.get_collection().find({

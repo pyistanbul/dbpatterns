@@ -22,9 +22,8 @@ def extract_keywords(title):
 
     stemmed_keywords = map(lancaster_stemmer.stem, original_keywords)
 
-    return list(set(original_keywords
-                    + lemmatized_keywords
-                    + stemmed_keywords))
+    return list(set(
+        original_keywords + lemmatized_keywords + stemmed_keywords))
 
 
 def reverse_tastypie_url(resource_name, pk=None):

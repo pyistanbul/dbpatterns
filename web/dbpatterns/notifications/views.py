@@ -10,7 +10,6 @@ from notifications.models import Notification
 
 
 class NotificationListView(ListView):
-
     template_name = "notifications/list.html"
     ajax_template_name = "notifications/notifications.html"
     context_object_name = "notifications"

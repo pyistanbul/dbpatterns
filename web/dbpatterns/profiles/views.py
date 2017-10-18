@@ -5,7 +5,8 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.http import HttpResponse
-from django.views.generic import FormView, CreateView, TemplateView, RedirectView, DetailView, ListView
+from django.views.generic import (
+    FormView, CreateView, RedirectView, DetailView)
 
 from profiles.forms import RegistrationForm
 from documents.models import Document

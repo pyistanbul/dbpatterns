@@ -4,7 +4,6 @@ from notifications.views import NotificationListView
 
 
 urlpatterns = patterns('',
-
-    url(r'^$', NotificationListView.as_view(), name='notifications'),
-
+    url(r'^$', NotificationListView.as_view(),
+        name='notifications'),
 )

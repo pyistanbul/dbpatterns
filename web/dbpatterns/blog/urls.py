@@ -1,12 +1,11 @@
 from django.conf.urls import patterns, url
 
 from blog.sitemaps import BlogSitemap
-from blog.views import BlogDetailView, BlogIndexView, \
-                        BlogPostsRssFeed, BlogPostsAtomFeed
+from blog.views import (BlogDetailView, BlogIndexView,
+                        BlogPostsRssFeed, BlogPostsAtomFeed)
 
 
 urlpatterns = patterns('',
-
     # blog urls
     url(r'^$', BlogIndexView.as_view(), name="blog"),
     url(r'^(?P<slug>[-\w]+)/$', BlogDetailView.as_view(), name="blog_detail"),
@@ -20,7 +19,4 @@ urlpatterns = patterns('',
         {'sitemaps': {
             "blog": BlogSitemap()
         }}, name="blog_sitemap"),
-
 )
-
-
