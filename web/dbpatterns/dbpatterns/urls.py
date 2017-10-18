@@ -7,7 +7,6 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 
-
     url(r'^$', HomeView.as_view(), name='home'),
 
     # notifications

@@ -1,5 +1,4 @@
 from django import forms
-from django.forms import RadioSelect
 
 from documents.fields import SearchInput
 from documents.parsers import ParseError

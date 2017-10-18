@@ -25,5 +25,4 @@ urlpatterns = patterns(
         name='fork_document'),
     url(r'^(?P<slug>[-\w]+)/star$', StarDocumentView.as_view(),
         name='star_document'),
-
 )

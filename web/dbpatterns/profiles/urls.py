@@ -5,8 +5,8 @@ from profiles.views import (RegistrationView, LoginView, LogoutView,
 
 
 urlpatterns = patterns('',
-
-    url(r'^login/$', LoginView.as_view(template_name="auth/login.html"), name='auth_login'),
+    url(r'^login/$', LoginView.as_view(
+        template_name="auth/login.html"), name='auth_login'),
     url(r'^logout/$', LogoutView.as_view(), name='auth_logout'),
     url(r'^register/$', RegistrationView.as_view(
         template_name="auth/register.html"), name='auth_registration'),
@@ -14,5 +14,4 @@ urlpatterns = patterns('',
         template_name="auth/complete.html"), name='auth_registration_complete'),
     url(r'^profile/(?P<username>[\w\._-]+)/$', ProfileDetailView.as_view(
         template_name="auth/profile.html"), name='auth_profile'),
-
 )

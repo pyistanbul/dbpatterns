@@ -59,14 +59,13 @@ class FieldVisitor(ast.NodeVisitor):
 
         if isinstance(node.value.func, Attribute):
             field_type = FIELD_TYPE_MAP.get(node.value.func.attr,
-                DEFAULT_FIELD_TYPE)
+                                            DEFAULT_FIELD_TYPE)
 
             if field_type in [MANY_TO_MANY_FIELD, FOREIGN_KEY_FIELD]:
                 relationship = node.value.args[0].id
 
         if field_type is not None:
             self.add_field(field_name, field_type, relationship=relationship)
-
 
 
 class ModelVisitor(ast.NodeVisitor):
@@ -130,7 +129,7 @@ class DjangoORMParser(BaseParser):
 
                     yield self.m2m_to_entity(model, field, position_top, position_left)
 
-                    continue # skip the field addition
+                    continue  # skip the field addition
 
                 elif field.get("type") == FOREIGN_KEY_FIELD:
 
@@ -165,7 +164,7 @@ class DjangoORMParser(BaseParser):
                 {
                     "name": "id",
                     "type": TYPES_INTEGER,
-                    },
+                },
                 {
                     "name": model.lower() + "_id",
                     "type": TYPES_INTEGER,

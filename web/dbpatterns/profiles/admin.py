@@ -24,5 +24,6 @@ class ProfileAdmin(UserAdmin):
         return '<img src="%s" />' % gravatar_for_user(obj)
     gravatar.allow_tags = True
 
+
 admin.site.unregister(User)
 admin.site.register(User, ProfileAdmin)
