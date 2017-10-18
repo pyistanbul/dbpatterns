@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
-from gravatar.templatetags.gravatar import gravatar_for_user
+from django_gravatar.templatetags.gravatar import gravatar_url
 
 from profiles.models import FollowedProfile
 
@@ -21,7 +21,7 @@ class ProfileAdmin(UserAdmin):
     inlines = [FollowedProfileInline]
 
     def gravatar(self, obj):
-        return '<img src="%s" />' % gravatar_for_user(obj)
+        return '<img src="%s" />' % gravatar_url(obj)
     gravatar.allow_tags = True
 
 

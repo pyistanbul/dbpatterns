@@ -3,7 +3,7 @@ from bson import ObjectId
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 
-from gravatar.templatetags.gravatar import gravatar_for_email
+from django_gravatar.templatetags.gravatar import gravatar_url
 from newsfeed.constants import NEWS_TYPE_COMMENT
 
 from profiles.models import AnonymousProfile
@@ -31,7 +31,7 @@ class Comment(dict):
     @property
     def avatar_url(self):
         """Returns the gravar address of email"""
-        return gravatar_for_email(self.user.email, size=40)
+        return gravatar_url(self.user.email, size=40)
 
     @property
     def username(self):

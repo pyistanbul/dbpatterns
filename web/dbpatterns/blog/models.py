@@ -22,7 +22,7 @@ class Post(models.Model):
     slug = models.SlugField(_("Slug"), max_length=255, unique=True)
     content = MarkupField(_("Content"))
     date_created = models.DateTimeField(auto_now_add=True)
-    date_modified = models.DateTimeField(auto_now=True, auto_now_add=True)
+    date_modified = models.DateTimeField(auto_now=True)
     is_published = models.BooleanField(_("Published"), default=True)
 
     objects = models.Manager()

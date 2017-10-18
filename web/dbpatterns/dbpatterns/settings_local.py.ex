@@ -1,7 +1,6 @@
 import os
 
 DEBUG = True
-TEMPLATE_DEBUG = True
 
 COMPRESS_ENABLED = False
 

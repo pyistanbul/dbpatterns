@@ -2,7 +2,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.views.generic import ListView
 
-from gravatar.templatetags.gravatar import gravatar_for_user
+from django_gravatar.templatetags.gravatar import gravatar_url
 
 from profiles.mixins import JSONResponseMixin
 
@@ -25,7 +25,7 @@ class UserResource(JSONResponseMixin, ListView):
 
         return [dict(id=user.id,
                      label=user.username,
-                     avatar=gravatar_for_user(user, size=40)) for user in users]
+                     avatar=gravatar_url(user, size=40)) for user in users]
 
     def render_to_response(self, context, **response_kwargs):
         return super(UserResource, self).render_to_response(

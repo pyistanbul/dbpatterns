@@ -2,7 +2,6 @@
 import os
 
 DEBUG = True
-TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -95,8 +94,7 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     'django.contrib.humanize',
 
-    'gravatar',
-    'social_auth',
+    'django_gravatar',
     'compressor',
     'debug_toolbar',
     'lettuce.django',
@@ -159,26 +157,7 @@ LOGGING = {
 
 # Social Auth Settings
 
-AUTHENTICATION_BACKENDS = (
-    'social_auth.backends.contrib.github.GithubBackend',
-    'django.contrib.auth.backends.ModelBackend',
-)
-
 LOGIN_REDIRECT_URL = '/'
-
-SOCIAL_AUTH_COMPLETE_URL_NAME  = 'socialauth_complete'
-SOCIAL_AUTH_ASSOCIATE_URL_NAME = 'socialauth_associate_complete'
-
-SOCIAL_AUTH_PIPELINE = (
-    'social_auth.backends.pipeline.social.social_auth_user',
-    'social_auth.backends.pipeline.associate.associate_by_email',
-    'social_auth.backends.pipeline.user.get_username',
-    'social_auth.backends.pipeline.user.create_user',
-    'social_auth.backends.pipeline.social.associate_user',
-    'social_auth.backends.pipeline.social.load_extra_data',
-    'social_auth.backends.pipeline.user.update_user_details',
-)
-
 
 # MONGODB Settings
 
@@ -223,6 +202,6 @@ BLOG_URL = "http://dbpatterns.com/blog/"
 SOCKETIO_HOST = "http://localhost:8000"
 
 try:
-    from settings_local import *
+    from settings_local import *  # noqa
 except ImportError:
     pass

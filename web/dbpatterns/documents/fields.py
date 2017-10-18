@@ -7,5 +7,5 @@ class SearchInput(forms.TextInput):
     def __init__(self, attrs=None, placeholder=None):
         super(SearchInput, self).__init__(attrs)
 
-        if placeholder not is None:
+        if placeholder is not None:
             self.attrs["placeholder"] = placeholder
