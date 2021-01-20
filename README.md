@@ -2,7 +2,10 @@
 
 Dbpatterns is a service that allows you to create, share, explore database models on the web.
 
-Note: The previous domain is not active anymore. Soon the project might be relaunched again under a different domain.
+Notes:
+
+    The previous domain is not active anymore.
+    Project might be relaunched under a different domain
 
 ### Installation
 
@@ -54,4 +57,4 @@ And run the following commands:
     python manage.py syncdb
     python manage.py runserver
 
-That's all. You can access to dbpatterns from http://127.0.0.1:8000
+That's all. You can access to dbpatterns from https://localhost:8000
