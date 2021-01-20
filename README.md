@@ -57,4 +57,4 @@ And run the following commands:
     python manage.py syncdb
     python manage.py runserver
 
-That's all. You can access to dbpatterns from https://localhost:8000
+That's all. You can access to dbpatterns on https://localhost:8000
