@@ -1,6 +1,8 @@
-### dbpatterns.com
+### Db-patterns
 
 Dbpatterns is a service that allows you to create, share, explore database models on the web.
+
+Note: dbpatterns dot com domain is not active anymore. Soon the project might be relaunched again under a different domain.
 
 ### Installation
 
