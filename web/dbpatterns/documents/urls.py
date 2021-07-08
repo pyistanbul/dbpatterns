@@ -1,4 +1,4 @@
-from django.conf.urls import patterns, url
+from django.conf.urls import url
 
 from documents.views import (DocumentDetailView, ExportDocumentView,
                              DocumentForksView, DocumentStarsView,
@@ -6,8 +6,7 @@ from documents.views import (DocumentDetailView, ExportDocumentView,
                              ForkDocumentView, StarDocumentView,
                              SearchDocumentView)
 
-urlpatterns = patterns(
-    '',
+urlpatterns = [
     url(r'^$', MyDocumentsView.as_view(), name='my_documents'),
     url(r'^search$', SearchDocumentView.as_view(), name='search_document'),
     url(r'^new$', NewDocumentView.as_view(), name='new_document'),
@@ -25,4 +24,4 @@ urlpatterns = patterns(
         name='fork_document'),
     url(r'^(?P<slug>[-\w]+)/star$', StarDocumentView.as_view(),
         name='star_document'),
-)
+]

@@ -1,9 +1,8 @@
-from django.conf.urls import url, patterns
+from django.conf.urls import url
 from django.views.generic import RedirectView
 
-urlpatterns = patterns(
-    '',
-   # Legacy URLs
+urlpatterns = [
+    # Legacy URLs
 
     url(r'^my-documents/$',
         RedirectView.as_view(url="/documents/")),
@@ -28,4 +27,4 @@ urlpatterns = patterns(
         url="/documents/%(slug)s/fork")),
     url(r'^star/(?P<slug>[-\w]+)/$', RedirectView.as_view(
         url="/documents/%(slug)s/star")),
-)
+]
